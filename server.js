@@ -9,7 +9,7 @@ var mongoose = require('mongoose'),
 
     compress = require('compression');
 
-var app = express(),
+var app = express()
     passport = require('./modules/passport.js');
 
 app.set('port', process.env.PORT || 3000);
@@ -27,6 +27,6 @@ app.listen(app.get('port'), function() {
   console.log('Express server listening on port ' + app.get('port'));
 });
 
-var routes = require('./modules/routes.js')(app);
+//var routes = require('./modules/routes.js')(app);
 
 mongoose.connect('mongodb://localhost:27017/zurival');

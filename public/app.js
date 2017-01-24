@@ -1,4 +1,4 @@
-var app = angular.module("freshflesh", ["ui.router"]);
+var app = angular.module("Zurival", ["ui.router"]);
 
 app.config([
     "$stateProvider",
@@ -16,10 +16,6 @@ app.config([
             "content": {
                 templateUrl: 'views/home.html',
                 controller: "HomeCtrl"
-            },
-            'footer':{
-                templateUrl: 'views/footer.html',
-                controller: 'FooterCtrl'
             }
           }
         })
