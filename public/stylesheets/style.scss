@@ -1,15 +1,25 @@
+/* Import bootstrap */
 @import "bootstrap.min.css";
+/* Colors */
+$primary: #932D24;
+$font-color: #FFFFFF;
 
 html {
     width: 100%;
     height: 100%;
     body {
         height: 100%;
+        background-color: $primary;
+        color: $font-color;
         .ui-views {
             .navbar {
+                background-color: $primary;
+                color: $font-color;
                 width: 55px;
                 height: 100%;
                 #nav-toggle {
+                    background-color: $primary;
+                    color: $font-color;
                     border-radius: 0;
                     width: inherit;
                     height: 55px;
@@ -23,8 +33,12 @@ html {
                             display: block;
                             width: inherit;
                             text-align: center;
+                            color: $font-color;
                         }
                     }
+                }
+                #content {
+                  color: $font-color;
                 }
             }
         }

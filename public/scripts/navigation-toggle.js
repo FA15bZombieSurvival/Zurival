@@ -3,25 +3,35 @@ var toggleStatus = false;
 $(document).ready(function() {
     $('#nav-toggle').click(function() {
         if(!toggleStatus) {
-            $('.navbar').css({
+            /*$('.navbar').css({
                 'width': '150px'
+            });*/
+            $( ".navbar" ).animate({
+              width: '150px'
+            }, 500, function() {
+              // Animation complete.
             });
             $('.nav-hidden').removeClass('hidden');
-            $('#content').css({
-                //'width': 'calc(100% - 150px)'
-                'margin-left': '150px'
-            })
+
+            $( "#content" ).animate({
+              'width': 'calc(100% - 150px)'
+            }, 500, function() {
+            // Animation complete.
+            });
             toggleStatus = true;
         }
         else {
-            $('.navbar').css({
-                'width': ''
+            $( ".navbar" ).animate({
+              width: '55px'
+            }, 500, function() {
+            // Animation complete.
             });
             $('.nav-hidden').addClass('hidden');
-            $('#content').css({
-                //'width': 'calc(100% - 150px)'
-                'margin-left': ''
-            })
+            $( "#content" ).animate({
+              'width': 'calc(100% - 55px)'
+            }, 500, function() {
+            // Animation complete.
+            });
             toggleStatus = false;
         }
     });

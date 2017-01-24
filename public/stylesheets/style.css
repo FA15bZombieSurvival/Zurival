@@ -1,13 +1,21 @@
+/* Import bootstrap */
 @import url(bootstrap.min.css);
+/* Colors */
 html {
   width: 100%;
   height: 100%; }
   html body {
-    height: 100%; }
+    height: 100%;
+    background-color: #932D24;
+    color: #FFFFFF; }
     html body .ui-views .navbar {
+      background-color: #932D24;
+      color: #FFFFFF;
       width: 55px;
       height: 100%; }
       html body .ui-views .navbar #nav-toggle {
+        background-color: #932D24;
+        color: #FFFFFF;
         border-radius: 0;
         width: inherit;
         height: 55px; }
@@ -19,6 +27,9 @@ html {
           html body .ui-views .navbar .navbar-nav li a {
             display: block;
             width: inherit;
-            text-align: center; }
+            text-align: center;
+            color: #FFFFFF; }
+      html body .ui-views .navbar #content {
+        color: #FFFFFF; }
 
 /*# sourceMappingURL=style.css.map */
