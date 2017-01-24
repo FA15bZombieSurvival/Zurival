@@ -1,4 +1,4 @@
-angular.module('MyApp')
+angular.module('Zurival')
   .directive('repeatPassword', function() {
     return {
       require: 'ngModel',

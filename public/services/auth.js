@@ -1,4 +1,4 @@
-angular.module('MyApp')
+angular.module('Zurival')
   .factory('Auth', ['$http', '$location', '$rootScope', '$cookieStore', '$alert',
     function($http, $location, $rootScope, $cookieStore, $alert) {
       $rootScope.currentUser = $cookieStore.get('user');

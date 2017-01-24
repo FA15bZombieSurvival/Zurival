@@ -1,4 +1,4 @@
-var agenda = require('agenda')({ db: { address: 'localhost:27017/test' } }),
+var agenda = require('agenda')({ db: { address: 'localhost:27017/agenda' } }),
     sugar = require('sugar'),
     nodemailer = require('nodemailer');
 

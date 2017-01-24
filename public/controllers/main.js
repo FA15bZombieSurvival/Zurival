@@ -1,4 +1,4 @@
-angular.module('MyApp')
+angular.module('Zurival')
   .controller('MainCtrl', ['$scope', 'Show', function($scope, Show) {
 
     $scope.alphabet = ['0-9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',

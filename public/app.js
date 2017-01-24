@@ -1,4 +1,4 @@
-angular.module('MyApp', ['ngCookies', 'ngResource', 'ngMessages', 'ngRoute', 'mgcrea.ngStrap'])
+angular.module('Zurival', ['ngCookies', 'ngResource', 'ngMessages', 'ngRoute', 'mgcrea.ngStrap'])
   .config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
     $locationProvider.html5Mode(true);
 
@@ -18,10 +18,6 @@ angular.module('MyApp', ['ngCookies', 'ngResource', 'ngMessages', 'ngRoute', 'mg
       .when('/signup', {
         templateUrl: 'views/signup.html',
         controller: 'SignupCtrl'
-      })
-      .when('/add', {
-        templateUrl: 'views/add.html',
-        controller: 'AddCtrl'
       })
       .when('/profile', {
         templateUrl: 'views/profile.html',

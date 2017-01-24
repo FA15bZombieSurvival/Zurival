@@ -1,4 +1,4 @@
-angular.module('MyApp')
+angular.module('Zurival')
   .controller('NavbarCtrl', ['$scope', 'Auth', function($scope, Auth) {
     $scope.logout = function() {
       Auth.logout();

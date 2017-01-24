@@ -1,4 +1,4 @@
-angular.module('MyApp')
+angular.module('Zurival')
   .controller('LoginCtrl', ['$scope', 'Auth', function($scope, Auth) {
     $scope.login = function() {
       Auth.login({

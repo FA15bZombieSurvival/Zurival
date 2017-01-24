@@ -29,4 +29,4 @@ app.listen(app.get('port'), function() {
 
 var routes = require('./modules/routes.js')(app);
 
-mongoose.connect('mongodb://localhost:27017/showTrackr');
+mongoose.connect('mongodb://localhost:27017/zurival');

@@ -1,4 +1,4 @@
-angular.module('MyApp')
+angular.module('Zurival')
   .factory('Subscription', ['$http', function($http) {
     return {
       subscribe: function(show, user) {
