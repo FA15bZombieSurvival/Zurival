@@ -37,6 +37,15 @@ app.config([
                 }
             }
         })
+        .state("root.game", {
+            url: "/game",
+            views: {
+                "content@": {
+                    templateUrl: 'views/game.html',
+                    controller: "GameCtrl"
+                }
+            }
+        })
         .state("root.login", {
             url: "/login",
             views: {
