@@ -36,7 +36,7 @@
 
             var currentUser = function() {
                 if(isLoggedIn()){
-                    var token = getTocken();
+                    var token = getToken();
                     var payload = token.split(".")[1];
                     payload = $window.atob(payload);
                     payload = JSON.parse(payload);
@@ -49,7 +49,7 @@
             }
 
             var register = function(user) {
-                return $http.post("/api/register", user).success(function(data){
+                return $http.post("/register", user).success(function(data){
                     saveToken(data.token);
                 });
             };
