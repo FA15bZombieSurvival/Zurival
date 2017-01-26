@@ -1,8 +1,19 @@
 /* Import bootstrap */
 @import "bootstrap.min.css";
 /* Colors */
-$primary: #932D24;
-$secondary: #69931E;
+@import "colors";
+/* Import stylesheets */
+@import "navigation";
+@import "content";
+
+@font-face {
+    font-family: "Helvetica";
+    src: url("../fonts/Transformers\ Movie.ttf");
+}
+@font-family-base {
+    font-family: "Helvetica";
+    src: url("../fonts/Transformers\ Movie.ttf");
+}
 
 html {
     width: 100%;
@@ -11,67 +22,5 @@ html {
         height: 100%;
         background-color: #FFFFFF;
         color: $primary;
-        #ui-nav {
-            .navbar {
-                float: left;
-                background-color: #FFFFFF;
-                color: $primary;
-                width: 55px;
-                height: 100%;
-                padding-right: 2px;
-                margin-right: 0;
-                #nav-toggle {
-                    background-color: #FFFFFF;
-                    color: $primary;
-                    border-radius: 0;
-                    border: 0;
-                    width: inherit;
-                    height: 55px;
-                    margin: 0;
-                    padding: 0;
-                }
-                .navbar-nav {
-                    width: inherit;
-                    li {
-                        display: block;
-                        width: inherit;
-                        a {
-                            display: block;
-                            width: inherit;
-                            text-align: center;
-                            color: $primary;
-                        }
-                    }
-                }
-            }
-        }
-        #content {
-            float: left;
-            margin-left: 55px;
-            width: calc(100% - 55px);
-            .container-fluid {
-                .row {
-                    margin-bottom: 20px;
-                    #play-button {
-                        .btn {
-                            border-radius: 0;
-                            background-color: $primary;
-                            color: #FFFFFF;
-                        }
-                    }
-                    div {
-                        .thumbnail {
-                            border-radius: 0;
-                            border-color: $secondary;
-                            .caption {
-                                h3 {
-                                    text-align: center;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
     }
 }

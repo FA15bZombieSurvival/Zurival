@@ -1,6 +1,61 @@
 /* Import bootstrap */
 @import url(bootstrap.min.css);
 /* Colors */
+/* Import stylesheets */
+#ui-nav .navbar {
+  float: left;
+  background-color: #FFFFFF;
+  color: #932D24;
+  width: 55px;
+  height: 100%;
+  padding-right: 2px;
+  margin-right: 0; }
+  #ui-nav .navbar #nav-toggle {
+    background-color: #FFFFFF;
+    color: #932D24;
+    border-radius: 0;
+    border: 0;
+    width: inherit;
+    height: 55px;
+    margin: 0;
+    padding: 0; }
+  #ui-nav .navbar .navbar-nav {
+    width: inherit; }
+    #ui-nav .navbar .navbar-nav li {
+      display: block;
+      width: inherit; }
+      #ui-nav .navbar .navbar-nav li a {
+        display: block;
+        width: inherit;
+        text-align: center;
+        color: #932D24; }
+
+#content {
+  float: left;
+  margin-left: 55px;
+  width: calc(100% - 55px);
+  border-left: 1px solid #932D24;
+  height: 100%; }
+  #content .container-fluid .row {
+    margin-bottom: 20px; }
+    #content .container-fluid .row #play-button .btn {
+      font-family: "Helvetica";
+      font: url("../fonts/Transformers Movie.ttf");
+      border-radius: 0;
+      background-color: #932D24;
+      color: #FFFFFF; }
+    #content .container-fluid .row div .thumbnail {
+      border-radius: 0;
+      border-color: #69931E; }
+      #content .container-fluid .row div .thumbnail .caption h3 {
+        text-align: center; }
+
+@font-face {
+  font-family: "Helvetica";
+  src: url("../fonts/Transformers Movie.ttf"); }
+@font-family-base {
+  font-family: "Helvetica";
+  src: url("../fonts/Transformers Movie.ttf"); }
 html {
   width: 100%;
   height: 100%; }
@@ -8,47 +63,5 @@ html {
     height: 100%;
     background-color: #FFFFFF;
     color: #932D24; }
-    html body #ui-nav .navbar {
-      float: left;
-      background-color: #FFFFFF;
-      color: #932D24;
-      width: 55px;
-      height: 100%;
-      padding-right: 2px;
-      margin-right: 0; }
-      html body #ui-nav .navbar #nav-toggle {
-        background-color: #FFFFFF;
-        color: #932D24;
-        border-radius: 0;
-        border: 0;
-        width: inherit;
-        height: 55px;
-        margin: 0;
-        padding: 0; }
-      html body #ui-nav .navbar .navbar-nav {
-        width: inherit; }
-        html body #ui-nav .navbar .navbar-nav li {
-          display: block;
-          width: inherit; }
-          html body #ui-nav .navbar .navbar-nav li a {
-            display: block;
-            width: inherit;
-            text-align: center;
-            color: #932D24; }
-    html body #content {
-      float: left;
-      margin-left: 55px;
-      width: calc(100% - 55px); }
-      html body #content .container-fluid .row {
-        margin-bottom: 20px; }
-        html body #content .container-fluid .row #play-button .btn {
-          border-radius: 0;
-          background-color: #932D24;
-          color: #FFFFFF; }
-        html body #content .container-fluid .row div .thumbnail {
-          border-radius: 0;
-          border-color: #69931E; }
-          html body #content .container-fluid .row div .thumbnail .caption h3 {
-            text-align: center; }
 
 /*# sourceMappingURL=style.css.map */

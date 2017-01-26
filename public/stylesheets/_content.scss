@@ -1,0 +1,34 @@
+@import "colors";
+
+#content {
+    float: left;
+    margin-left: 55px;
+    width: calc(100% - 55px);
+    border-left: 1px solid $primary;
+    height: 100%;
+    .container-fluid {
+        .row {
+            margin-bottom: 20px;
+            #play-button {
+                .btn {
+                    font-family: "Helvetica";
+                    font: url("../fonts/Transformers\ Movie.ttf");
+                    border-radius: 0;
+                    background-color: $primary;
+                    color: #FFFFFF;
+                }
+            }
+            div {
+                .thumbnail {
+                    border-radius: 0;
+                    border-color: $secondary;
+                    .caption {
+                        h3 {
+                            text-align: center;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

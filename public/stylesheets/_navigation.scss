@@ -1,0 +1,36 @@
+@import "colors";
+
+#ui-nav {
+    .navbar {
+        float: left;
+        background-color: #FFFFFF;
+        color: $primary;
+        width: 55px;
+        height: 100%;
+        padding-right: 2px;
+        margin-right: 0;
+        #nav-toggle {
+            background-color: #FFFFFF;
+            color: $primary;
+            border-radius: 0;
+            border: 0;
+            width: inherit;
+            height: 55px;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar-nav {
+            width: inherit;
+            li {
+                display: block;
+                width: inherit;
+                a {
+                    display: block;
+                    width: inherit;
+                    text-align: center;
+                    color: $primary;
+                }
+            }
+        }
+    }
+}
