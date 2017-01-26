@@ -2,27 +2,33 @@
 @import "bootstrap.min.css";
 /* Colors */
 $primary: #932D24;
-$font-color: #FFFFFF;
+$secondary: #69931E;
 
 html {
     width: 100%;
     height: 100%;
     body {
         height: 100%;
-        background-color: $primary;
-        color: $font-color;
-        .ui-views {
+        background-color: #FFFFFF;
+        color: $primary;
+        #ui-nav {
             .navbar {
-                background-color: $primary;
-                color: $font-color;
+                float: left;
+                background-color: #FFFFFF;
+                color: $primary;
                 width: 55px;
                 height: 100%;
+                padding-right: 2px;
+                margin-right: 0;
                 #nav-toggle {
-                    background-color: $primary;
-                    color: $font-color;
+                    background-color: #FFFFFF;
+                    color: $primary;
                     border-radius: 0;
+                    border: 0;
                     width: inherit;
                     height: 55px;
+                    margin: 0;
+                    padding: 0;
                 }
                 .navbar-nav {
                     width: inherit;
@@ -33,12 +39,37 @@ html {
                             display: block;
                             width: inherit;
                             text-align: center;
-                            color: $font-color;
+                            color: $primary;
                         }
                     }
                 }
-                #content {
-                  color: $font-color;
+            }
+        }
+        #content {
+            float: left;
+            margin-left: 55px;
+            width: calc(100% - 55px);
+            .container-fluid {
+                .row {
+                    margin-bottom: 20px;
+                    #play-button {
+                        .btn {
+                            border-radius: 0;
+                            background-color: $primary;
+                            color: #FFFFFF;
+                        }
+                    }
+                    div {
+                        .thumbnail {
+                            border-radius: 0;
+                            border-color: $secondary;
+                            .caption {
+                                h3 {
+                                    text-align: center;
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }

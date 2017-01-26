@@ -1,11 +1,9 @@
 var toggleStatus = false;
 
 $(document).ready(function() {
+    // Read sass variables
     $('#nav-toggle').click(function() {
         if(!toggleStatus) {
-            /*$('.navbar').css({
-                'width': '150px'
-            });*/
             $( ".navbar" ).animate({
               width: '150px'
             }, 500, function() {
@@ -13,12 +11,11 @@ $(document).ready(function() {
             });
             $('.nav-hidden').removeClass('hidden');
 
-            $( "#content" ).animate({
-              'width': 'calc(100% - 150px)'
-            }, 500, function() {
-            // Animation complete.
+            $('#content').animate({
+                marginLeft: '+=95px',
+                width: '-=95px'
             });
-            toggleStatus = true;
+          toggleStatus = true;
         }
         else {
             $( ".navbar" ).animate({
@@ -28,7 +25,8 @@ $(document).ready(function() {
             });
             $('.nav-hidden').addClass('hidden');
             $( "#content" ).animate({
-              'width': 'calc(100% - 55px)'
+              marginLeft: '-=95px',
+              width: '+=95px'
             }, 500, function() {
             // Animation complete.
             });

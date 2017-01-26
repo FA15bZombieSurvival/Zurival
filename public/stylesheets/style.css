@@ -6,30 +6,49 @@ html {
   height: 100%; }
   html body {
     height: 100%;
-    background-color: #932D24;
-    color: #FFFFFF; }
-    html body .ui-views .navbar {
-      background-color: #932D24;
-      color: #FFFFFF;
+    background-color: #FFFFFF;
+    color: #932D24; }
+    html body #ui-nav .navbar {
+      float: left;
+      background-color: #FFFFFF;
+      color: #932D24;
       width: 55px;
-      height: 100%; }
-      html body .ui-views .navbar #nav-toggle {
-        background-color: #932D24;
-        color: #FFFFFF;
+      height: 100%;
+      padding-right: 2px;
+      margin-right: 0; }
+      html body #ui-nav .navbar #nav-toggle {
+        background-color: #FFFFFF;
+        color: #932D24;
         border-radius: 0;
+        border: 0;
         width: inherit;
-        height: 55px; }
-      html body .ui-views .navbar .navbar-nav {
+        height: 55px;
+        margin: 0;
+        padding: 0; }
+      html body #ui-nav .navbar .navbar-nav {
         width: inherit; }
-        html body .ui-views .navbar .navbar-nav li {
+        html body #ui-nav .navbar .navbar-nav li {
           display: block;
           width: inherit; }
-          html body .ui-views .navbar .navbar-nav li a {
+          html body #ui-nav .navbar .navbar-nav li a {
             display: block;
             width: inherit;
             text-align: center;
-            color: #FFFFFF; }
-      html body .ui-views .navbar #content {
-        color: #FFFFFF; }
+            color: #932D24; }
+    html body #content {
+      float: left;
+      margin-left: 55px;
+      width: calc(100% - 55px); }
+      html body #content .container-fluid .row {
+        margin-bottom: 20px; }
+        html body #content .container-fluid .row #play-button .btn {
+          border-radius: 0;
+          background-color: #932D24;
+          color: #FFFFFF; }
+        html body #content .container-fluid .row div .thumbnail {
+          border-radius: 0;
+          border-color: #69931E; }
+          html body #content .container-fluid .row div .thumbnail .caption h3 {
+            text-align: center; }
 
 /*# sourceMappingURL=style.css.map */
