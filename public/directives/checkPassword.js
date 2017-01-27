@@ -10,7 +10,7 @@ angular.module('Zurival')
                     if(/^(.)*([A-Z])(.)*$/.test(value)) ctrl.$setValidity('minBigChar', true);
                     else ctrl.$setValidity('minBigChar', false);
 
-                    ctrl.$setValidity('check', /^((?=.*[0-9])(?=.*[A-Z])([a-z0-9A-Z]*){6,20})$/.test(value));
+                    ctrl.$setValidity('check', /^((?=.*[0-9])(?=.*[A-Z])([a-z0-9A-Z]){6,20})$/.test(value));
                     return value;
                 }
 

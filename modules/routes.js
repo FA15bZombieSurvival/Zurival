@@ -29,21 +29,32 @@ module.exports = function(app){
         res.redirect('/#' + req.originalUrl);
     });
 
-    app.post('/api/login', passport.authenticate('login'), function(req, res, next) {
-        res.cookie('user', JSON.stringify(req.user));
-        res.send(req.user);
+    app.post('/api/login', function(req, res, next) {
+        passport.authenticate('login', function(err, user, info){
+            if (err) { return next(err); }
+            if (!user) {
+                console.log(info);
+                res.status(401);
+                return res.send(info);
+            }
+            req.logIn(user, function(err) {
+                if (err) { return next(err); }
+                res.cookie('user', JSON.stringify(req.user));
+                return res.send(user);
+            });
+        })(req, res, next);
     });
 
-    app.post('/api/signup', function(req, res, next) {
-        var user = new User({
+    app.post('/api/registration', function(req, res, next) {
+        /*var user = new User({
             username: req.body.username,
             email: req.body.email,
             password: req.body.password
         });
-        user.save(function(err) {
+        user.save(function(err) {*/
             if (err) return next(err);
             res.sendStatus(200);
-        });
+        //});
     });
 }
 

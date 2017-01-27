@@ -2,8 +2,8 @@
     angular.module("Zurival")
         .service("authentication", authentication);
 
-        authentication.$inject = ["$http", "$window"];
-        function authentication($http, $window) {
+        authentication.$inject = ["$http", "$window", "$q", "$rootScope"];
+        function authentication($http, $window, $q, $rootScope) {
 
             var saveToken = function(token){
                 $window.localStorage["mean-token"] = token;
@@ -49,14 +49,20 @@
             }
 
             var register = function(user) {
-                return $http.post("/register", user).success(function(data){
+                return $http.post("/api/registration", user)
+                .success(function(data){
                     saveToken(data.token);
                 });
             };
 
             var login = function(user) {
-                return $http.post("/api/login", user).success(function(data) {
+                return $http.post("/api/login", user)
+                .success(function(data) {
                     saveToken(data.token);
+                    $rootScope.loginInfo = null;
+                })
+                .error(function(data){
+                    $rootScope.loginInfo = data;
                 });
             };
 

@@ -15,6 +15,10 @@
                     </div>
 
                     <button type="submit" ng-disabled="loginForm.$invalid" class="btn btn-lg btn-block btn-success">Log In</button>
+                    <a ui-sref="root.registration">No account? Register here!</a>
+                    <div class="help-block text-danger" ng-if="loginInfo">
+                        <span class="help-block text-danger my-special-animation">{{loginInfo}}</span>
+                    </div>
                 </form>
             </div>
         </div>
