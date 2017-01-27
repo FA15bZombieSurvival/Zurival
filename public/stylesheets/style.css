@@ -50,6 +50,11 @@
       #content .container-fluid .row div .thumbnail .caption h3 {
         text-align: center; }
 
+#login-wrapper .row {
+  margin-top: calc((100% - 70.75px)/6); }
+  #login-wrapper .row div .panel .panel-body p {
+    text-align: center; }
+
 @font-face {
   font-family: "Helvetica";
   src: url("../fonts/Transformers Movie.ttf"); }
