@@ -1,4 +1,9 @@
-var app = angular.module("Zurival", ["ui.router"]);
+var app = angular.module("Zurival", [
+    "ui.router",
+    "Zurival.game",
+    "Zurival.game.lobby",
+    "Zurival.game.game"
+]);
 
 app.config([
     "$stateProvider",
@@ -38,13 +43,7 @@ app.config([
             }
         })
         .state("root.game", {
-            url: "/game",
-            views: {
-                "content@": {
-                    templateUrl: 'views/game.html',
-                    controller: "GameCtrl"
-                }
-            }
+            url: "/game"
         })
         .state("root.login", {
             url: "/login",
