@@ -6,19 +6,22 @@
 
                 <form method="post" ng-submit="login()" name="loginForm">
 
-                    <div class="form-group">
+                    <div class="form-group" ng-class="{ 'has-error' : userNotFound }">
                         <input class="form-control input-lg" type="text" name="email" ng-model="email" placeholder="Email/Username" required autofocus>
+                        <div class="help-block text-danger" ng-if="userNotFound">
+                            <span class="help-block text-danger my-special-animation">{{userNotFound}}</span>
+                        </div>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group" ng-class="{ 'has-error' : wrongPassword }">
                         <input class="form-control input-lg" type="password" name="password" ng-model="password" placeholder="Password" required>
+                        <div class="help-block text-danger" ng-if="wrongPassword">
+                            <span class="help-block text-danger my-special-animation">{{wrongPassword}}</span>
+                        </div>
                     </div>
 
                     <button type="submit" ng-disabled="loginForm.$invalid" class="btn btn-lg btn-block btn-success">Log In</button>
                     <a ui-sref="root.registration">No account? Register here!</a>
-                    <div class="help-block text-danger" ng-if="loginInfo">
-                        <span class="help-block text-danger my-special-animation">{{loginInfo}}</span>
-                    </div>
                 </form>
             </div>
         </div>

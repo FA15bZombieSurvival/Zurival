@@ -33,7 +33,6 @@ module.exports = function(app){
         passport.authenticate('login', function(err, user, info){
             if (err) { return next(err); }
             if (!user) {
-                console.log(info);
                 res.status(401);
                 return res.send(info);
             }
@@ -46,15 +45,15 @@ module.exports = function(app){
     });
 
     app.post('/api/registration', function(req, res, next) {
-        /*var user = new User({
+        var user = new User({
             username: req.body.username,
             email: req.body.email,
             password: req.body.password
         });
-        user.save(function(err) {*/
+        user.save(function(err) {
             if (err) return next(err);
             res.sendStatus(200);
-        //});
+        });
     });
 }
 

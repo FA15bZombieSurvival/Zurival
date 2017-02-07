@@ -55,14 +55,14 @@
                 });
             };
 
-            var login = function(user) {
+            var login = function(user, callback) {
                 return $http.post("/api/login", user)
                 .success(function(data) {
                     saveToken(data.token);
-                    $rootScope.loginInfo = null;
+                    callback(null);
                 })
                 .error(function(data){
-                    $rootScope.loginInfo = data;
+                    callback(data);
                 });
             };
 
