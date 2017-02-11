@@ -8,13 +8,6 @@
       <title>Zurival</title>
       <link rel="icon" type="image/png" href="./images/favicon.png"/>
       <link href="stylesheets/style.css" rel="stylesheet">
-      <style>
-        canvas {
-            border: 5px solid black;
-            width: 500px;
-            height: 300px;
-        }
-      </style>
 </head>
 <body>
     <div ui-view="navigation"></div>
@@ -33,6 +26,9 @@
     <script src="controllers/game/game.lobby.js"></script>
     <script src="controllers/game/game.game.js"></script>
     <!-- Phaser game files -->
+    <script src="game/states/Boot.js"></script>
+    <script src="game/states/Preload.js"></script>
+    <script src="game/states/Game.js"></script>
     <script src="game/main.js"></script>
 
     <!-- Controller -->
