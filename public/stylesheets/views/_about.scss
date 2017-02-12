@@ -1,0 +1,16 @@
+@import "../colors";
+
+#about {
+    .row {
+        #about-content {
+            .row {
+                div {
+                    .btn-lg {
+                        background-color: $bluegrey;
+                        color: #ffffff;
+                    }
+                }
+            }
+        }
+    }
+}

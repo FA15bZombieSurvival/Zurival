@@ -1,9 +1,28 @@
+@import "../colors";
+
 #login-wrapper {
     .row {
         margin-top: calc((100% - 70.75px)/6);
         div {
             .panel {
                 .panel-body {
+                    form {
+                        .form-group {
+                            input {
+                                border: none;
+                                border-radius: 0;
+                                &:focus {
+                                    border: 1px solid $primary;
+                                    box-shadow: none;
+                                }
+                            }
+                        }
+                        button {
+                            background-color: $primary;
+                            border-radius: 0;
+                            border: none;
+                        }
+                    }
                     p {
                         text-align: center;
                     }

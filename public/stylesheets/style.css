@@ -39,21 +39,46 @@
   #content .container-fluid .row {
     margin-bottom: 20px; }
     #content .container-fluid .row #play-button .btn {
-      font-family: "Helvetica";
-      font: url("../fonts/Transformers Movie.ttf");
       border-radius: 0;
       background-color: #932D24;
       color: #FFFFFF; }
+@font-face {
+  #content .container-fluid .row #play-button .btn {
+    font-family: "Helvetica";
+    src: url("../fonts/Transformers Movie.ttf"); } }
+@font-family-base {
+  #content .container-fluid .row #play-button .btn {
+    font-family: "Helvetica";
+    src: url("../fonts/Transformers Movie.ttf"); } }
     #content .container-fluid .row div .thumbnail {
       border-radius: 0;
-      border-color: #69931E; }
-      #content .container-fluid .row div .thumbnail .caption h3 {
+      border: none; }
+      #content .container-fluid .row div .thumbnail .caption {
+        padding: 0;
+        display: block;
+        height: 46px;
+        color: #FFFFFF;
+        background-color: #17525A;
         text-align: center; }
 
 #login-wrapper .row {
   margin-top: calc((100% - 70.75px)/6); }
+  #login-wrapper .row div .panel .panel-body form .form-group input {
+    border: none;
+    border-radius: 0; }
+    #login-wrapper .row div .panel .panel-body form .form-group input:focus {
+      border: 1px solid #932D24;
+      box-shadow: none; }
+  #login-wrapper .row div .panel .panel-body form button {
+    background-color: #932D24;
+    border-radius: 0;
+    border: none; }
   #login-wrapper .row div .panel .panel-body p {
     text-align: center; }
+
+#about .row #about-content .row div .btn-lg {
+  background-color: #17525A;
+  color: #ffffff; }
 
 @font-face {
   font-family: "Helvetica";
