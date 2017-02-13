@@ -1,42 +1,45 @@
 <!DOCTYPE html>
 <html ng-app="Zurival">
-<head>
-      <!--base href="/"-->
-      <meta charset="utf-8">
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <title>Zurival</title>
-      <link rel="icon" type="image/png" href="./images/favicon.png"/>
-      <link href="stylesheets/style.css" rel="stylesheet">
-</head>
-<body>
-    <div ui-view="navigation"></div>
-    <div ui-view="content"></div>
+  <head>
+        <!--base href="/"-->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Zurival</title>
+        <link rel="icon" type="image/png" href="./images/favicon.png"/>
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <link href="stylesheets/style.css" rel="stylesheet">
+  </head>
+  <body>
+      <div ui-view="navigation" id="ui-nav"></div>
+      <div ui-view="content" class="ui-views" id="content"></div>
+      <!-- jQuery & Bootstrap -->
+      <script src="scripts/jquery.min.js"></script>
+      <scripts src="scripts/bootstrap.min.js"></script>
+      <!-- Angular -->
+      <script src="vendor/angular.js"></script>
+      <script src="vendor/angular-animate.min.js"></script>
+      <script src="vendor/angular-strap.min.js"></script>
+      <script src="vendor/angular-touch.min.js"></script>
+      <script src="vendor/angular-ui-router.min.js"></script>
+      <script src="vendor/phaser.min.js"></script>
+      <script src="app.js"></script>
 
-    <script src="vendor/angular.js"></script>
-    <script src="vendor/angular-animate.min.js"></script>
-    <script src="vendor/angular-strap.min.js"></script>
-    <script src="vendor/angular-touch.min.js"></script>
-    <script src="vendor/angular-ui-router.min.js"></script>
-    <script src="vendor/phaser.min.js"></script>
-    <script src="app.js"></script>
-
-    <!-- Angular game files -->
-    <script src="controllers/game/game.js"></script>
-    <script src="controllers/game/game.lobby.js"></script>
-    <script src="controllers/game/game.game.js"></script>
-    <!-- Phaser game files -->
-    <script src="game/states/Boot.js"></script>
-    <script src="game/states/Preload.js"></script>
-    <script src="game/states/Game.js"></script>
-    <script src="game/main.js"></script>
-
-    <!-- Controller -->
-    <script src="controllers/home.js"></script>
-    <script src="controllers/navigation.js"></script>
-
-    <!-- Directives -->
-    <script src="directives/gameWorld.js"></script>
-
-</body>
+      <!-- Angular game files -->
+      <script src="controllers/game/game.js"></script>
+      <script src="controllers/game/game.lobby.js"></script>
+      <script src="controllers/game/game.game.js"></script>
+      <!-- Phaser game files -->
+      <script src="game/states/Boot.js"></script>
+      <script src="game/states/Preload.js"></script>
+      <script src="game/states/Game.js"></script>
+      <script src="game/main.js"></script>
+      <!-- Controller -->
+      <script src="controllers/home.js"></script>
+      <script src="controllers/navigation.js"></script>
+      <!-- Directives -->
+      <script src="directives/gameWorld.js"></script>
+      <!-- Scripts -->
+      <script src="scripts/mobile-detector.js"></script>
+  </body>
 </html>

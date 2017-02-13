@@ -22,6 +22,7 @@ app.use(cookieParser());
 app.use(session({ secret: 'keyboard cat' }));
 app.use(passport.initialize());
 app.use(passport.session());
+
 app.use(express.static('public'));
 // maxAge for caching in server (default: 86400000)
 app.use(express.static(path.join(__dirname, '/public/game'), { maxAge: 0 }));
