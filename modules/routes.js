@@ -51,7 +51,14 @@ module.exports = function(app){
             password: req.body.password
         });
         user.save(function(err) {
-            if (err) return next(err);
+            if (err){
+                if(err.toJSON().errmsg.indexOf("email") >= 0 && err.toJSON().errmsg.indexOf("dup key") >= 0)
+                    return next("Err:Email");
+                else if(err.toJSON().errmsg.indexOf("username") >= 0 && err.toJSON().errmsg.indexOf("dup key") >= 0)
+                    return next("Err:User");
+                else
+                    return next(err);
+            }
             res.sendStatus(200);
         });
     });

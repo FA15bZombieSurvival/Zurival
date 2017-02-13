@@ -1,5 +1,5 @@
 angular.module('Zurival')
-    .controller('LoginCtrl', ['$scope', 'authentication', function($scope, authentication) {
+    .controller('LoginCtrl', ['$scope', '$location', 'authentication', function($scope, $location, authentication) {
         $scope.title = 'Login';
 
         $scope.login = function() {
@@ -13,7 +13,7 @@ angular.module('Zurival')
                     if(err.indexOf("Err:Password") !== -1)
                         $scope.wrongPassword = "Wrong password";
                 }else{
-
+                    $location.path("/home");
                 }
             });
         };

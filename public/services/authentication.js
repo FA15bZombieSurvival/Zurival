@@ -48,10 +48,14 @@
                 }
             }
 
-            var register = function(user) {
+            var register = function(user, callback) {
                 return $http.post("/api/registration", user)
                 .success(function(data){
                     saveToken(data.token);
+                    callback(null);
+                })
+                .error(function(data){
+                    callback(data);
                 });
             };
 
