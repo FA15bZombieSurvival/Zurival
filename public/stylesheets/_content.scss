@@ -9,6 +9,13 @@
     .container-fluid {
         .row {
             margin-bottom: 20px;
+            #logo-container {
+                h1 {
+                    span {
+                        color: $primary;
+                    }
+                }
+            }
             #play-button {
                 .btn {
                     @font-face {

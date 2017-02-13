@@ -38,6 +38,8 @@
   height: 100%; }
   #content .container-fluid .row {
     margin-bottom: 20px; }
+    #content .container-fluid .row #logo-container h1 span {
+      color: #932D24; }
     #content .container-fluid .row #play-button .btn {
       border-radius: 0;
       background-color: #932D24;
@@ -76,9 +78,28 @@
   #login-wrapper .row div .panel .panel-body p {
     text-align: center; }
 
-#about .row #about-content .row div .btn-lg {
-  background-color: #17525A;
-  color: #ffffff; }
+#registration-wrapper .row {
+  margin-top: calc((100% - 70.75px)/6); }
+  #registration-wrapper .row div .panel form .form-group input {
+    border: none;
+    border-radius: 0; }
+    #registration-wrapper .row div .panel form .form-group input:focus {
+      border: 1px solid #932D24;
+      box-shadow: none; }
+  #registration-wrapper .row div .panel form button {
+    background-color: #932D24;
+    border-radius: 0;
+    border: none; }
+  #registration-wrapper .row div .panel p {
+    text-align: center; }
+
+#about .row #about-content .row div a {
+  color: #17525A;
+  text-align: center;
+  display: block;
+  width: auto;
+  height: auto;
+  margin: 0; }
 
 @font-face {
   font-family: "Helvetica";

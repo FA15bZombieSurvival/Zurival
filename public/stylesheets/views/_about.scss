@@ -5,9 +5,13 @@
         #about-content {
             .row {
                 div {
-                    .btn-lg {
-                        background-color: $bluegrey;
-                        color: #ffffff;
+                    a {
+                        color: $bluegrey;
+                        text-align: center;
+                        display: block;
+                        width: auto;
+                        height: auto;
+                        margin: 0;
                     }
                 }
             }

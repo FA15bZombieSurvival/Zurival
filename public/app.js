@@ -42,7 +42,7 @@ app.config([
             views: {
                 "content@": {
                     templateUrl: 'views/login.html',
-                    controller: "LoginCtrl"
+                    //controller: "LoginCtrl"
                 }
             }
         })
@@ -50,7 +50,7 @@ app.config([
             url: "/registration",
             views: {
                 "content@": {
-                    templateUrl: 'views/signup.html',
+                    templateUrl: 'views/registration.html',
                     controller: "RegistrationCtrl"
                 }
             }
