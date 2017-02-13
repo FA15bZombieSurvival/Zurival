@@ -15,5 +15,5 @@ window.createGame = function(scope, element, players, enemies, mapId, injector) 
     scope.$on('$destroy', function() {
         console.log("Game gets cleaned up.");
         game.destroy();
-    })
+    });
 };
