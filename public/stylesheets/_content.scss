@@ -1,0 +1,52 @@
+@import "colors";
+
+#content {
+    float: left;
+    margin-left: 55px;
+    width: calc(100% - 55px);
+    border-left: 1px solid $primary;
+    height: 100%;
+    .container-fluid {
+        .row {
+            margin-bottom: 20px;
+            #logo-container {
+                h1 {
+                    span {
+                        color: $primary;
+                    }
+                }
+            }
+            #play-button {
+                .btn {
+                    @font-face {
+                        font-family: "Helvetica";
+                        src: url("../fonts/Transformers\ Movie.ttf");
+                    }
+                    @font-family-base {
+                        font-family: "Helvetica";
+                        src: url("../fonts/Transformers\ Movie.ttf");
+                    }
+                    border-radius: 0;
+                    background-color: $primary;
+                    color: #FFFFFF;
+                }
+            }
+            div {
+                .thumbnail {
+                    border-radius: 0;
+                    border: none;
+                    .caption {
+                        padding: 0;
+                        display: block;
+                        height: 46px;
+                        color: #FFFFFF;
+                        background-color: $bluegrey;
+                        text-align: center;
+                        h3 {
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
