@@ -6,7 +6,8 @@ var mongoose = require('mongoose'),
     cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
     session = require('express-session'),
-
+    socket = require('socket.io'),
+    http = require('http');
     compress = require('compression');
 
 var app = express()
@@ -21,9 +22,15 @@ app.use(cookieParser());
 app.use(session({ secret: 'keyboard cat' }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(express.static(path.join(__dirname, 'public'), { maxAge: 0 }));
 
-app.listen(app.get('port'), function() {
+app.use(express.static('public'));
+// maxAge for caching in server (default: 86400000)
+app.use(express.static(path.join(__dirname, '/public/game'), { maxAge: 0 }));
+
+var server = http.createServer(app);
+var io = socket.listen(server);
+
+server.listen(app.get('port'), function() {
   console.log('Express server listening on port ' + app.get('port'));
 });
 
