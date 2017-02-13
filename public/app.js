@@ -51,7 +51,7 @@ app.config([
             views: {
                 "content@": {
                     templateUrl: 'views/login.html',
-                    controller: "LoginCtrl"
+                    //controller: "LoginCtrl"
                 }
             }
         })

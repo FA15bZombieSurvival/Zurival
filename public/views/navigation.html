@@ -1,4 +1,28 @@
+<!-- Navigation (Bootstrap Navbar) -->
 <nav class="navbar navbar-inverse navbar-fixed-top" ng-Controller="NavigationCtrl">
+<<<<<<< HEAD
+    <button class="btn btn-lg" id="nav-toggle">
+        <span class="glyphicon glyphicon-menu-hamburger"></span>
+    </button>
+    <ul class="nav navbar-nav">
+        <li>
+            <a ui-sref=".">
+                <span class="fa fa-play"></span>
+                <span class="hidden nav-hidden"> Home</span>
+            </a>
+        </li>
+        <li>
+            <a ui-sref=".login">
+                <span class="fa fa-user"></span>
+                <span class="hidden nav-hidden"> Login</span>
+            </a>
+            <a ui-sref=".about">
+                <span class="fa fa-question"></span>
+                <span class="hidden nav-hidden"> About</span>
+            </a>
+        </li>
+    </ul>
+=======
     <button  class="btn btn-lg" id="nav-toggle"><span class="glyphicon glyphicon-align-justify"></span></button>
         <!--div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -17,4 +41,7 @@
                 <li><a ui-sref=".registration">Registrations</a></li>
             </ul>
         </div>
+>>>>>>> origin/master
 </nav>
+<!-- Include navigation toggler -->
+<script src="../scripts/navigation-toggle.js"></script>
