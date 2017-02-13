@@ -1,7 +1,4 @@
 node_modules
 data/db
-<<<<<<< HEAD
-=======
 bower_components
 .tern-project
->>>>>>> origin/master

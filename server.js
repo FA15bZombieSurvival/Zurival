@@ -34,6 +34,6 @@ server.listen(app.get('port'), function() {
   console.log('Express server listening on port ' + app.get('port'));
 });
 
-//var routes = require('./modules/routes.js')(app);
+var routes = require('./modules/routes.js')(app);
 
 mongoose.connect('mongodb://localhost:27017/zurival');
