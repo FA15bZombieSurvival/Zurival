@@ -1,12 +1,10 @@
-module.exports = (function(app, io) {
+const socketio = require('socket.io');
+const UUID = require('UUID');
 
-    var gameData = {
-        io: io,
-        players: [],
-        maps: {}
-    };
+module.exports.invoke = function(server) {
+    var io = socketio.listen(server);
 
-    gameData.io.sockets.on('connection', function onConnection(client){
+    io.sockets.on('connection', function onConnection(client){
         client.userid = UUID();
         client.emit("connected", { id: client.userid } );
         console.log('player ' + client.userid + ' connected ');
@@ -15,4 +13,4 @@ module.exports = (function(app, io) {
             console.log('client disconnected ' + client.userid );
         });
     });
-});
+};

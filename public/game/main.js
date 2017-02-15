@@ -1,4 +1,4 @@
-window.createGame = function(scope, element, players, enemies, mapId, injector) {
+window.createGame = function(scope, element, injector) {
 
     // Build game object
     //TODO: Change width and height dynamically
@@ -12,8 +12,7 @@ window.createGame = function(scope, element, players, enemies, mapId, injector) 
 
     game.state.start('Boot');
 
-    scope.$on('$destroy', function() {
-        console.log("Game gets cleaned up.");
-        game.destroy();
-    });
+    var socket = io();
+
+    socket.emit('connection');
 };
