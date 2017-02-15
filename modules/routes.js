@@ -3,8 +3,7 @@ var async = require('async'),
     xml2js = require('xml2js'),
     _ = require('lodash'),
     passport = require('./passport.js'),
-    agenda = require('./agenda.js'),
-    Show = require('../models/show.js');
+    agenda = require('./agenda.js');
 
 module.exports = function(app){
 
