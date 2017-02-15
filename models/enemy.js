@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 
 var enemySchema = new mongoose.Schema({
+    _id: Number,
     name: { type: String, unique: true, required: true },
     description: String,
     hp: Number,
@@ -8,15 +9,6 @@ var enemySchema = new mongoose.Schema({
     defence: Number,
     type: String
 });
-
-enemySchema.methods.add = function(data, callback){
-    if("name" in data){
-        this.save(function(err){
-            if(err) return callback(err)
-            else return callback(null);
-        });
-    }else return callback("Name is required");
-}
 
 enemySchema.methods.update = function(name, data, callback){
     this.findOne({ name: name }, function(err, enemy){

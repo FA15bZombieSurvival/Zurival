@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 
 var characterSchema = new mongoose.Schema({
+    _id: Number,
     id: { type: String, unique: true, required: true },
     name: String,
     userID: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
@@ -27,27 +28,18 @@ var characterSchema = new mongoose.Schema({
     created: { type: Date, default: Date.now }
 });
 
-characterSchema.methods.add = function(data, callback){
-    if("id" in data){
-        this.save(function(err){
-            if(err) return callback(err)
-            else return callback(null);
-        });
-    }else return callback("ID is required");
-}
-
 characterSchema.methods.update = function(id, data, callback){
     this.findOne({ id: id }, function(err, character){
         if(err) return callback(err);
         if(character){
-            updateCharacter(character, err);
+            updateCharacter(character, data, err);
             if(err) return callback(err);
             else return callback(null);
         }else{
             this.findById(id, function(err, character){
                 if(err) return callback(err);
                 if(character){
-                    updateCharacter(character, err);
+                    updateCharacter(character, data, err);
                     if(err) return callback(err);
                     else return callback(null);
                 }
@@ -80,7 +72,7 @@ characterSchema.methods.delete = function(name, callback){
     });
 }
 
-function updateCharacter(character, callback){
+function updateCharacter(character, data, callback){
     if("id" in data) character.id = data.id;
     if("name" in data) character.name = data.name;
     if("userID" in data) character.userID = data.userID;
