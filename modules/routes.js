@@ -39,7 +39,9 @@ module.exports = function(app){
             req.logIn(user, function(err) {
                 if (err) { return next(err); }
                 res.cookie('user', JSON.stringify(req.user));
-                return res.send(user);
+                token = user.generateJwt();
+                res.status(200);
+                res.json({"token": token});
             });
         })(req, res, next);
     });
@@ -59,7 +61,10 @@ module.exports = function(app){
                 else
                     return next(err);
             }
-            res.sendStatus(200);
+            var token;
+            token = user.generateJwt();
+            res.status(200);
+            res.json({"token": token});
         });
     });
 }
