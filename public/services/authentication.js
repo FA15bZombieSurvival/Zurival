@@ -22,7 +22,7 @@
                 var token = getToken();
                 var payload;
 
-                if(token && !== 'undefined'){
+                if(token && token !== 'undefined'){
                     payload = token.split(".")[1];
                     payload = $window.atob(payload);
                     payload = JSON.parse(payload);
