@@ -2,9 +2,8 @@ var async = require('async'),
     request = require('request'),
     xml2js = require('xml2js'),
     _ = require('lodash'),
-    passport = require('./passport.js'),
-    agenda = require('./agenda.js'),
-    Map = require('../models/map.js');
+    Map = require('../models/map.js'),
+    passport = require('./passport.js');
 
 module.exports = function(app, worlds, callback){
 
@@ -43,7 +42,9 @@ module.exports = function(app, worlds, callback){
             req.logIn(user, function(err) {
                 if (err) { return next(err); }
                 res.cookie('user', JSON.stringify(req.user));
-                return res.send(user);
+                token = user.generateJwt();
+                res.status(200);
+                res.json({"token": token});
             });
         })(req, res, next);
     });
@@ -63,7 +64,10 @@ module.exports = function(app, worlds, callback){
                 else
                     return next(err);
             }
-            res.sendStatus(200);
+            var token;
+            token = user.generateJwt();
+            res.status(200);
+            res.json({"token": token});
         });
     });
 
