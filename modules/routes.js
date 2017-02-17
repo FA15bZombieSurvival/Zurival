@@ -2,9 +2,7 @@ var async = require('async'),
     request = require('request'),
     xml2js = require('xml2js'),
     _ = require('lodash'),
-    passport = require('./passport.js'),
-    agenda = require('./agenda.js'),
-    Show = require('../models/show.js');
+    passport = require('./passport.js');
 
 module.exports = function(app){
 
@@ -39,7 +37,9 @@ module.exports = function(app){
             req.logIn(user, function(err) {
                 if (err) { return next(err); }
                 res.cookie('user', JSON.stringify(req.user));
-                return res.send(user);
+                token = user.generateJwt();
+                res.status(200);
+                res.json({"token": token});
             });
         })(req, res, next);
     });
@@ -59,7 +59,10 @@ module.exports = function(app){
                 else
                     return next(err);
             }
-            res.sendStatus(200);
+            var token;
+            token = user.generateJwt();
+            res.status(200);
+            res.json({"token": token});
         });
     });
 }
