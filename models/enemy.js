@@ -2,11 +2,12 @@ var mongoose = require('mongoose');
 
 var enemySchema = new mongoose.Schema({
     _id: Number,
+    sprite: Number,
     name: { type: String, unique: true, required: true },
     description: String,
     hp: Number,
     damage: Number,
-    defence: Number,
+    armor: Number,
     type: String
 });
 
@@ -55,11 +56,12 @@ enemySchema.methods.delete = function(name, callback){
 }
 
 function updateEnemy(enemy, callback){
+    if("sprite" in data) enemy.sprite = data.sprite;
     if("name" in data) enemy.name = data.name;
     if("description" in data) enemy.description = data.description;
     if("hp" in data) enemy.hp = data.hp;
     if("damage" in data) enemy.damage = data.damage;
-    if("defence" in data) enemy.defence = data.defence;
+    if("armor" in data) enemy.armor = data.armor;
     if("type" in data) enemy.type = data.type;
     enemy.save(function(err){
         if(err) return callback(err)

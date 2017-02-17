@@ -2,7 +2,6 @@ var mongoose = require('mongoose');
 
 var characterSchema = new mongoose.Schema({
     _id: Number,
-    id: { type: String, unique: true, required: true },
     name: String,
     userID: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     inventarID: { type: mongoose.Schema.Types.ObjectId, ref: 'Inventar' },
@@ -28,52 +27,30 @@ var characterSchema = new mongoose.Schema({
     created: { type: Date, default: Date.now }
 });
 
-characterSchema.methods.update = function(id, data, callback){
-    this.findOne({ id: id }, function(err, character){
+characterSchema.methods.update = function(_id, data, callback){
+    this.findById(_id, function(err, character){
         if(err) return callback(err);
         if(character){
             updateCharacter(character, data, err);
             if(err) return callback(err);
             else return callback(null);
-        }else{
-            this.findById(id, function(err, character){
-                if(err) return callback(err);
-                if(character){
-                    updateCharacter(character, data, err);
-                    if(err) return callback(err);
-                    else return callback(null);
-                }
-            });
-        }
-    }
-}
-
-characterSchema.methods.delete = function(name, callback){
-    this.findOne({name: name}, function(err, character){
-        if(err) return callback(err);
-        if(!character){
-            this.findById(name, function(err, character){
-                if(err) return callback(err);
-                if(character)
-                    character.remove(function(err){
-                        return callback(err);
-                    });
-                else
-                    return callback("Could not be removed");
-            });
-        }else{
-            if(character)
-                character.remove(function(err){
-                    return callback(err);
-                });
-            else
-                return callback("Could not be removed");
         }
     });
 }
 
+characterSchema.methods.delete = function(name, callback){
+    this.findById(name, function(err, character){
+        if(err) return callback(err);
+        if(character)
+            character.remove(function(err){
+                return callback(err);
+            });
+        else
+            return callback("Could not be removed");
+    });
+}
+
 function updateCharacter(character, data, callback){
-    if("id" in data) character.id = data.id;
     if("name" in data) character.name = data.name;
     if("userID" in data) character.userID = data.userID;
     if("inventarID" in data) character.inventarID = data.inventarID;

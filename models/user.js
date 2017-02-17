@@ -55,7 +55,7 @@ userSchema.methods.update = function(name, data, callback) {
 function updateUser(user, data, callback){
     if("gold" in data) user.gold = data.gold;
     user.save(function(err){
-        if(err) return callback("Err:CantUpdateUser")
+        if(err) return callback("Err:CantUpdateUser");
         else return callback(null);
     });
 }
