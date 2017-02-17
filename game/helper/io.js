@@ -4,6 +4,7 @@ const UUID = require('UUID');
 module.exports.invoke = function(server) {
     var io = socketio.listen(server);
 
+    // Player connects into the game
     io.sockets.on('connection', function onConnection(client){
         client.userid = UUID();
         client.emit("connected", { id: client.userid } );
@@ -13,4 +14,6 @@ module.exports.invoke = function(server) {
             console.log('client disconnected ' + client.userid );
         });
     });
+
+
 };
