@@ -13,12 +13,12 @@
     <body>
         <div ui-view="navigation" id="ui-nav"></div>
         <div ui-view="content" class="ui-views" id="content"></div>
-        
-        <!-- Socket.io -->
-        <script src="/socket.io/socket.io.js"></script>
+
         <!-- jQuery & Bootstrap -->
         <script src="scripts/jquery.min.js"></script>
         <scripts src="scripts/bootstrap.min.js"></script>
+        <!-- Socket.io -->
+        <script src="/socket.io/socket.io.js"></script>
         <!-- Angular -->
         <script src="vendor/angular.js"></script>
         <script src="vendor/angular-animate.min.js"></script>
@@ -32,7 +32,6 @@
         <script src="controllers/game/game.lobby.js"></script>
         <script src="controllers/game/game.game.js"></script>
         <!-- Phaser game files -->
-        <script src="game/helper/io.js"></script>
         <script src="game/states/Boot.js"></script>
         <script src="game/states/Preload.js"></script>
         <script src="game/states/Game.js"></script>
@@ -50,7 +49,6 @@
         <script src="directives/checkUsername.js"></script>
         <!-- Services -->
         <script src="services/authentication.js"></script>
-        <script src="services/socketio.js"></script>
         <!-- Scripts -->
         <script src="scripts/mobile-detector.js"></script>
     </body>

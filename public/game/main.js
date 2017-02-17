@@ -10,9 +10,5 @@ window.createGame = function(scope, element, injector) {
     game.state.add('Preload', Preload);
     game.state.add('Game', Game);
 
-    game.state.start('Boot');
-
-    var socket = io();
-
-    socket.emit('connection');
+    game.state.start('Boot'); 
 };

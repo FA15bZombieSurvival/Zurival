@@ -4,9 +4,9 @@ var async = require('async'),
     _ = require('lodash'),
     passport = require('./passport.js'),
     agenda = require('./agenda.js'),
-    Show = require('../models/show.js');
+    Map = require('../models/map.js');
 
-module.exports = function(app){
+module.exports = function(app, worlds, callback){
 
     app.use(function(err, req, res, next) {
         console.error(err.stack);
@@ -23,6 +23,10 @@ module.exports = function(app){
             res.cookie('user', JSON.stringify(req.user));
         }
         next();
+    });
+
+    app.get('/game/lobby', function(req, res){
+        res.json({ worlds: worlds });
     });
 
     app.get('*', function(req, res) {
@@ -60,6 +64,24 @@ module.exports = function(app){
                     return next(err);
             }
             res.sendStatus(200);
+        });
+    });
+
+    app.post('/api/generateWorld', function(req, res){
+        var id = req.body._id;
+        Map.findById(id, function(err, map){
+            if(err){ return res.status(401).send(err + '\nErr:CantCreateWorld') }
+            if(map){
+                //null for possible error responses
+                callback(null, {
+                    name: "generatedWorld",
+                    value: map
+                });
+                res.status(200).send(map);
+            }
+            else {
+                res.status(401).send("Couldn\'t find a map");
+            }
         });
     });
 }

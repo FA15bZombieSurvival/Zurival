@@ -1,3 +1,10 @@
+// Private
+var mapId,
+    name,
+    maxPlayers,
+    survivingTime,
+    enemyTypes;
+
 // Time object for applying delta to movements
 let time = {
     delta_start : new Date().getTime(),
@@ -6,29 +13,23 @@ let time = {
 };
 time.delta = new Date().getTime() - time.delta_end;
 
-// Create map with given number of tiles
-var worldInTilesWidth = 100,
-    worldInTilesHeight = 100,
-    tileSize = 64;
+//private functions are written like this
+function dummy(dummyValue1) {
+  return dummyValue1 - 0.1;
+}
 
-// World coordinates in pixels
-const WORLD_PIXEL_WIDTH = worldInPixelWidth * tileSize;
-const WORLD_PIXEL_HEIGHT = worldInPixelHeight * tileSize;
-console.log(WORLD_PIXEL_HEIGHT + ' / ' + WORLD_PIXEL_WIDTH);
+// Public
+module.exports = World;
 
-// Imports
-let Enemy = require("./entities/enemy.js");
-let Player = require("./entities/player.js");
+function World(data) {
+    this.mapId = data._id;
+    this.name = data.name;
+    this.maxPlayers = data.maxPlayers;
+    this.survivingTime = data.survivingTime;
+    this.enemyTypes = data.enemyTypes;
+}
 
-// Array for different objects
-let enemys = [
-    new Enemy(10, 10, "#FF0000"),
-    new Enemy(130, 30, "#00FF00")
-];
-let players = [];
-
-// Updates all entities
-function update(delta){
+World.prototype.update = function(delta){
     // Update enemies
     for (var i = 0; i < enemys.length; i++) {
         enemys[i].update(delta);
@@ -40,6 +41,19 @@ function update(delta){
     }
 }
 
+World.prototype.generate = function(){
+
+    // Create map with given number of tiles
+    var worldInTilesWidth = 100,
+        worldInTilesHeight = 100,
+        tileSize = 64;
+
+    // World coordinates in pixels
+    const WORLD_PIXEL_WIDTH = worldInTilesWidth * tileSize;
+    const WORLD_PIXEL_HEIGHT = worldInTilesHeight * tileSize;
+    console.log(WORLD_PIXEL_HEIGHT + ' / ' + WORLD_PIXEL_WIDTH);
+}
+
 // Game servers loop that calculates the delta time and saves it in a json object
 setInterval(function(){
     time.delta_start = new Date().getTime() - time.delta_end;
@@ -47,5 +61,18 @@ setInterval(function(){
 
     time.delta_end = new Date().getTime();
 
-    update(time.delta);
+    //update(time.delta);
 }, 4);
+
+/*
+// Imports
+let Enemy = require("./entities/enemy.js");
+let Player = require("./entities/player.js");
+
+// Array for different objects
+let enemys = [
+    new Enemy(10, 10, "#FF0000"),
+    new Enemy(130, 30, "#00FF00")
+];
+let players = [];
+*/
