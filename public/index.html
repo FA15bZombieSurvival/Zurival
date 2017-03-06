@@ -13,9 +13,12 @@
     <body>
         <div ui-view="navigation" id="ui-nav"></div>
         <div ui-view="content" class="ui-views" id="content"></div>
+
         <!-- jQuery & Bootstrap -->
         <script src="scripts/jquery.min.js"></script>
         <scripts src="scripts/bootstrap.min.js"></script>
+        <!-- Socket.io -->
+        <script src="/socket.io/socket.io.js"></script>
         <!-- Angular -->
         <script src="vendor/angular.js"></script>
         <script src="vendor/angular-animate.min.js"></script>
@@ -47,6 +50,7 @@
         <!-- Services -->
         <script src="services/authentication.js"></script>
         <!-- Scripts -->
+        <script src="/socket.io/socket.io.js"></script>
         <script src="scripts/mobile-detector.js"></script>
     </body>
 </html>

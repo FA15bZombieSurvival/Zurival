@@ -6,16 +6,16 @@ var mongoose = require('mongoose'),
     cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
     session = require('express-session'),
-    socket = require('socket.io'),
     http = require('http');
-    compress = require('compression');
+    compress = require('compression'),
+    World = require('./game/World');
 
 var app = express()
     passport = require('./modules/passport.js');
 
 app.set('port', process.env.PORT || 3000);
 app.use(compress())
-app.use(logger('dev'));
+//app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
@@ -28,12 +28,27 @@ app.use(express.static('public'));
 app.use(express.static(path.join(__dirname, '/public/game'), { maxAge: 0 }));
 
 var server = http.createServer(app);
-var io = socket.listen(server);
+
+//Array for all worlds
+var worlds = [];
+
+// Any socket.io related functions are at game/helper/io.js
+var io = require('./game/helper/io.js').invoke(server);
 
 server.listen(app.get('port'), function() {
   console.log('Express server listening on port ' + app.get('port'));
 });
 
-var routes = require('./modules/routes.js')(app);
+var routes = require('./modules/routes.js')(app, worlds, function(err, data){
+    if(err){ console.log("Err: " + err); }
+    switch(data.name){
+        case 'generatedWorld':
+            var w = new World(data.value);
+            w.generate();
+            worlds.push(w);
+            break;
+        default: break;
+    }
+});
 
 mongoose.connect('mongodb://localhost:27017/zurival');

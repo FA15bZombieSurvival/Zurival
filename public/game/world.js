@@ -1,3 +1,5 @@
+var socket = io();
+
 // Time object for applying delta to movements
 let time = {
     delta_start : new Date().getTime(),
@@ -21,10 +23,7 @@ let Enemy = require("./entities/enemy.js");
 let Player = require("./entities/player.js");
 
 // Array for different objects
-let enemys = [
-    new Enemy(10, 10, "#FF0000"),
-    new Enemy(130, 30, "#00FF00")
-];
+let enemys = [];
 let players = [];
 
 // Updates all entities
@@ -49,3 +48,11 @@ setInterval(function(){
 
     update(time.delta);
 }, 4);
+
+socket.on('addEnemys', function (data) {
+    data.forEach(addEnemy);
+});
+
+function addEnemy(element, index, array){
+    enemys.push(new Enemy(element));
+}
