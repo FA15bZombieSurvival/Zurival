@@ -17,13 +17,25 @@
             </a>
         </li>
         <li>
-            <a ui-sref=".login">
+            <!-- a ui-sref=".login">
                 <span class="fa fa-user"></span>
                 <span class="hidden nav-hidden"> Login</span>
+            </a -->
+            <a ui-sref=".login">
+                <span class="fa fa-user"></span>
+                <span class="hidden nav-hidden"> Profile</span>
             </a>
             <a ui-sref=".about">
                 <span class="fa fa-question"></span>
                 <span class="hidden nav-hidden"> About</span>
+            </a>
+        </li>
+    </ul>
+    <ul ng-if="isLoggedIn">
+        <li>
+            <a ui-sref=".profile">
+                <span class="fa fa-user"></span>
+                <span class="hidden nav-hidden"> Profile</span>
             </a>
         </li>
     </ul>

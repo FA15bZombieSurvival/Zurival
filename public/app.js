@@ -62,6 +62,15 @@ app.config([
                     controller: "RegistrationCtrl"
                 }
             }
+        })
+        .state("root.profile", {
+            url: "/profile",
+            views: {
+                "content@": {
+                    templateUrl: 'views/profile.html',
+                    controller: "ProfileCtrl"
+                }
+            }
         });
 
         $urlRouterProvider.otherwise("home");

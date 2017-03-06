@@ -1,6 +1,7 @@
 var toggleStatus = false;
 
 $(document).ready(function() {
+
     // Read sass variables
     $('#nav-toggle').click(function() {
         if(!toggleStatus) {
