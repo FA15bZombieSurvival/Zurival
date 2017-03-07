@@ -16,28 +16,25 @@
                 <span class="hidden nav-hidden"> Game</span>
             </a>
         </li>
-        <li>
-            <!-- a ui-sref=".login">
-                <span class="fa fa-user"></span>
-                <span class="hidden nav-hidden"> Login</span>
-            </a -->
+        <li ng-show="!authentication.isLoggedIn()">
             <a ui-sref=".login">
                 <span class="fa fa-user"></span>
-                <span class="hidden nav-hidden"> Profile</span>
-            </a>
-            <a ui-sref=".about">
-                <span class="fa fa-question"></span>
-                <span class="hidden nav-hidden"> About</span>
+                <span class="hidden nav-hidden"> Login</span>
             </a>
         </li>
-    </ul>
-    <ul ng-if="isLoggedIn">
-        <li>
+        <li ng-show="authentication.isLoggedIn()">
             <a ui-sref=".profile">
                 <span class="fa fa-user"></span>
                 <span class="hidden nav-hidden"> Profile</span>
             </a>
         </li>
+        <li>
+            <a ui-sref=".about">
+                <span class="fa fa-question"></span>
+                <span class="hidden nav-hidden"> About</span>
+            </a>
+        </li>
+
     </ul>
 </nav>
 <!-- Include navigation toggler -->

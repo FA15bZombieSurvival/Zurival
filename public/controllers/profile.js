@@ -1,4 +1,4 @@
 angular.module('Zurival')
-  .controller('ProfileCtrl', ['$scope', function($scope) {
-      //return $window.localStorage["mean-token"];
+  .controller('ProfileCtrl', ['$scope', 'authentication', function($scope, authentication) {
+    $scope.user = authentication.currentUser;
   }]);
