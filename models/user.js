@@ -135,6 +135,31 @@ userSchema.methods.changeName = function(name, otherName, callback){
     });
 }
 
+userSchema.methods.getFriends = function(name, callback){
+    getUser(name, function(err, user){
+        if(err) return callback(err);
+        if(user){
+            var friendIds = user.friends;
+            var arrFriends;
+            function recursivCallbacks(i){
+                if( i < friendIds.length){
+                    for(let friendId in friendIds){
+                        this.findById(friendId, function(err, friend){
+                            if(friend){
+                                arrFriends.push(friend.username);
+                            }
+                            recursivCallbacks(i+1);
+                        });
+                    }
+                }else{
+                    callback(null, arrFriends);
+                }
+            }
+            recursivCallbacks(0);
+        }
+    });
+}
+
 userSchema.methods.addFriend = function(name, _id, callback){
     getUser(name, function(err, user){
         if(err) return callback(err);
