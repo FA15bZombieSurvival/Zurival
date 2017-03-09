@@ -73,7 +73,9 @@ Player.prototype.update = function(keyPressed, delta){
       //Set the first Bit of the move variable
       moveToServer |= (1<<0);
     }
-    //Move right if "d" is pressed
+
+/*
+//Move right if "d" is pressed
 update: function(){
   //Movementspeed
   this.baseVelocity = 128;
@@ -122,7 +124,9 @@ update: function(){
     //Move the player down with the basespeed
     this.player.body.velocity.y += this.baseVelocity;
   }
+  */
 }
+
 
 Player.prototype.generate = function(){
 
