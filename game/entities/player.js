@@ -24,8 +24,7 @@ var x,
     width,
     height,
     xVelocity,
-    yVelocity
-    moveToServer;
+    yVelocity;
 
 //private functions are written like this
 function dummy(dummyValue1) {
@@ -75,59 +74,54 @@ Player.prototype.update = function(keyPressed, delta){
       moveToServer |= (1<<0);
     }
     //Move right if "d" is pressed
-    if(right.isDown){
-      //play animation for running right
-      this.player.animations.play('right');
-      //Set the second Bit of the move variable
-      moveToServer |= (1<<1);
-    }
-    //Move up if "w" is pressed
-    if(up.isDown){
-      //play animation for running down
-      this.player.animations.play('back');
-      //Set the third Bit of the move variable
-      moveToServer |= (1<<2);
-    }
-    //Move down if "s" is pressed
-    if(down.isDown){
-      //play animation for running up
-      this.player.animations.play('front');
-      //Set the fourth Bit of the move variable
-      moveToServer |= (1<<3);
-    }
+update: function(){
+  //Movementspeed
+  this.baseVelocity = 128;
 
-    //Initiate collisiondetection
-    this.game.physics.arcade.collide(this.player, this.blockedLayer);
-
-    //If no movementkey is pressed ...
-    if(left.isUp&&right.isUp&&up.isUp&&down.isUp){
-      //... Stop Animation
-      this.player.animations.stop();
-      //If player is facing left ...
-      if(this.player.frame == 3||this.player.frame == 5){
-        //... set frame to stand facing left
-        this.player.frame = 4;
-        //If player is facing right ...
-          }else if(this.player.frame == 6||this.player.frame == 8) {
-            //... set frame to stand facing right
-            this.player.frame = 7;
-            //If player is facing front ...
-          }else if(this.player.frame == 1||this.player.frame == 2){
-            //... set frame to stand facing front
-            this.player.frame = 0;
-            //If player is facing back ...
-          }else if(this.player.frame == 9||this.player.frame == 11){
-            //... set frame to stand facing front
-            this.player.frame = 10;
-          }
-        }
-
-        if (game.input.activePointer.isDown)
-        {
-            attackToServer = 01;
-        }
-
-        sockets.send('message', moveToServer);
+  //Move left
+  if (moveDirection == 01){
+    //Move the player left with the basespeed
+    this.player.body.velocity.x -= this.baseVelocity;
+  }
+  //Move right
+  if (moveDirection == 010){
+    //Move the player right with the basespeed
+    this.player.body.velocity.x += this.baseVelocity;
+  }
+  //Move up
+  if (moveDirection == 0100){
+    //Move the player up with the basespeed
+    this.player.body.velocity.y -= this.baseVelocity;
+  }
+  //Move down
+  if (moveDirection == 01000){
+    //Move the player down with the basespeed
+    this.player.body.velocity.y += this.baseVelocity;
+  }
+  if (moveDirection == 0101){
+    //Move the player left with the basespeed
+    this.player.body.velocity.x -= this.baseVelocity;
+    //Move the player up with the basespeed
+    this.player.body.velocity.y -= this.baseVelocity;
+  }
+  if (moveDirection == 0110){
+    //Move the player right with the basespeed
+    this.player.body.velocity.x += this.baseVelocity;
+    //Move the player up with the basespeed
+    this.player.body.velocity.y -= this.baseVelocity;
+  }
+  if (moveDirection == 01001){
+    //Move the player left with the basespeed
+    this.player.body.velocity.x -= this.baseVelocity;
+    //Move the player down with the basespeed
+    this.player.body.velocity.y += this.baseVelocity;
+  }
+  if (moveDirection == 01010){
+    //Move the player right with the basespeed
+    this.player.body.velocity.x += this.baseVelocity;
+    //Move the player down with the basespeed
+    this.player.body.velocity.y += this.baseVelocity;
+  }
 }
 
 Player.prototype.generate = function(){
