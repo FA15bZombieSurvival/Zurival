@@ -3,7 +3,7 @@
     <div class="center-form panel">
       <div class="panel-body">
         <h2 class="text-center">Lobby</h2>
-        <a ui-sref="root.game.game" ng-click="generateWorld()">Join Game</a>
+        <a ui-sref="root.game.game" ng-click="generateWorld()">Create Game</a>
         <table class="table table-hover">
             <tr>
                 <th class="text-center">World</th>
@@ -17,7 +17,7 @@
                 <td class="text-center">{{world.name}}</td>
                 <td class="text-center">{{world.maxPlayers}}</td>
                 <td class="text-center">{{world.survivingTime}}</td>
-                <td><button ng-click="joinGame(gameId)">Join</button></td>
+                <td><button ng-click="generatePlayer()">Join</button></td>
             </tr>
         </table>
       </div>

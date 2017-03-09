@@ -23,7 +23,7 @@
                 var payload;
 
                 if(token && token !== 'undefined'){
-                    payload = token.split(".")[1];
+                    payload = token.split(".")[1]; //Payload starts in the 2nd segment
                     payload = $window.atob(payload);
                     payload = JSON.parse(payload);
 
@@ -44,6 +44,7 @@
                     payload = JSON.parse(payload);
 
                     return {
+                        id: payload._id,
                         username: payload.username,
                         email: payload.email
                     }

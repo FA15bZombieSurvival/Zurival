@@ -21,6 +21,9 @@ function dummy(dummyValue1) {
 // Public
 module.exports = World;
 
+World.prototype.players = [];
+
+// Constructor
 function World(data) {
     this.mapId = data._id;
     this.name = data.name;
@@ -52,6 +55,10 @@ World.prototype.generate = function(){
     const WORLD_PIXEL_WIDTH = worldInTilesWidth * tileSize;
     const WORLD_PIXEL_HEIGHT = worldInTilesHeight * tileSize;
     console.log(WORLD_PIXEL_HEIGHT + ' / ' + WORLD_PIXEL_WIDTH);
+}
+
+World.prototype.addPlayer = function(data){
+    players.push(new Player(data));
 }
 
 // Game servers loop that calculates the delta time and saves it in a json object

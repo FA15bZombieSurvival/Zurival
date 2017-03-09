@@ -1,20 +1,21 @@
-var async = require('async'),
+        var async = require('async'),
     request = require('request'),
     xml2js = require('xml2js'),
     _ = require('lodash'),
     Map = require('../models/map.js'),
+    Character = require('../models/character.js'),
     passport = require('./passport.js');
 
 module.exports = function(app, worlds, callback){
 
     app.use(function(err, req, res, next) {
         console.error(err.stack);
-        res.send(500, { message: err.message });
+        res.status(500).send({ message: err.message });
     });
 
     app.get('/api/logout', function(req, res, next) {
         req.logout();
-        res.send(200);
+        res.status(200);
     });
 
     app.use(function(req, res, next) {
@@ -22,10 +23,6 @@ module.exports = function(app, worlds, callback){
             res.cookie('user', JSON.stringify(req.user));
         }
         next();
-    });
-
-    app.get('/game/lobby', function(req, res){
-        res.json({ worlds: worlds });
     });
 
     app.get('*', function(req, res) {
@@ -71,6 +68,25 @@ module.exports = function(app, worlds, callback){
         });
     });
 
+    app.post('/game/lobby', function(req, res){
+
+        var userID = req.body.userID;
+
+        Character.find({userID: userID}, function(err, characters){
+            if(err){ return res.status(401).send(err + '\nErr:CantCreateWorldOrCharacters') }
+            if(characters){
+
+                res.status(200).send({
+                    worlds: worlds,
+                    characters: characters
+                });
+            }
+            else {
+                res.status(401).send("Couldn\'t find a characters or maps");
+            }
+        });
+    });
+
     app.post('/api/generateWorld', function(req, res){
         var id = req.body._id;
         Map.findById(id, function(err, map){
@@ -86,6 +102,17 @@ module.exports = function(app, worlds, callback){
             else {
                 res.status(401).send("Couldn\'t find a map");
             }
+        });
+    });
+
+    app.post('/api/generatePlayer', function(req, res){
+        var character = req.body.character;
+        var worldID = req.body.worldID;
+
+        callback(null, {
+            name: "generatedPlayer",
+            value: character,
+            worldID: worldID
         });
     });
 }
