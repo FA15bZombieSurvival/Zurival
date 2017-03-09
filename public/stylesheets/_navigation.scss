@@ -1,7 +1,13 @@
 @import "colors";
 
 #ui-nav {
+    float: left;
+    min-height: 100% !important;
+    height: 100% !important;
+    max-height: 100% !important;
+    margin-bottom: 0 !important;
     .navbar {
+        margin-bottom: 0;
         float: left;
         background-color: #FFFFFF;
         color: $primary;
@@ -9,6 +15,7 @@
         height: 100%;
         padding-right: 2px;
         margin-right: 0;
+        border-bottom: none;
         #nav-toggle {
             background-color: #FFFFFF;
             color: $primary;
@@ -30,6 +37,12 @@
                     text-align: center;
                     color: $primary;
                 }
+            }
+            #navigationLogout {
+                position: relative;
+                left: 0;
+                bottom: 0;
+                margin-bottom: 0;
             }
         }
     }
