@@ -5,7 +5,8 @@
     margin-left: 55px;
     width: calc(100% - 55px);
     border-left: 1px solid $primary;
-    height: 100%;
+    min-height: 100% !important;
+    height: 100% !important;
     .container-fluid {
         .row {
             margin-bottom: 20px;

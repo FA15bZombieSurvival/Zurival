@@ -1,4 +1,4 @@
 angular.module('Zurival')
-  .controller('ProfileCtrl', ['$scope', '$rootScope', 'Show', function($scope, $rootScope, Show) {
-      $scope.subshows = Show.query({subscribers: $rootScope.currentUser._id});
+    .controller('ProfileCtrl', ['$scope', 'authentication', function($scope, authentication) {
+        $scope.user = authentication.currentUser();
     }]);
