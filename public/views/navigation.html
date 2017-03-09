@@ -16,13 +16,13 @@
                 <span class="hidden nav-hidden"> Game</span>
             </a>
         </li>
-        <li ng-show="!authentication.isLoggedIn()">
-            <a ui-sref=".login">
+        <li ng-show="!isLoggedIn">
+            <a ui-sref=".login" id="navigationUser">
                 <span class="fa fa-user"></span>
                 <span class="hidden nav-hidden"> Login</span>
             </a>
         </li>
-        <li ng-show="authentication.isLoggedIn()">
+        <li ng-show="isLoggedIn">
             <a ui-sref=".profile">
                 <span class="fa fa-user"></span>
                 <span class="hidden nav-hidden"> Profile</span>
@@ -34,7 +34,12 @@
                 <span class="hidden nav-hidden"> About</span>
             </a>
         </li>
-
+        <li ng-show="isLoggedIn" id="navigationLogout">
+            <button id="logout" class="btn btn-default" ng-click="authentication.logout()" type="button">
+                <span class="fa fa-power-off"></span>
+                <span class="hidden nav-hidden">Log Out</span>
+            </button>
+        </li>
     </ul>
 </nav>
 <!-- Include navigation toggler -->

@@ -38,6 +38,12 @@
                     color: $primary;
                 }
             }
+            #navigationLogout {
+                position: relative;
+                left: 0;
+                bottom: 0;
+                margin-bottom: 0;
+            }
         }
     }
 }

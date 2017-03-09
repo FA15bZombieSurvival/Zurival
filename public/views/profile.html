@@ -1,4 +1,4 @@
-<div class="container-fluid" id="profile" controller="ProfileCtrl">
+<div class="container-fluid" id="profile">
     <div class="row" id="profile-header">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <header>
@@ -28,11 +28,11 @@
                                 <table>
                                     <tr>
                                         <td><label for="username">Username:</label></td>
-                                        <td><input id="username" disabled>{{ user.username }}</td>
+                                        <td><input id="username" value="{{ user.username }}" disabled></td>
                                     </tr>
                                     <tr>
                                         <td><label for="usermail">E-Mail:</label></td>
-                                        <td><input id="usermail" value="thelegend27@gmail.com" disabled></td>
+                                        <td><input id="usermail" value="{{ user.email }}" disabled></td>
                                     </tr>
                                     <tr>
                                         <td><label for="usergold">Gold:</label></td>
@@ -50,7 +50,7 @@
                 <div id="profile-marketplace-short" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            TheLegend27 is selling this items:
+                            {{ user.username }} is selling this items:
                         </div>
                         <div class="panel-body">
                             <div class="col-md-8 col-lg-8" id="profile-mp-items">
@@ -99,7 +99,7 @@
                 <input type="text" class="form-control">
 
             </div>
-                            <button type="submit" class="btn btn-default">Send!</button>
+            <button type="submit" class="btn btn-default">Send!</button>
         </form>
     </div>
     <span class="fa fa-arrow-left" id="arrow"></span>

@@ -37,6 +37,11 @@
           width: inherit;
           text-align: center;
           color: #932D24; }
+      #ui-nav .navbar .navbar-nav #navigationLogout {
+        position: relative;
+        left: 0;
+        bottom: 0;
+        margin-bottom: 0; }
 
 #content {
   float: left;
@@ -115,7 +120,7 @@
   max-height: 100% !important;
   width: 100% !important;
   max-width: 100% !important;
-  overflow: hidden; }
+  overflow-x: hidden; }
   #profile #profile-header {
     max-height: 55px !important;
     margin-bottom: 0; }
@@ -206,6 +211,6 @@ html {
     max-height: 100%;
     background-color: #FFFFFF;
     color: #932D24;
-    overflow: hidden; }
+    overflow-x: hidden; }
 
 /*# sourceMappingURL=style.css.map */

@@ -5,7 +5,7 @@ $(document).ready(function() {
         if(!visibility) {
             $('#chat').animate({
                 'right': '0'
-            }, 5000, function() {
+            }, 1000, function() {
                 console.log('Animation complete');
             });
             $('#arrow').css('transform', 'rotate(180deg)');
@@ -14,7 +14,7 @@ $(document).ready(function() {
         else {
             $('#chat').animate({
                 'right': '-275px'
-            }, 5000, function() {
+            }, 1000, function() {
                 console.log('Animation complete');
             });
             $('#arrow').css('transform', 'rotate(180deg)');
