@@ -22,7 +22,7 @@ angular.module('Zurival.game', [])
                 views: {
                     "content@": {
                         templateUrl: 'views/game/game.html'
-                    }
+                    } 
                 }
             })
     });
