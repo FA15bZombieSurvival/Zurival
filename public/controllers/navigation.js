@@ -5,4 +5,10 @@ angular.module('Zurival')
               $scope.isLoggedIn = true;
 
           }
+
+          $scope.logout = function() {
+
+              authentication.logout();
+
+          }
     }]);
