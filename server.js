@@ -8,7 +8,8 @@ var mongoose = require('mongoose'),
     session = require('express-session'),
     http = require('http');
     compress = require('compression'),
-    World = require('./game/World');
+    World = require('./game/World.js'),
+    Player = require('./game/entities/Player.js');
 
 var app = express()
     passport = require('./modules/passport.js');
@@ -41,11 +42,21 @@ server.listen(app.get('port'), function() {
 
 var routes = require('./modules/routes.js')(app, worlds, function(err, data){
     if(err){ console.log("Err: " + err); }
+    //Switch to distinguish different callbacks
     switch(data.name){
         case 'generatedWorld':
             var w = new World(data.value);
             w.generate();
             worlds.push(w);
+            break;
+        case 'generatedPlayer':
+            var p = new Player(data.value);
+            for(var i=0; i<worlds.length; i++){
+                if(worlds[i]._id == data.worldID){
+                    worlds[i].players.push(p);
+                    console.log(worlds[i].players);
+                }
+            }
             break;
         default: break;
     }
