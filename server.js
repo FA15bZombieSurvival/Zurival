@@ -9,7 +9,7 @@ var mongoose = require('mongoose'),
     http = require('http');
     compress = require('compression'),
     Lobby = require('./game/lobby.js'),
-    Player = require('./game/entities/Player.js');
+    Player = require('./game/entities/player.js');
 
 var app = express()
     passport = require('./modules/passport.js');
