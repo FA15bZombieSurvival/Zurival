@@ -19,20 +19,21 @@ function dummy(dummyValue1) {
 }
 
 // Public
-module.exports = World;
+module.exports = Lobby;
 
-World.prototype.players = [];
+Lobby.prototype.players = [];
 
 // Constructor
-function World(data) {
-    this.mapId = data._id;
+function Lobby(data) {
     this.name = data.name;
+    this.host = data.user;
     this.maxPlayers = data.maxPlayers;
     this.survivingTime = data.survivingTime;
     this.enemyTypes = data.enemyTypes;
+
 }
 
-World.prototype.update = function(delta){
+Lobby.prototype.update = function(delta){
     // Update enemies
     for (var i = 0; i < enemys.length; i++) {
         enemys[i].update(delta);
@@ -44,8 +45,8 @@ World.prototype.update = function(delta){
     }
 }
 
-World.prototype.generate = function(){
-
+Lobby.prototype.generateWorld = function(data){
+    this.mapId = data.value._id;
     // Create map with given number of tiles
     var worldInTilesWidth = 100,
         worldInTilesHeight = 100,
@@ -57,7 +58,7 @@ World.prototype.generate = function(){
     console.log(WORLD_PIXEL_HEIGHT + ' / ' + WORLD_PIXEL_WIDTH);
 }
 
-World.prototype.addPlayer = function(data){
+Lobby.prototype.addPlayer = function(data){
     players.push(new Player(data));
 }
 
