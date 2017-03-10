@@ -61,6 +61,7 @@ function Player(data) {
     this.yVelocity = data.yVelocity;
 }
 
+/*
 Player.prototype.update = function(keyPressed, delta){
     //Reset the move and attack variable before sending it again
     moveToServer = 0;
@@ -74,7 +75,7 @@ Player.prototype.update = function(keyPressed, delta){
       moveToServer |= (1<<0);
     }
 
-/*
+
 //Move right if "d" is pressed
 update: function(){
   //Movementspeed
@@ -124,10 +125,9 @@ update: function(){
     //Move the player down with the basespeed
     this.player.body.velocity.y += this.baseVelocity;
   }
-  */
 }
-
 
 Player.prototype.generate = function(){
 
 }
+*/
