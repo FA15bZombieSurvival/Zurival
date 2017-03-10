@@ -6,7 +6,7 @@
     Character = require('../models/character.js'),
     passport = require('./passport.js');
 
-module.exports = function(app, worlds, callback){
+module.exports = function(app, lobbys, callback){
 
     app.use(function(err, req, res, next) {
         console.error(err.stack);
@@ -73,11 +73,11 @@ module.exports = function(app, worlds, callback){
         var userID = req.body.userID;
 
         Character.find({userID: userID}, function(err, characters){
-            if(err){ return res.status(401).send(err + '\nErr:CantCreateWorldOrCharacters') }
+            if(err){ return res.status(401).send(err + '\nErr:CantCreateLobbyOrCharacters') }
             if(characters){
 
                 res.status(200).send({
-                    worlds: worlds,
+                    lobbys: lobbys,
                     characters: characters
                 });
             }
@@ -87,14 +87,28 @@ module.exports = function(app, worlds, callback){
         });
     });
 
-    app.post('/api/generateWorld', function(req, res){
+// TODO: Namen auf doppelten Eintrag überprüfen. Die Namen müssen Unique sein.
+    app.post('/api/createLobby', function(req, res){
+        var user = req.body.user;
+        var lobbyName = req.body.lobbyName;
+        callback(null, {
+            name: 'createdLobby',
+            lobbyName: lobbyName,
+            user: user
+        })
+    });
+
+// gibt die ID der ausgesuchten Karte um diese in der Lobby zu erstellen.
+    app.post('/api/generateMap', function(req, res){
         var id = req.body._id;
+        var lobbyName = req.body.lobbyName;
         Map.findById(id, function(err, map){
-            if(err){ return res.status(401).send(err + '\nErr:CantCreateWorld') }
+            if(err){ return res.status(401).send(err + '\nErr:CantCreateLobby') }
             if(map){
                 //null for possible error responses
                 callback(null, {
-                    name: "generatedWorld",
+                    name: "generatedMap",
+                    lobbyName: lobbyName,
                     value: map
                 });
                 res.status(200).send(map);
@@ -107,12 +121,12 @@ module.exports = function(app, worlds, callback){
 
     app.post('/api/generatePlayer', function(req, res){
         var character = req.body.character;
-        var worldID = req.body.worldID;
+        var lobbyID = req.body.lobbyID;
 
         callback(null, {
             name: "generatedPlayer",
             value: character,
-            worldID: worldID
+            lobbyID: lobbyID
         });
     });
 }

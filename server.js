@@ -8,7 +8,7 @@ var mongoose = require('mongoose'),
     session = require('express-session'),
     http = require('http');
     compress = require('compression'),
-    World = require('./game/World.js'),
+    Lobby = require('./game/lobby.js'),
     Player = require('./game/entities/Player.js');
 
 var app = express()
@@ -30,8 +30,8 @@ app.use(express.static(path.join(__dirname, '/public/game'), { maxAge: 0 }));
 
 var server = http.createServer(app);
 
-//Array for all worlds
-var worlds = [];
+//Array for all Lobbys
+var lobbys = [];
 
 // Any socket.io related functions are at game/helper/io.js
 var io = require('./game/helper/io.js').invoke(server);
@@ -40,21 +40,24 @@ server.listen(app.get('port'), function() {
   console.log('Express server listening on port ' + app.get('port'));
 });
 
-var routes = require('./modules/routes.js')(app, worlds, function(err, data){
+var routes = require('./modules/routes.js')(app, lobbys, function(err, data){
     if(err){ console.log("Err: " + err); }
     //Switch to distinguish different callbacks
     switch(data.name){
-        case 'generatedWorld':
-            var w = new World(data.value);
-            w.generate();
-            worlds.push(w);
+        case 'createdLobby':
+            let lobby = new Lobby(data);
+            lobbys.push(lobby);
+        case 'generatedMap':
+            for(let lobby in lobbys)
+                if(lobby.name === data.lobbyName)
+                    lobby.generateWorld(data);
             break;
         case 'generatedPlayer':
             var p = new Player(data.value);
-            for(var i=0; i<worlds.length; i++){
-                if(worlds[i]._id == data.worldID){
-                    worlds[i].players.push(p);
-                    console.log(worlds[i].players);
+            for(var i=0; i<lobbys.length; i++){
+                if(lobbys[i]._id == data.lobbyID){
+                    lobbys[i].players.push(p);
+                    console.log(lobbys[i].players);
                 }
             }
             break;
