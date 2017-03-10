@@ -53,6 +53,14 @@ socket.on('addEnemys', function (data) {
     data.forEach(addEnemy);
 });
 
+//EXPERIMENTAL
+//Needs to be overhauled
+/*
+socket.on('updatePlayer', function (actions){
+  console.log(actions.moveDirection + actions.attack);
+});
+*/
+
 function addEnemy(element, index, array){
     enemys.push(new Enemy(element));
 }

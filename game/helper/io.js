@@ -13,7 +13,11 @@ module.exports.invoke = function(server) {
         client.on("disconnect", function(){
             console.log('client disconnected ' + client.userid );
         });
+        //Saves actions into variables on server
+        client.on('playerAction',function(actions) {
+           var moveDirection = actions.moveDirection;
+           var attack = actions.attack;
+           console.log(moveDirection + attack);
+        });
     });
-
-
 };

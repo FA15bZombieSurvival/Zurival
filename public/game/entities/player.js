@@ -2,11 +2,17 @@ module.exports = function player(){}
 
 //Variables
 var moveToServer = 0;
+var attackToServer
 
+render: function(){
+
+}
+/* CAN STAY IN GAME.js
 update: function(){
+
     //Reset the move and attack variable before sending it again
     moveToServer = 0;
-    attackToServer = 0;
+    attackToServer = false;
 
     //Move left if "a" is pressed
     if(left.isDown){
@@ -65,8 +71,11 @@ update: function(){
 
     if (game.input.activePointer.isDown)
     {
-        attackToServer = 01;
+        attackToServer = true;
     }
 
-    sockets.send('message', moveToServer);
-}
+    if game.input.
+
+    //Send attack and movementStatus to the server
+    socket.emit('playerAction', {moveDirection: moveToServer, attack: attackToServer});  
+}*/
