@@ -194,6 +194,13 @@
     color: #932D24;
     margin-top: calc((100% - 25px) / 2); }
 
+.navbar-default {
+  width: 100%;
+  border-radius: 0;
+  border: none;
+  margin: 0;
+  background-color: #FFFFFF; }
+
 /*@font-face {
     font-family: "Helvetica";
     src: url("../fonts/Transformers\ Movie.ttf");

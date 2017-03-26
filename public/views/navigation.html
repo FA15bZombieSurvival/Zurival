@@ -34,10 +34,18 @@
                 <span class="hidden nav-hidden"> About</span>
             </a>
         </li>
-        <li ng-show="isLoggedIn" id="navigationLogout">
+
+    </ul>
+    <ul class="nav navbar-nav" id="userViews" ng-show="isLoggedIn">
+        <li>
+            <a ui-sref=".friends">
+                <span class="fa fa-users"></span>
+                <span class="hidden nav-hidden"> Friends</span>
+        </li>
+        <li id="navigationLogout">
             <button id="logout" class="btn btn-default" ng-click="logout()" type="button">
                 <span class="fa fa-power-off"></span>
-                <span class="hidden nav-hidden">Log Out</span>
+                <span class="hidden nav-hidden"> Log Out</span>
             </button>
         </li>
     </ul>
