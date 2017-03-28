@@ -45,7 +45,7 @@ var routes = require('./modules/routes.js')(app, lobbys, function(err, data){
     //Switch to distinguish different callbacks
     switch(data.name){
         case 'createdLobby':
-            let lobby = new Lobby(data);
+            let lobby = new Lobby(/*io,*/ data);
             lobbys.push(lobby);
         case 'generatedMap':
             for(let lobby in lobbys)
