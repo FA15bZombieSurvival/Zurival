@@ -34,7 +34,7 @@ var server = http.createServer(app);
 var lobbys = [];
 
 // Any socket.io related functions are at game/helper/io.js
-var io = require('./game/helper/io.js').invoke(server);
+var io = require('./modules/io.js')(server);
 
 server.listen(app.get('port'), function() {
   console.log('Express server listening on port ' + app.get('port'));
@@ -45,7 +45,7 @@ var routes = require('./modules/routes.js')(app, lobbys, function(err, data){
     //Switch to distinguish different callbacks
     switch(data.name){
         case 'createdLobby':
-            let lobby = new Lobby(/*io,*/ data);
+            let lobby = new Lobby(data);
             lobbys.push(lobby);
         case 'generatedMap':
             for(let lobby in lobbys)

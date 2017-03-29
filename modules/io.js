@@ -1,43 +1,33 @@
-const socketio  = require('socket.io');
-const UUID      = require('uuid/v4');
+const socketio      = require('socket.io');
+const socketioJwt   = require("socketio-jwt");
 
-var client  = NULL,
-    room;
+var clients     = [];
+var socket      = null;
 
-module.exports.invoke = function(server) {
-    var io = socketio.listen(server);
-    var ioLobby = io.of('/lobby');
+module.exports = io;
 
-    ioLobby.use(socketioJwt.authorize({
+function io(server){
+    socket = socketio.listen(server);
+
+    socket.use(socketioJwt.authorize({
         secret: "MY_SECRET",    //ToDo get from Environment Variable (process.env.ENV_VARIABLE)
         handshake: true
     }));
 
-    ioLobby.on('connection', function (client) {
-        this.client = client;
-        this.client.name = client.decoded_token.username);
-        this.client.on('disconnect', function(){
-            console.log('client disconnected ' + this.client.userid );
-            client = NULL;
+    socket.on('connection', function (client) {
+        client.name = client.decoded_token.username;
+        console.log('client connected ' + client.name );
+        clients.push(client);
+        client.on('disconnect', function(){
+            console.log('client disconnected ' + client.name );
+            var index = clients.indexOf(client.name);
+            if(index != -1) clients.splice(index, 1);
         });
     });
-
-    return io;
 };
 
-/*
-module.exports.setRoom = function(roomName) {
-    room = roomName;
-    if(client !== NULL){
-        client.join(room);
-        client.emit('connected', { id: client.userid } );
-        console.log('player ' + client.userid + ' connected ');
-    }
+io.prototype.getClient = function(name) {
+    var index = clients.indexOf(name);
+    if(index != -1) return client;
+    else return null;
 }
-
-module.exports.sendOwnPosition = function(data) {
-    if(client !== NULL){
-        client.emit("position", data);
-    }
-}
-*/

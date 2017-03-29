@@ -25,15 +25,12 @@ module.exports = Lobby;
 Lobby.prototype.players = [];
 
 // Constructor
-function Lobby(/*io,*/ data) {
+function Lobby(data) {
     this.name = data.lobbyName;
     this.host = data.user;
     this.maxPlayers = data.maxPlayers;
     this.survivingTime = data.survivingTime;
     this.enemyTypes = data.enemyTypes;
-    /*
-    this.socket = io.of('/lobby');
-    socket.setRoom(this.name);*/
 }
 
 Lobby.prototype.update = function(delta){
