@@ -1,7 +1,6 @@
 var mongoose = require('mongoose');
 
 var enemySchema = new mongoose.Schema({
-    _id: Number,
     sprite: Number,
     name: { type: String, unique: true, required: true },
     description: String,
