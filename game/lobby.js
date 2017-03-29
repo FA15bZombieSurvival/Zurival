@@ -3,7 +3,8 @@ var mapId,
     name,
     maxPlayers,
     survivingTime,
-    enemyTypes;
+    enemyTypes,
+    socket;
 
 // Time object for applying delta to movements
 let time = {
@@ -25,12 +26,11 @@ Lobby.prototype.players = [];
 
 // Constructor
 function Lobby(data) {
-    this.name = data.name;
+    this.name = data.lobbyName;
     this.host = data.user;
     this.maxPlayers = data.maxPlayers;
     this.survivingTime = data.survivingTime;
     this.enemyTypes = data.enemyTypes;
-
 }
 
 Lobby.prototype.update = function(delta){
