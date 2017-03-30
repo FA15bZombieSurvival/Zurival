@@ -82,10 +82,11 @@ function getUser(name, callback){
     });
 }
 
-function getAllUsers(callback) {
+userSchema.methods.getAllUsers =function(callback) {
     this.find({}, function(err, data) {
         if(err) return callback(err);
         if(data) {
+            console.log(data);
             callback(null, data);
         }
     });
