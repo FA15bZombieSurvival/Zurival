@@ -1,33 +1,71 @@
 const socketio      = require('socket.io');
 const socketioJwt   = require("socketio-jwt");
 
-var clients     = [];
-var socket      = null;
+var standardClients = [],
+    lobbyClients    = [];
+
+var socket      = null,
+    lobbySocket = null;
 
 module.exports = io;
 
 function io(server){
     socket = socketio.listen(server);
+    lobbySocket = socket.of('/lobby');
+    nspStandard();
+    nspLobby();
+};
 
+function nspStandard(){
     socket.use(socketioJwt.authorize({
-        secret: "MY_SECRET",    //ToDo get from Environment Variable (process.env.ENV_VARIABLE)
+        secret: "MY_SECRET",    //TODO get from Environment Variable (process.env.ENV_VARIABLE)
         handshake: true
     }));
 
     socket.on('connection', function (client) {
         client.name = client.decoded_token.username;
+        client.id = client.decoded_token._id;
         console.log('client connected ' + client.name );
-        clients.push(client);
+        standardClients.push(client);
         client.on('disconnect', function(){
             console.log('client disconnected ' + client.name );
-            var index = clients.indexOf(client.name);
-            if(index != -1) clients.splice(index, 1);
+            var index = standardClients.indexOf(client.name);
+            if(index != -1) standardClients.splice(index, 1);
         });
     });
-};
+}
 
-io.prototype.getClient = function(name) {
-    var index = clients.indexOf(name);
-    if(index != -1) return client;
-    else return null;
+function nspLobby() {
+    lobbySocket.use(socketioJwt.authorize({
+        secret: "MY_SECRET",    //TODO get from Environment Variable (process.env.ENV_VARIABLE)
+        handshake: true
+    }));
+
+    lobbySocket.on('connection', function (client) {
+        client.name = client.decoded_token.username;
+        console.log('client connected to \'lobby\' ' + client.name );
+        lobbyClients.push(client);
+        client.on('disconnect', function(){
+            console.log('client disconnected from \'lobby\' ' + client.name );
+            var index = lobbyClients.indexOf(client.name);
+            if(index != -1) lobbyClients.splice(index, 1);
+        });
+    });
+}
+
+io.prototype.getNamespace = function(namespace){
+    return socket.of(namespace);
+}
+
+io.prototype.getClient = function(name, namespace) {
+    var index;
+    if(namespace == '/lobby'){
+        index = lobbyClients.indexOf(name);
+        if(index >= 0) return lobbyClients[index];
+    }
+    else{
+        index = standardClients.indexOf(name);
+        if(index >= 0) return standardClients[index];
+    }
+    return null;
 }

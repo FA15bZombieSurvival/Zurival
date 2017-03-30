@@ -25,12 +25,18 @@ module.exports = Lobby;
 Lobby.prototype.players = [];
 
 // Constructor
-function Lobby(data) {
+function Lobby(socket, data) {
     this.name = data.lobbyName;
     this.host = data.user;
     this.maxPlayers = data.maxPlayers;
     this.survivingTime = data.survivingTime;
     this.enemyTypes = data.enemyTypes;
+    this.socket = socket.join(this.name);
+    let playerData;
+    playerData.userID = this.host;
+    let hostSocket = socket.getClient(this.host);
+    if(hostSocket != null) playerData.socket = hostSocket;
+    this.players.push(new Player(playerData));
 }
 
 Lobby.prototype.update = function(delta){
