@@ -1,9 +1,14 @@
 angular.module('Zurival.game.lobby', [])
-    .controller('LobbyCtrl', ['$scope', '$http', 'authentication', function($scope, $http, authentication) {
+    .controller('LobbyCtrl', ['$scope', '$rootScope', '$http', 'authentication', function($scope, $rootScope, $http, authentication) {
         $scope.maps = [
             { _id: '58a581686ac37b3b848b7b36' },
             { _id: '58a59dfb6ac37b3b848b7b37' }
         ];
+
+        // TODO erst connecten, wenn man einer Lobby beigetreten ist.
+        $rootScope.lobbySocket = io.connect('/lobby', {
+            'query': 'token=' + authentication.getToken()
+        });
 
         //Getting active world instances from the server
         $http.post('/game/lobby', {userID: authentication.currentUser().id})//$window.localStorage["mean-token"])

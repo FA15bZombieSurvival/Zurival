@@ -5,24 +5,26 @@ var standardClients = [],
     lobbyClients    = [];
 
 var socket      = null,
-    lobbySocket = null;
+    lobbySocket = null,
+    chatSocket  = null;
 
 module.exports = io;
 
 function io(server){
     socket = socketio.listen(server);
+    chatSocket = socket.of('/chat');
     lobbySocket = socket.of('/lobby');
-    nspStandard();
+    nspChat();
     nspLobby();
 };
 
-function nspStandard(){
-    socket.use(socketioJwt.authorize({
+function nspChat(){
+    chatSocket.use(socketioJwt.authorize({
         secret: "MY_SECRET",    //TODO get from Environment Variable (process.env.ENV_VARIABLE)
         handshake: true
     }));
 
-    socket.on('connection', function (client) {
+    chatSocket.on('connection', function (client) {
         client.name = client.decoded_token.username;
         client.id = client.decoded_token._id;
         console.log('client connected ' + client.name );
