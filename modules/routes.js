@@ -115,8 +115,37 @@ module.exports = function(app, worlds, callback){
             worldID: worldID
         });
     });
-}
+    app.post('/api/addFriend', function(req, res){
+        var user = req.body.user;
+        var friend = req.body.friend;
+        User.addFriend(user, friend, function(err){
+            if(err) res.sendStatus(401);
+            else res.sendStatus(200);
+        });
+    });
 
+app.post('/api/deleteFriend', function(req, res){
+        var user = req.body.user;
+        var friend = req.body.friend;
+        User.deleteFriend(user, friend, function(err){
+            if(err) res.sendStatus(401);
+            else res.sendStatus(200);
+        });
+    });
+
+    app.post('/api/getFriends', function(req, res){
+        var user = req.body.user;
+        User.getFriends(user, function(err, arrFriends){
+            res.status(200).send(arrFriends);
+        });
+    });
+
+    app.post('/api/getUsers', function(req, res) {
+        User.getAllUsers(function(err, arrUsers) {
+            res.status(200).send(arrUsers);
+        });
+    });
+}
 function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) next();
     else res.sendStatus(401);

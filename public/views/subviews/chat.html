@@ -1,52 +1,18 @@
-<html>
-    <head>
-        <style>
-        body {
-            width: 250px;
-            max-width: 250px;
-            height: 350px;
-            max-height: 350px;
-            border: 1px solid #000;
-        }
-        header {
-            background-color: grey;
-            width: inherit;
-            height: 20px;
-        }
-        main {
-            width: inherit;
-            height: 300px;
-            max-height: 300px;
-            overflow:auto;
-	        overflow-x: hidden;
-        }
-        footer {
-            display: flex;
-            flex-direction: row;
-            height: 30px;
-        }
-        button {
-            margin: 0;
-            width: 49px;
-        }
-        </style>
-    </head>
-    <body>
+
         <header>Chat mit Freund!
         </header>
         <main></main>
         <footer>
-            <input type="text">
+            <input type="text" id="chattext">
             <button type="submit">Send</button>
         </footer>
         <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
         <script>
         $(document).ready(function() {
             $('button').click(function() {
-                var text = $('input').val();
-                $('main').append('<p>Username: ' + text + '</p>' )
+                var text = $('#chattext').val();
+                $('main').append('<p><b>{{ user.username }}</b> ' + text + '</p>' )
+                $('#chattext').val('');
             });
         });
         </script>
-    </body>
-</html>
