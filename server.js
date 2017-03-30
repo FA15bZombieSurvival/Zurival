@@ -8,8 +8,8 @@ var mongoose = require('mongoose'),
     session = require('express-session'),
     http = require('http');
     compress = require('compression'),
-    World = require('./game/World.js'),
-    Player = require('./game/entities/Player.js');
+    World = require('./game/world.js'),
+    Player = require('./game/entities/player.js');
 
 var app = express()
     passport = require('./modules/passport.js');

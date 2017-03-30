@@ -82,6 +82,15 @@ function getUser(name, callback){
     });
 }
 
+function getAllUsers(callback) {
+    this.find({}, function(err, data) {
+        if(err) return callback(err);
+        if(data) {
+            callback(null, data);
+        }
+    });
+}
+
 userSchema.methods.changePassword = function(name, password, callback){
     getUser(name, function(err, user){
         if(err) return callback(err);

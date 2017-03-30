@@ -140,8 +140,13 @@ module.exports = function(app, worlds, callback){
             res.status(200).send(arrFriends);
         });
     });
-}
 
+    app.post('/api/getUsers', function(req, res) {
+        User.getAllUsers(function(err, arrUsers) {
+            res.status(200).send(arrUsers);
+        });
+    });
+}
 function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) next();
     else res.sendStatus(401);

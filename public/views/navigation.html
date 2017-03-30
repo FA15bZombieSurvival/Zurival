@@ -34,11 +34,26 @@
                 <span class="hidden nav-hidden"> About</span>
             </a>
         </li>
-        <li ng-show="isLoggedIn" id="navigationLogout">
-            <button id="logout" class="btn btn-default" ng-click="logout()" type="button">
+
+    </ul>
+    <ul class="nav navbar-nav" id="userViews" ng-show="isLoggedIn">
+        <li>
+            <a ui-sref=".friends">
+                <span class="fa fa-users"></span>
+                <span class="hidden nav-hidden"> Friends</span>
+            </a>
+        </li>
+        <li>
+            <a ui-sref=".statistics">
+                <span class="fa fa-bar-chart"></span>
+                <span class="hidden nav-hidden"> Statistics</span>
+            </a>
+        </li>
+        <li id="navigationLogout">
+            <a id="logout" ng-click="logout()" ui-sref=".home">
                 <span class="fa fa-power-off"></span>
-                <span class="hidden nav-hidden">Log Out</span>
-            </button>
+                <span class="hidden nav-hidden"> Log Out</span>
+            </a>
         </li>
     </ul>
 </nav>

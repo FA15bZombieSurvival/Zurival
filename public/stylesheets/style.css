@@ -37,11 +37,8 @@
           width: inherit;
           text-align: center;
           color: #932D24; }
-      #ui-nav .navbar .navbar-nav #navigationLogout {
-        position: relative;
-        left: 0;
-        bottom: 0;
-        margin-bottom: 0; }
+        #ui-nav .navbar .navbar-nav li #logout {
+          border: none; }
 
 #content {
   float: left;
@@ -193,6 +190,60 @@
     height: 25px;
     color: #932D24;
     margin-top: calc((100% - 25px) / 2); }
+
+.navbar-default {
+  width: 100%;
+  border-radius: 0;
+  border: none;
+  margin: 0;
+  background-color: #FFFFFF; }
+
+#chat {
+  z-index: 5;
+  visibility: hidden;
+  width: 275px;
+  height: 450px;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  background-color: #FFFFFF;
+  border: 1px solid #932D24; }
+  #chat header p {
+    float: left; }
+  #chat main {
+    width: 273px;
+    height: 404px;
+    max-height: 404px;
+    overflow-y: scroll; }
+    #chat main #message {
+      display: block;
+      background-color: #BD564E;
+      margin: 10px 10px;
+      padding: 10px 10px;
+      color: #FFFFFF;
+      border-radius: 10px;
+      width: 223px;
+      float: left; }
+    #chat main #friendsMessage {
+      display: block;
+      background-color: #89AF48;
+      margin: 10px 10px;
+      padding: 10px 10px;
+      color: #FFFFFF;
+      border-radius: 10px;
+      width: 223px;
+      float: right; }
+  #chat footer {
+    position: absolute;
+    bottom: 0;
+    left: 0; }
+    #chat footer button {
+      width: 70px;
+      height: 26px;
+      float: right;
+      border: none;
+      background-color: #FFFFFF;
+      font-weight: bold; }
 
 /*@font-face {
     font-family: "Helvetica";
