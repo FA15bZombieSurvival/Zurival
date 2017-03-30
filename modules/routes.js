@@ -4,7 +4,8 @@ var async = require('async'),
     _ = require('lodash'),
     Map = require('../models/map.js'),
     Character = require('../models/character.js'),
-    passport = require('./passport.js');
+    passport = require('./passport.js'),
+    User = require('../models/user.js');
 
 module.exports = function(app, worlds, callback){
 
