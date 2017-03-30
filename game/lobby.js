@@ -35,8 +35,11 @@ function Lobby(socket, data) {
     let playerData;
     playerData.userID = this.host;
     let hostSocket = socket.getClient(this.host);
-    if(hostSocket != null) playerData.socket = hostSocket;
-    this.players.push(new Player(playerData));
+    if(hostSocket != null){
+        hostSocket.join(this.name);
+        playerData.socket = hostSocket;
+    }
+    addPlayer(playerData);
 }
 
 Lobby.prototype.update = function(delta){
@@ -65,7 +68,18 @@ Lobby.prototype.generateWorld = function(data){
 }
 
 Lobby.prototype.addPlayer = function(data){
-    players.push(new Player(data));
+    var player = new Player(data);
+    player.socket.join(this.name);
+    players.push(player);
+}
+
+Lobby.prototype.removePlayer = function(userID){
+    var index = players.indexOf(userID);
+    if(index >= 0){
+        var player = players[index];
+        player.socket.leave(this.name);
+        players.splice(index, 1);
+    }
 }
 
 // Game servers loop that calculates the delta time and saves it in a json object
