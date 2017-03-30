@@ -69,7 +69,12 @@ Lobby.prototype.generateWorld = function(data){
 
 Lobby.prototype.addPlayer = function(data){
     var player = new Player(data);
-    player.socket.join(this.name);
+    // get the client-Socket from the /lobby namespace
+    var playerSocket = socket.getClient(player.userID, '/lobby');
+    // let him join the lobby-Room
+    playerSocket.join(this.name);
+    // set the player.socket
+    player.socket = playerSocket;
     players.push(player);
 }
 
@@ -77,7 +82,7 @@ Lobby.prototype.removePlayer = function(userID){
     var index = players.indexOf(userID);
     if(index >= 0){
         var player = players[index];
-        player.socket.leave(this.name);
+        socket.removeClientFromNamespace(player.userID);
         players.splice(index, 1);
     }
 }

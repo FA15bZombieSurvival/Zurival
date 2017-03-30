@@ -33,7 +33,7 @@ var server = http.createServer(app);
 //Array for all Lobbys
 var lobbys = [];
 
-// Any socket.io related functions are at game/helper/io.js
+// Any socket.io related functions are at modules/io.js
 var io = require('./modules/io.js')(server);
 
 server.listen(app.get('port'), function() {
