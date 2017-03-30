@@ -1,4 +1,4 @@
-        var async = require('async'),
+var async = require('async'),
     request = require('request'),
     xml2js = require('xml2js'),
     _ = require('lodash'),
@@ -115,6 +115,7 @@ module.exports = function(app, worlds, callback){
             worldID: worldID
         });
     });
+
     app.post('/api/addFriend', function(req, res){
         var user = req.body.user;
         var friend = req.body.friend;
@@ -124,7 +125,7 @@ module.exports = function(app, worlds, callback){
         });
     });
 
-app.post('/api/deleteFriend', function(req, res){
+    app.post('/api/deleteFriend', function(req, res){
         var user = req.body.user;
         var friend = req.body.friend;
         User.deleteFriend(user, friend, function(err){
