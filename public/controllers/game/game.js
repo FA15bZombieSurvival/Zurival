@@ -5,15 +5,17 @@ angular.module('Zurival.game', [])
                 url: '/lobby',
                 views: {
                     "content@": {
-                        templateUrl: 'views/game/lobby.html'
+                        templateUrl: 'views/game/lobby.html',
+                        controller: 'LobbyCtrl'
                     }
                 }
             })
             .state('root.game.create_game', {
-                url: '/create_game',
+                url: '/lobby/create_game?lobbyname',
                 views: {
                     "content@": {
-                        templateUrl: 'views/game/create_game.html'
+                        templateUrl: 'views/game/create_game.html',
+                        controller: 'CreateGameCtrl'
                     }
                 }
             })
@@ -21,8 +23,9 @@ angular.module('Zurival.game', [])
                 url: '/ingame',
                 views: {
                     "content@": {
-                        templateUrl: 'views/game/game.html'
-                    } 
+                        templateUrl: 'views/game/game.html',
+                        controller: 'GameCtrl'
+                    }
                 }
             })
     });
