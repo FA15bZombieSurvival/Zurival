@@ -1,4 +1,4 @@
-        var async = require('async'),
+var async = require('async'),
     request = require('request'),
     xml2js = require('xml2js'),
     _ = require('lodash'),
@@ -127,6 +127,31 @@ module.exports = function(app, lobbys, callback){
             name: "generatedPlayer",
             value: character,
             lobbyID: lobbyID
+        });
+    });
+
+    app.post('/api/addFriend', function(req, res){
+        var user = req.body.user;
+        var friend = req.body.friend;
+        User.addFriend(user, friend, function(err){
+            if(err) res.sendStatus(401);
+            else res.sendStatus(200);
+        });
+    });
+
+    app.post('/api/deleteFriend', function(req, res){
+        var user = req.body.user;
+        var friend = req.body.friend;
+        User.deleteFriend(user, friend, function(err){
+            if(err) res.sendStatus(401);
+            else res.sendStatus(200);
+        });
+    });
+
+    app.post('/api/getFriends', function(req, res){
+        var user = req.body.user;
+        User.getFriends(user, function(err, arrFriends){
+            res.status(200).send(arrFriends);
         });
     });
 }
