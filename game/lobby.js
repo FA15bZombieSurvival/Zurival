@@ -5,6 +5,8 @@ var mapId,
     survivingTime,
     enemyTypes;
 
+var players;
+
 // Time object for applying delta to movements
 let time = {
     delta_start : new Date().getTime(),
@@ -21,16 +23,18 @@ function dummy(dummyValue1) {
 // Public
 module.exports = Lobby;
 
-Lobby.prototype.players = [];
-
 // Constructor
-function Lobby(data) {
-    this.name = data.name;
+function Lobby(lobbyname, user) {
+
+    this.name = lobbyname;
+    this.players = [];
+    this.players.push(user);
+/*
     this.host = data.user;
     this.maxPlayers = data.maxPlayers;
     this.survivingTime = data.survivingTime;
     this.enemyTypes = data.enemyTypes;
-
+*/
 }
 
 Lobby.prototype.update = function(delta){
@@ -59,7 +63,7 @@ Lobby.prototype.generateWorld = function(data){
 }
 
 Lobby.prototype.addPlayer = function(data){
-    players.push(new Player(data));
+    this.players.push(data);
 }
 
 // Game servers loop that calculates the delta time and saves it in a json object
