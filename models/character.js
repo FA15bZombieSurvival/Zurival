@@ -1,7 +1,6 @@
 var mongoose = require('mongoose');
 
 var characterSchema = new mongoose.Schema({
-    _id: Number,
     name: String,
     userID: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     inventarID: { type: mongoose.Schema.Types.ObjectId, ref: 'Inventar' },
