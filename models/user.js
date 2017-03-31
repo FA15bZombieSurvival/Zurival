@@ -39,7 +39,7 @@ userSchema.methods.generateJwt = function() {
         email: this.email,
         username: this.username,
         exp: parseInt(expiry.getTime() / 1000),
-    }, "MY_SECRET"); //ToDo get from Environment Variable (process.env.ENV_VARIABLE)
+    }, "MY_SECRET"); //TODO: get from Environment Variable (process.env.ENV_VARIABLE)
 };
 
 userSchema.methods.update = function(name, data, callback) {
