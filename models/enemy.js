@@ -27,7 +27,7 @@ enemySchema.methods.update = function(name, data, callback){
             if(err) return callback(err);
             else return callback(null);
         }
-    }
+    })
 }
 
 enemySchema.methods.delete = function(name, callback){

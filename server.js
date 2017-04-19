@@ -45,21 +45,34 @@ var routes = require('./modules/routes.js')(app, lobbys, function(err, data){
     //Switch to distinguish different callbacks
     switch(data.name){
         case 'createdLobby':
-            let lobby = new Lobby(data);
-            lobbys.push(lobby);
-        case 'generatedMap':
-            for(let lobby in lobbys)
-                if(lobby.name === data.lobbyName)
-                    lobby.generateWorld(data);
-            break;
-        case 'generatedPlayer':
-            var p = new Player(data.value);
+            var alreadyUsed = false
             for(var i=0; i<lobbys.length; i++){
-                if(lobbys[i]._id == data.lobbyID){
-                    lobbys[i].players.push(p);
-                    console.log(lobbys[i].players);
+                if(lobbys[i].name == data.lobbyname){
+                    alreadyUsed = true;
                 }
             }
+            if(!alreadyUsed){
+                let lobby = new Lobby(data.lobbyname, data.user);
+                lobbys.push(lobby);
+            }
+            break;
+        case 'joinLobby':
+            var alreadyJoined = false;
+            // Find lobby
+            for(var i=0; i<lobbys.length; i++){
+                if(lobbys[i].name == data.lobby.name){
+                    // Check if player has already joined
+                    for (var j = 0; j < lobbys[i].players.length; j++) {
+                        if(lobbys[i].players[j].id === data.user.id){
+                            alreadyJoined = true;
+                        }
+                    }
+                    if(!alreadyJoined){
+                        lobbys[i].addPlayer(data.user);
+                    }
+                }
+            }
+            data.callback();
             break;
         default: break;
     }
