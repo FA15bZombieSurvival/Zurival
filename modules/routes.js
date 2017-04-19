@@ -189,18 +189,6 @@ module.exports = function(app, lobbys, callback){
             callback: ndCallback
         });
     });
-
-    app.post('/api/generatePlayer', function(req, res){
-        var character = req.body.character;
-        var lobbyID = req.body.lobbyID;
-
-        callback(null, {
-            name: "generatedPlayer",
-            value: character,
-            lobbyID: lobbyID
-        });
-        res.sendStatus(200);
-    });
 }
 
 function ensureAuthenticated(req, res, next) {
