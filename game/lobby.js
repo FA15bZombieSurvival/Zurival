@@ -3,7 +3,8 @@ var mapId,
     name,
     maxPlayers,
     survivingTime,
-    enemyTypes;
+    enemyTypes,
+    socket;
 
 var players;
 
@@ -34,6 +35,7 @@ function Lobby(lobbyname, user) {
     this.maxPlayers = data.maxPlayers;
     this.survivingTime = data.survivingTime;
     this.enemyTypes = data.enemyTypes;
+
 */
 }
 
