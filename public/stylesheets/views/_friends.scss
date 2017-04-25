@@ -8,6 +8,13 @@
     background-color: #FFFFFF;
 }
 
+#searchFriendsTable {
+    visibility: hidden;
+    width: 0;
+    height: 0;
+    z-index: -1;
+}
+
 #chat {
     z-index: 5;
     visibility: hidden;

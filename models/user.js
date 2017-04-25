@@ -85,10 +85,9 @@ function getUser(name, callback){
 }
 
 user.getAllUsers = function(callback){
-    this.find({}, function(err, data) {
+    this.find({}, {username:1}, function(err, data) {
         if(err) return callback(err);
         if(data) {
-            console.log(data);
             callback(null, data);
         }
     });
