@@ -3,7 +3,10 @@ var mapId,
     name,
     maxPlayers,
     survivingTime,
-    enemyTypes;
+    enemyTypes,
+    socket;
+
+var players;
 
 // Time object for applying delta to movements
 let time = {
@@ -19,20 +22,24 @@ function dummy(dummyValue1) {
 }
 
 // Public
-module.exports = World;
-
-World.prototype.players = [];
+module.exports = Lobby;
 
 // Constructor
-function World(data) {
-    this.mapId = data._id;
-    this.name = data.name;
+function Lobby(lobbyname, user) {
+
+    this.name = lobbyname;
+    this.players = [];
+    this.players.push(user);
+/*
+    this.host = data.user;
     this.maxPlayers = data.maxPlayers;
     this.survivingTime = data.survivingTime;
     this.enemyTypes = data.enemyTypes;
+
+*/
 }
 
-World.prototype.update = function(delta){
+Lobby.prototype.update = function(delta){
     // Update enemies
     for (var i = 0; i < enemys.length; i++) {
         enemys[i].update(delta);
@@ -44,8 +51,8 @@ World.prototype.update = function(delta){
     }
 }
 
-World.prototype.generate = function(){
-
+Lobby.prototype.generateWorld = function(data){
+    this.mapId = data.value._id;
     // Create map with given number of tiles
     var worldInTilesWidth = 100,
         worldInTilesHeight = 100,
@@ -57,8 +64,8 @@ World.prototype.generate = function(){
     console.log(WORLD_PIXEL_HEIGHT + ' / ' + WORLD_PIXEL_WIDTH);
 }
 
-World.prototype.addPlayer = function(data){
-    players.push(new Player(data));
+Lobby.prototype.addPlayer = function(data){
+    this.players.push(data);
 }
 
 // Game servers loop that calculates the delta time and saves it in a json object

@@ -1,7 +1,6 @@
 var mongoose = require('mongoose');
 
 var enemySchema = new mongoose.Schema({
-    _id: Number,
     sprite: Number,
     name: { type: String, unique: true, required: true },
     description: String,
@@ -28,7 +27,7 @@ enemySchema.methods.update = function(name, data, callback){
             if(err) return callback(err);
             else return callback(null);
         }
-    }
+    })
 }
 
 enemySchema.methods.delete = function(name, callback){
