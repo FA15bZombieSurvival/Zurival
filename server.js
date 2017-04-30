@@ -33,7 +33,7 @@ var server = http.createServer(app);
 //Array for all Lobbys
 var lobbys = [];
 
-// Any socket.io related functions are at game/helper/io.js
+// Any socket.io related functions are at modules/io.js
 var io = require('./modules/io.js')(server);
 
 server.listen(app.get('port'), function() {
@@ -45,34 +45,21 @@ var routes = require('./modules/routes.js')(app, lobbys, function(err, data){
     //Switch to distinguish different callbacks
     switch(data.name){
         case 'createdLobby':
-            var alreadyUsed = false
-            for(var i=0; i<lobbys.length; i++){
-                if(lobbys[i].name == data.lobbyname){
-                    alreadyUsed = true;
-                }
-            }
-            if(!alreadyUsed){
-                let lobby = new Lobby(data.lobbyname, data.user);
-                lobbys.push(lobby);
-            }
+            let lobby = new Lobby(io.getNamespace('/lobby'), data);
+            lobbys.push(lobby);
+        case 'generatedMap':
+            for(let lobby in lobbys)
+                if(lobby.name === data.lobbyName)
+                    lobby.generateWorld(data);
             break;
-        case 'joinLobby':
-            var alreadyJoined = false;
-            // Find lobby
+        case 'generatedPlayer':
+            var p = new Player(data.value);
             for(var i=0; i<lobbys.length; i++){
-                if(lobbys[i].name == data.lobby.name){
-                    // Check if player has already joined
-                    for (var j = 0; j < lobbys[i].players.length; j++) {
-                        if(lobbys[i].players[j].id === data.user.id){
-                            alreadyJoined = true;
-                        }
-                    }
-                    if(!alreadyJoined){
-                        lobbys[i].addPlayer(data.user);
-                    }
+                if(lobbys[i]._id == data.lobbyID){
+                    lobbys[i].players.push(p);
+                    console.log(lobbys[i].players);
                 }
             }
-            data.callback();
             break;
         default: break;
     }

@@ -18,6 +18,9 @@ var id,
     rounds,
     created;
 
+// Socket from client
+var socket;
+
 // Ingame specific
 var x,
     y,
@@ -52,6 +55,8 @@ function Player(data) {
     this.kills = data.kills;
     this.rounds = data.rounds;
     this.created = data.created;
+
+    this.socket = data.socket;
 
     this.x = data.x;
     this.y = data.y;
