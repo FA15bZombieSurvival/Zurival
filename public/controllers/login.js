@@ -14,12 +14,10 @@ angular.module('Zurival')
                         $scope.wrongPassword = "Wrong password";
                 }else{
                     $rootScope.isLoggedIn = true;
-                    $rootScope.socket = io.connect('http://localhost:3000/chat', {   // TODO change Website
-                        'query': 'token=' + authentication.getToken(),
-                        'reconnection': true,
-                        'reconnectionDelay': 500,
-                        'reconnectionAttempts': 10
+                    $rootScope.socket = io.connect('http://localhost:3000', {   // ToDo change Website
+                        'query': 'token=' + authentication.getToken()
                     });
+                    console.log($rootScope.socket);
                     $location.path("/home");
                 }
             });

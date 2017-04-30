@@ -48,6 +48,7 @@ function nspLobby() {
 
 io.prototype.removeClientFromNamespace = function(id, namespace){
     var ns = io.of(namespace || "/");
+
     if (ns) {
         var index = ns.connected.indexOf(id);
         if(index !== -1){

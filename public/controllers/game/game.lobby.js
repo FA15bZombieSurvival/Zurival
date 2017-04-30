@@ -4,7 +4,7 @@ angular.module('Zurival.game.lobby', [])
             { _id: '58a581686ac37b3b848b7b36' },
             { _id: '58a59dfb6ac37b3b848b7b37' }
         ];
-  
+
         // TODO erst connecten, wenn man einer Lobby beigetreten ist.
         $rootScope.lobbySocket = io.connect('/lobby', {
             'query': 'token=' + authentication.getToken()

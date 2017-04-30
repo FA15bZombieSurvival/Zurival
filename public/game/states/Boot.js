@@ -1,21 +1,28 @@
-Boot = function(){};
+var Boot = function(){};
 
 Boot.prototype = {
     preload: function() {
     },
 
     create: function(){
+        //Prevents stopping the game when window loses focus
+        game.stage.disableVisibilityChange = true;
+        game.input.maxPointers = 1;
 
-        this.game.stage.backgroundColor = '#fff';
-        this.game.add.text(100, 100, "Loading...")
+        game.stage.backgroundColor = '#fff';
+        game.add.text(100, 100, "Loading...")
 
-        this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+        game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 
-        this.scale.pageAlignHorizontally = true;
-        this.scale.pageAlignVertically = true;
+        //difference must be tested
+        game.stage.scale.pageAlignHorizontally = true;
+        game.scale.pageAlignHorizontally = true;
+        game.scale.pageAlignVertically = true;
 
-        this.game.physics.startSystem(Phaser.Physics.ARCADE);
+        game.physics.startSystem(Phaser.Physics.ARCADE);
 
-        this.state.start('Preload');
+        game.state.start('Preload');
     }
 }
+
+//module.exports = Boot();

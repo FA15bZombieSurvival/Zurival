@@ -1,14 +1,25 @@
-window.createGame = function(scope, element, injector) {
+var width = parseInt(window.innerWidth/1.1, 10),
+    height = parseInt(window.innerHeight/1.7, 10);
 
-    // Build game object
-    //TODO: Change width and height dynamically
-    var width = parseInt(window.innerWidth/1.1, 10),
-        height = parseInt(window.innerHeight/1.7, 10);
-    var game = new Phaser.Game(width, height, Phaser.AUTO, 'gameCanvas');
+window.game = new Phaser.Game(width, height, Phaser.AUTO, 'gameCanvas');
+window.player = null;
+window.socket = null;
+window.map = null;
+//window.TEXTURES = ;
 
+//var createGame();
+//window.createGame = function(scope, element, injector) {
+window.createGame = function() {
+  //socket muss hier rein
+    socket = io("");
+/*
+    game.state.add('Boot', require("./game/states/Boot"));
+    game.state.add('Preload', require("./game/states/Preload"));
+    game.state.add('Game', require("./game/states/Game"));
+    */
     game.state.add('Boot', Boot);
     game.state.add('Preload', Preload);
     game.state.add('Game', Game);
 
-    game.state.start('Boot'); 
+    game.state.start('Boot');
 };
