@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var Enemy = require('./enemy.js');
 
 var mapSchema = new mongoose.Schema({
     name: String,

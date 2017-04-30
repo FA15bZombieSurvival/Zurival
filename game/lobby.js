@@ -6,6 +6,8 @@ var mapId,
     enemyTypes,
     socket;
 
+var players;
+
 // Time object for applying delta to movements
 let time = {
     delta_start : new Date().getTime(),
@@ -21,8 +23,6 @@ function dummy(dummyValue1) {
 
 // Public
 module.exports = Lobby;
-
-Lobby.prototype.players = [];
 
 // Constructor
 function Lobby(socket, data) {

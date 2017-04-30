@@ -25,6 +25,76 @@ module.exports = function(app, lobbys, callback){
         next();
     });
 
+    // app.get('/api/generateSchema', function(req, res, next){
+    //     var Enemy = require('../models/enemy.js');
+    //
+    //     var enemy1 = new Enemy({
+    //         sprite: 21,
+    //         name: 'Sprinter1',
+    //         description: 'Sprinter are faster than their walkers friends',
+    //         hp: 100,
+    //         damage: 5,
+    //         armor: 1,
+    //         type: 'sprinter'
+    //     });
+    //     var enemy2 = new Enemy({
+    //         sprite: 21,
+    //         name: 'Sprinter2',
+    //         description: 'Sprinter are faster than their walkers friends',
+    //         hp: 100,
+    //         damage: 5,
+    //         armor: 1,
+    //         type: 'sprinter'
+    //     });
+    //     enemy1.save();
+    //     enemy2.save();
+    //     var map = new Map({
+    //         name: 'Wasteland',
+    //         maxPlayers: 11,
+    //         survivingTime: 22,
+    //         enemyTypes: [
+    //           enemy1._id,
+    //           enemy2._id
+    //         ]
+    //     });
+    //     map.save(function(err){
+    //         if(err) console.log(err);
+    //     });
+    // });
+
+    app.get('/game/lobby', function(req, res){
+        res.status(200).send(lobbys);
+    });
+
+    app.get('/api/maps', function(req, res) {
+        Map
+          .find({})
+          .populate('enemyTypes')
+          .exec(function(err, maps) {
+            if(err) console.log(err);
+            res.status(200).send(maps);
+          })
+    });
+
+    app.get('/game/lobby/create_game/:lobbyname', function(req, res){
+
+        var lobbyname = req.params.lobbyname;
+        var lobby;
+
+        for (var i = 0; i < lobbys.length; i++) {
+            if(lobbys[i].name == lobbyname){
+                lobby = lobbys[i];
+            }
+        }
+        if(lobby !== undefined){
+            res.status(200).send(lobby);
+        }
+        else {
+            //TODO: Implement callback
+            res.redirect('/#' + req.originalUrl);
+        }
+    });
+
     app.get('*', function(req, res) {
         res.redirect('/#' + req.originalUrl);
     });
@@ -68,47 +138,32 @@ module.exports = function(app, lobbys, callback){
         });
     });
 
-    app.post('/game/lobby', function(req, res){
-
-        var userID = req.body.userID;
-
-        Character.find({userID: userID}, function(err, characters){
-            if(err){ return res.status(401).send(err + '\nErr:CantCreateLobbyOrCharacters') }
-            if(characters){
-
-                res.status(200).send({
-                    lobbys: lobbys,
-                    characters: characters
-                });
-            }
-            else {
-                res.status(401).send("Couldn\'t find a characters or maps");
-            }
-        });
-    });
-
-// TODO: Namen auf doppelten Eintrag überprüfen. Die Namen müssen Unique sein.
+    // TODO: Namen auf doppelten Eintrag überprüfen. Die Namen müssen Unique sein.
     app.post('/api/createLobby', function(req, res){
+
+        var lobbyname = req.body.lobbyname;
         var user = req.body.user;
-        var lobbyName = req.body.lobbyName;
+
         callback(null, {
             name: 'createdLobby',
-            lobbyName: lobbyName,
+            lobbyname: lobbyname,
             user: user
-        })
+        });
+
+        res.sendStatus(200);
     });
 
 // gibt die ID der ausgesuchten Karte um diese in der Lobby zu erstellen.
     app.post('/api/generateMap', function(req, res){
         var id = req.body._id;
-        var lobbyName = req.body.lobbyName;
+        var lobbyname = req.body.lobbyname;
         Map.findById(id, function(err, map){
             if(err){ return res.status(401).send(err + '\nErr:CantCreateLobby') }
             if(map){
                 //null for possible error responses
                 callback(null, {
                     name: "generatedMap",
-                    lobbyName: lobbyName,
+                    lobbyname: lobbyname,
                     value: map
                 });
                 res.status(200).send(map);
@@ -119,14 +174,19 @@ module.exports = function(app, lobbys, callback){
         });
     });
 
-    app.post('/api/generatePlayer', function(req, res){
-        var character = req.body.character;
-        var lobbyID = req.body.lobbyID;
+    app.post('/api/joinLobby', function(req, res){
+
+        var user = req.body.user;
+        var lobby = req.body.lobby;
+        var ndCallback = function(){
+            res.status(200).send(lobby);
+        }
 
         callback(null, {
-            name: "generatedPlayer",
-            value: character,
-            lobbyID: lobbyID
+            name: "joinLobby",
+            user: user,
+            lobby: lobby,
+            callback: ndCallback
         });
     });
 }

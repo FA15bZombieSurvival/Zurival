@@ -2,6 +2,7 @@ var app = angular.module("Zurival", [
     "ui.router",
     "Zurival.game",
     "Zurival.game.lobby",
+    "Zurival.game.create_game",
     "Zurival.game.game"
 ]);
 
