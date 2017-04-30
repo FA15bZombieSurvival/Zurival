@@ -25,21 +25,18 @@ function dummy(dummyValue1) {
 module.exports = Lobby;
 
 // Constructor
-function Lobby(socket, data) {
-    this.name = data.lobbyName;
+function Lobby(lobbyname, user) {
+
+    this.name = lobbyname;
+    this.players = [];
+    this.players.push(user);
+/*
     this.host = data.user;
     this.maxPlayers = data.maxPlayers;
     this.survivingTime = data.survivingTime;
     this.enemyTypes = data.enemyTypes;
-    this.socket = socket.join(this.name);
-    let playerData;
-    playerData.userID = this.host;
-    let hostSocket = socket.getClient(this.host);
-    if(hostSocket != null){
-        hostSocket.join(this.name);
-        playerData.socket = hostSocket;
-    }
-    addPlayer(playerData);
+
+*/
 }
 
 Lobby.prototype.update = function(delta){
@@ -65,26 +62,11 @@ Lobby.prototype.generateWorld = function(data){
     const WORLD_PIXEL_WIDTH = worldInTilesWidth * tileSize;
     const WORLD_PIXEL_HEIGHT = worldInTilesHeight * tileSize;
     console.log(WORLD_PIXEL_HEIGHT + ' / ' + WORLD_PIXEL_WIDTH);
+    createGame();
 }
 
 Lobby.prototype.addPlayer = function(data){
-    var player = new Player(data);
-    // get the client-Socket from the /lobby namespace
-    var playerSocket = socket.getClient(player.userID, '/lobby');
-    // let him join the lobby-Room
-    playerSocket.join(this.name);
-    // set the player.socket
-    player.socket = playerSocket;
-    players.push(player);
-}
-
-Lobby.prototype.removePlayer = function(userID){
-    var index = players.indexOf(userID);
-    if(index >= 0){
-        var player = players[index];
-        socket.removeClientFromNamespace(player.userID);
-        players.splice(index, 1);
-    }
+    this.players.push(data);
 }
 
 // Game servers loop that calculates the delta time and saves it in a json object

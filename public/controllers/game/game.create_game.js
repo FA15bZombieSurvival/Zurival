@@ -32,13 +32,14 @@ angular.module('Zurival.game.create_game', ['smart-table'])
                 console.log("Error in GET:api/maps");
             });
 
-        $scope.generateWorld = function(selectedMap){
+        $scope.generateWorld = function(){
 
-            var mapId = selectedMap._id;
+            var mapId = $scope.chosenMap._id;
 
             $http.post('/api/createLobby', mapId)
                 .success(function(data, status, header, config){
                     $scope.worlds.push(data);
+                    createGame();
                 })
                 .error(function(data, status, header, config){
                     console.log("Error in POST:api/generateWorld");
