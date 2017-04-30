@@ -190,6 +190,11 @@ module.exports = function(app, lobbys, callback){
             callback: ndCallback
         });
     });
+    // TODO: Save profilechanges to db
+    app.post('/api/changeProfile', function(req, res) {
+
+    });
+}
 
     app.post('/api/addFriend', function(req, res){
         var user = req.body.user;

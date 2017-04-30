@@ -17,10 +17,6 @@
                     display: flex;
                     flex-flow: flex-start;
                     float: left;
-                    #profile-avatar {
-                        height: inherit;
-                        max-height: inherit;
-                    }
                 }
                 #profile-header-left {
                     height: inherit;
@@ -54,6 +50,9 @@
                         height: 100%;
                         .panel-heading {
                             height: auto;
+                            #submitProfileChanges {
+                                visibility: hidden;
+                            }
                         }
                     }
                 }

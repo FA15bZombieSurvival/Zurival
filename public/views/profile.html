@@ -1,10 +1,10 @@
+
 <div class="container-fluid" id="profile">
     <div class="row" id="profile-header">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <header>
                 <div id="profile-header-left">
-                    <img id="profile-avatar" class="img-circle" src="images/profile-placeholder.png">
-                    <h3 id="profile-name">Username</h3>
+                    <h3 id="profile-name">{{ user.username }}</h3>
                 </div>
             </header>
         </div>
@@ -16,6 +16,8 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             Informations
+                            <button class="btn btn-default" ng-if="loggedInUser" ng-click="edit()"><span class="fa fa-pencil"></span></button>
+                            <button class="btn btn-success" id="submitProfileChanges"><span class="fa fa-check"></span></button>
                         </div>
                         <div class="panel-body">
                             <form>
