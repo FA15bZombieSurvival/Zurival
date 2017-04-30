@@ -1,0 +1,65 @@
+<div class="container">
+  <div class="row">
+    <div class="center-form panel">
+      <div class="panel-body text-center">
+        <h2 class="text-center">Lobby {{lobby.name}}</h2>
+
+        <form>
+            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <label class="text-center">Map Selection</label>
+                </div>
+                <div class="col-xs-offset-2 col-xs-8 col-sm-offset-2 col-sm-8 col-md-offset-2 col-md-8 col-lg-offset-2 col-lg-8 text-center">
+                    <select class="form-control input-xs" name="mapselection" ng-model="chosenMap" ng-options="map.name for map in maps"></select>
+                </div>
+                <div class="col-xs-12 col-sm-offset-2 col-sm-8 col-md-offset-2 col-md-8 col-lg-offset-2 col-lg-8 table-responsive" style="margin-top: 10px">
+                    <table class="table">
+                        <tr>
+                            <td class="text-left">Name</td>
+                            <td class="text-right">{{chosenMap.name}}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-left">Max. Player</td>
+                            <td class="text-right">{{chosenMap.maxPlayers}}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-left">Surviving Time</td>
+                            <td class="text-right">{{chosenMap.survivingTime}}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-left" colspan="2"><b>Enemy Types</b></td>
+                        </tr>
+                        <tr ng-repeat="enemy in chosenMap.enemyTypes">
+                            <td class="text-right" colspan="2">{{enemy.name}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                <table class="table">
+                    <tr>
+                        <th class="text-center" colspan="2">Character</th>
+                    </tr>
+                </table>
+            </div>
+            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                <table st-table="displayedUsers" st-safe-src="users" class="table">
+                    <tr>
+                        <th class="text-center">Players</th>
+                    </tr>
+                    <tr ng-repeat="user in displayedUsers">
+                        <td class="text-right">{{user.username}}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="form-group col-sm-12">
+                <div class="col-xs-offset-2 col-xs-8 col-sm-offset-2 col-sm-8 col-md-offset-2 col-md-8 col-lg-offset-2 col-lg-8 ">
+                    <button type="submit" class="btn btn-lg btn-block btn-danger" ui-sref="root.game.create_game" ng-click="generateWorld()">Start Game</button>
+                </div>
+            </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>

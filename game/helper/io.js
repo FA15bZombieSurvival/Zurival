@@ -1,5 +1,5 @@
 const socketio = require('socket.io');
-const UUID = require('UUID');
+const UUID = require('uuid/v4');
 
 module.exports.invoke = function(server) {
     var io = socketio.listen(server);

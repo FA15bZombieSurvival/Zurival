@@ -38,11 +38,12 @@
                 if(isLoggedIn()){
                     var token = getToken();
                     var payload = token.split(".")[1];
-                    payload = $window.atob(payload);
+                    if(token != undefined) {
+                        payload = $window.atob(payload);
+                    }
                     payload = JSON.parse(payload);
 
-                    return {
-                        id: payload._id,
+                    return {                        id: payload._id,
                         username: payload.username,
                         email: payload.email
                     }

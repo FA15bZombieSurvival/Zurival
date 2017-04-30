@@ -2,40 +2,54 @@
 @import url(bootstrap.min.css);
 /* Colors */
 /* Import stylesheets */
-#ui-nav .navbar {
+#ui-nav {
   float: left;
-  background-color: #FFFFFF;
-  color: #932D24;
-  width: 55px;
-  height: 100%;
-  padding-right: 2px;
-  margin-right: 0; }
-  #ui-nav .navbar #nav-toggle {
+  min-height: 100% !important;
+  height: 100% !important;
+  max-height: 100% !important;
+  margin-bottom: 0 !important; }
+  #ui-nav .navbar {
+    margin-bottom: 0;
+    float: left;
     background-color: #FFFFFF;
     color: #932D24;
-    border-radius: 0;
-    border: 0;
-    width: inherit;
-    height: 55px;
-    margin: 0;
-    padding: 0; }
-  #ui-nav .navbar .navbar-nav {
-    width: inherit; }
-    #ui-nav .navbar .navbar-nav li {
-      display: block;
+    width: 55px;
+    height: 100%;
+    padding-right: 2px;
+    margin-right: 0;
+    border-bottom: none; }
+    #ui-nav .navbar #nav-toggle {
+      background-color: #FFFFFF;
+      color: #932D24;
+      border-radius: 0;
+      border: 0;
+      width: inherit;
+      height: 55px;
+      margin: 0;
+      padding: 0; }
+    #ui-nav .navbar .navbar-nav {
       width: inherit; }
-      #ui-nav .navbar .navbar-nav li a {
+      #ui-nav .navbar .navbar-nav li {
         display: block;
-        width: inherit;
-        text-align: center;
-        color: #932D24; }
+        width: inherit; }
+        #ui-nav .navbar .navbar-nav li a {
+          display: block;
+          width: inherit;
+          text-align: center;
+          color: #932D24; }
+      #ui-nav .navbar .navbar-nav #navigationLogout {
+        position: relative;
+        left: 0;
+        bottom: 0;
+        margin-bottom: 0; }
 
 #content {
   float: left;
   margin-left: 55px;
   width: calc(100% - 55px);
   border-left: 1px solid #932D24;
-  height: 100%; }
+  min-height: 100% !important;
+  height: 100% !important; }
   #content .container-fluid .row {
     margin-bottom: 20px; }
     #content .container-fluid .row #logo-container h1 span {
@@ -101,19 +115,101 @@
   height: auto;
   margin: 0; }
 
-@font-face {
-  font-family: "Helvetica";
-  src: url("../fonts/Transformers Movie.ttf"); }
+#profile {
+  height: 100% !important;
+  max-height: 100% !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: hidden; }
+  #profile #profile-header {
+    max-height: 55px !important;
+    margin-bottom: 0; }
+    #profile #profile-header div header {
+      height: 55px !important; }
+      #profile #profile-header div header #profile-header-left {
+        height: inherit;
+        display: flex;
+        flex-flow: flex-start;
+        float: left; }
+      #profile #profile-header div header #profile-header-left {
+        height: inherit;
+        display: flex;
+        flex-flow: flex-start;
+        float: left; }
+        #profile #profile-header div header #profile-header-left #profile-avatar {
+          height: inherit;
+          max-height: inherit; }
+      #profile #profile-header div header #profile-header-right {
+        float: right; }
+  #profile #profile-body {
+    height: calc(100% - 100px);
+    max-height: calc(100% - 100px);
+    margin: 15px 0 0 0 !important; }
+    #profile #profile-body #profile-left {
+      margin-bottom: 0 !important;
+      height: 100%; }
+      #profile #profile-body #profile-left .row {
+        margin-bottom: 0 !important;
+        height: inherit; }
+        #profile #profile-body #profile-left .row div {
+          height: 50%; }
+          #profile #profile-body #profile-left .row div .panel {
+            height: 100%; }
+            #profile #profile-body #profile-left .row div .panel .panel-heading {
+              height: auto; }
+              #profile #profile-body #profile-left .row div .panel .panel-heading #submitProfileChanges {
+                visibility: hidden; }
+        #profile #profile-body #profile-left .row #profile-marketplace-short {
+          margin: 15px 0; }
+          #profile #profile-body #profile-left .row #profile-marketplace-short .panel {
+            margin: 0; }
+            #profile #profile-body #profile-left .row #profile-marketplace-short .panel .panel-body #profile-mp-items {
+              display: flex;
+              flex-direction: row;
+              flex-wrap: wrap; }
+              #profile #profile-body #profile-left .row #profile-marketplace-short .panel .panel-body #profile-mp-items #profile-mp-item {
+                width: 32px;
+                height: 32px;
+                border: 1px solid #932D24; }
+    #profile #profile-body #profile-log {
+      height: 100%;
+      margin: 0 !important; }
+      #profile #profile-body #profile-log .panel {
+        height: calc(100% + 15px);
+        margin: 0; }
+
+#chat {
+  width: 300px;
+  height: 75%;
+  position: absolute;
+  top: 12.5%;
+  right: -275px;
+  background-color: #FFFFFF; }
+  #chat .panel-heading {
+    text-align: center; }
+  #chat #arrow {
+    width: 25px;
+    height: 25px;
+    color: #932D24;
+    margin-top: calc((100% - 25px) / 2); }
+
+/*@font-face {
+    font-family: "Helvetica";
+    src: url("../fonts/Transformers\ Movie.ttf");
+}
 @font-family-base {
-  font-family: "Helvetica";
-  src: url("../fonts/Transformers Movie.ttf"); }
+    font-family: "Helvetica";
+    src: url("../fonts/Transformers\ Movie.ttf");
+}*/
 html {
   width: 100%;
+  height: 100%;
   max-height: 100%; }
   html body {
     height: 100%;
     max-height: 100%;
     background-color: #FFFFFF;
-    color: #932D24; }
+    color: #932D24;
+    overflow-x: hidden; }
 
 /*# sourceMappingURL=style.css.map */

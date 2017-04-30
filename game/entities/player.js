@@ -61,12 +61,73 @@ function Player(data) {
     this.yVelocity = data.yVelocity;
 }
 
+/*
 Player.prototype.update = function(keyPressed, delta){
+    //Reset the move and attack variable before sending it again
+    moveToServer = 0;
+    attackToServer = 0;
 
-    this.x = xVelocity * delta;
-    this.y = yVelocity * delta;
+    //Move left if "a" is pressed
+    if(left.isDown){
+      //play animation for running left
+      this.player.animations.play('left');
+      //Set the first Bit of the move variable
+      moveToServer |= (1<<0);
+    }
+
+
+//Move right if "d" is pressed
+update: function(){
+  //Movementspeed
+  this.baseVelocity = 128;
+
+  //Move left
+  if (moveDirection == 01){
+    //Move the player left with the basespeed
+    this.player.body.velocity.x -= this.baseVelocity;
+  }
+  //Move right
+  if (moveDirection == 010){
+    //Move the player right with the basespeed
+    this.player.body.velocity.x += this.baseVelocity;
+  }
+  //Move up
+  if (moveDirection == 0100){
+    //Move the player up with the basespeed
+    this.player.body.velocity.y -= this.baseVelocity;
+  }
+  //Move down
+  if (moveDirection == 01000){
+    //Move the player down with the basespeed
+    this.player.body.velocity.y += this.baseVelocity;
+  }
+  if (moveDirection == 0101){
+    //Move the player left with the basespeed
+    this.player.body.velocity.x -= this.baseVelocity;
+    //Move the player up with the basespeed
+    this.player.body.velocity.y -= this.baseVelocity;
+  }
+  if (moveDirection == 0110){
+    //Move the player right with the basespeed
+    this.player.body.velocity.x += this.baseVelocity;
+    //Move the player up with the basespeed
+    this.player.body.velocity.y -= this.baseVelocity;
+  }
+  if (moveDirection == 01001){
+    //Move the player left with the basespeed
+    this.player.body.velocity.x -= this.baseVelocity;
+    //Move the player down with the basespeed
+    this.player.body.velocity.y += this.baseVelocity;
+  }
+  if (moveDirection == 01010){
+    //Move the player right with the basespeed
+    this.player.body.velocity.x += this.baseVelocity;
+    //Move the player down with the basespeed
+    this.player.body.velocity.y += this.baseVelocity;
+  }
 }
 
 Player.prototype.generate = function(){
 
 }
+*/

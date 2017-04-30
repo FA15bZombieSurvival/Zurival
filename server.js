@@ -8,7 +8,8 @@ var mongoose = require('mongoose'),
     session = require('express-session'),
     http = require('http');
     compress = require('compression'),
-    World = require('./game/world.js'),
+    //World = require('./game/world.js'),
+    Lobby = require('./game/lobby.js'),
     Player = require('./game/entities/player.js');
 
 var app = express()
@@ -30,33 +31,49 @@ app.use(express.static(path.join(__dirname, '/public/game'), { maxAge: 0 }));
 
 var server = http.createServer(app);
 
-//Array for all worlds
-var worlds = [];
+//Array for all Lobbys
+var lobbys = [];
 
 // Any socket.io related functions are at game/helper/io.js
-var io = require('./game/helper/io.js').invoke(server);
+var io = require('./modules/io.js')(server);
 
 server.listen(app.get('port'), function() {
   console.log('Express server listening on port ' + app.get('port'));
 });
 
-var routes = require('./modules/routes.js')(app, worlds, function(err, data){
+var routes = require('./modules/routes.js')(app, lobbys, function(err, data){
     if(err){ console.log("Err: " + err); }
     //Switch to distinguish different callbacks
     switch(data.name){
-        case 'generatedWorld':
-            var w = new World(data.value);
-            w.generate();
-            worlds.push(w);
-            break;
-        case 'generatedPlayer':
-            var p = new Player(data.value);
-            for(var i=0; i<worlds.length; i++){
-                if(worlds[i]._id == data.worldID){
-                    worlds[i].players.push(p);
-                    console.log(worlds[i].players);
+        case 'createdLobby':
+            var alreadyUsed = false
+            for(var i=0; i<lobbys.length; i++){
+                if(lobbys[i].name == data.lobbyname){
+                    alreadyUsed = true;
                 }
             }
+            if(!alreadyUsed){
+                let lobby = new Lobby(data.lobbyname, data.user);
+                lobbys.push(lobby);
+            }
+            break;
+        case 'joinLobby':
+            var alreadyJoined = false;
+            // Find lobby
+            for(var i=0; i<lobbys.length; i++){
+                if(lobbys[i].name == data.lobby.name){
+                    // Check if player has already joined
+                    for (var j = 0; j < lobbys[i].players.length; j++) {
+                        if(lobbys[i].players[j].id === data.user.id){
+                            alreadyJoined = true;
+                        }
+                    }
+                    if(!alreadyJoined){
+                        lobbys[i].addPlayer(data.user);
+                    }
+                }
+            }
+            data.callback();
             break;
         default: break;
     }

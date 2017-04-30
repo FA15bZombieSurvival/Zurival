@@ -1,5 +1,5 @@
 angular.module('Zurival')
-    .controller('LoginCtrl', ['$scope', '$location', 'authentication', function($scope, $location, authentication) {
+    .controller('LoginCtrl', ['$rootScope', '$scope', '$location', 'authentication', function($rootScope, $scope, $location, authentication) {
         $scope.title = 'Login';
 
         $scope.login = function() {
@@ -13,6 +13,11 @@ angular.module('Zurival')
                     if(err.indexOf("Err:Password") !== -1)
                         $scope.wrongPassword = "Wrong password";
                 }else{
+                    $rootScope.isLoggedIn = true;
+                    $rootScope.socket = io.connect('http://localhost:3000', {   // ToDo change Website
+                        'query': 'token=' + authentication.getToken()
+                    });
+                    console.log($rootScope.socket);
                     $location.path("/home");
                 }
             });

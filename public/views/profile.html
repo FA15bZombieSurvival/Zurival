@@ -1,14 +1,104 @@
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-12 col-lg-12"></div>
+
+<div class="container-fluid" id="profile">
+    <div class="row" id="profile-header">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <header>
+                <div id="profile-header-left">
+                    <h3 id="profile-name">{{ user.username }}</h3>
+                </div>
+            </header>
+        </div>
     </div>
-    <div class="row">
-        <div class="col-md-6 col-lg-6">
-            <div class="row">
-                <div class="col-md-12 col-lg-12"></div>
+    <div class="row" id="profile-body">
+        <div id="profile-left" class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+            <div class="row row-eq-height">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="profile-informations">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Informations
+                            <button class="btn btn-default" ng-if="loggedInUser" ng-click="edit()"><span class="fa fa-pencil"></span></button>
+                            <button class="btn btn-success" id="submitProfileChanges"><span class="fa fa-check"></span></button>
+                        </div>
+                        <div class="panel-body">
+                            <form>
+                                <table>
+                                    <tr>
+                                        <td><label for="username">Username:</label></td>
+                                        <td><input id="username" value="{{ user.username }}" disabled></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label for="usermail">E-Mail:</label></td>
+                                        <td><input id="usermail" value="{{ user.email }}" disabled></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label for="usergold">Gold:</label></td>
+                                        <td><p id="usergold">12G</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label for="userfriends">Friends:</label></td>
+                                        <td><p>50</p></td>
+                                    </tr>
+                                </table>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div id="profile-marketplace-short" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            {{ user.username }} is selling this items:
+                        </div>
+                        <div class="panel-body">
+                            <div class="col-md-8 col-lg-8" id="profile-mp-items">
+                                <div id="profile-mp-item"></div>
+                                <div id="profile-mp-item"></div>
+                                <div id="profile-mp-item"></div>
+                                <div id="profile-mp-item"></div>
+                                <div id="profile-mp-item"></div>
+                                <div id="profile-mp-item"></div>
+                                <div id="profile-mp-item"></div>
+                                <div id="profile-mp-item"></div>
+                                <div id="profile-mp-item"></div>
+                                <div id="profile-mp-item"></div>
+                                <div id="profile-mp-item"></div>
+                                <div id="profile-mp-item"></div>
+                                <div id="profile-mp-item"></div>
+                                <div id="profile-mp-item"></div>
+                                <div id="profile-mp-item"></div>
+                            </div>
+                            <div class="col-md-4 col-lg-4" id="profile-mp-detail">
+                                Detail
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="row">
-                <div class="col-md-12 col-lg-12"></div>
+        </div>
+        <div id="profile-log" class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">Activity Log</div>
+                <div class="panel-body"></div>
             </div>
+        </div>
     </div>
 </div>
+
+<div id="chat" class="panel panel-default">
+    <div class="panel-heading">Chat</div>
+    <div class="panel-body">
+        <p class="chat-conversation">
+            <b><span class="chat-username">User 1</span></b>
+            <span class="chat-message">Hallo</span>
+        </p>
+        <form class="form-inline" id="chat-message">
+            <div class="form-group">
+                <input type="text" class="form-control">
+
+            </div>
+            <button type="submit" class="btn btn-default">Send!</button>
+        </form>
+    </div>
+    <span class="fa fa-arrow-left" id="arrow"></span>
+</div>
+
+<script src="../scripts/chat-slider.js"></script>
