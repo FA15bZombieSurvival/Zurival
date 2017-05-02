@@ -194,7 +194,6 @@ module.exports = function(app, lobbys, callback){
     app.post('/api/changeProfile', function(req, res) {
 
     });
-}
 
     app.post('/api/addFriend', function(req, res){
         var user = req.body.user;
@@ -227,6 +226,7 @@ module.exports = function(app, lobbys, callback){
         });
     });
 }
+
 function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) next();
     else res.sendStatus(401);

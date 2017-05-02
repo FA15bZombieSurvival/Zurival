@@ -2,7 +2,7 @@ angular.module('Zurival')
     .controller('FriendsCtrl', ['$scope', '$http', 'authentication', function($scope, $http, authentication) {
         $scope.user = authentication.currentUser();
 
-        getAllUsers();
+        $scope.searchFriends = getAllUsers();
 
         function getAllUsers() {
             $http.post('/api/getUsers')

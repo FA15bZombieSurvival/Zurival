@@ -1,10 +1,10 @@
-<div class="container-fluid">
+<div class="container-fluid" ng-controller="FriendsCtrl">
     <div class="row">
         <div class="col-md-12 col-lg-12">
             <h3 class="navbar-left">{{ user.username }} - Friends</h3>
             <form class="navbar-form navbar-right">
                 <div class="form-group">
-                    <input type="text" id="friendsSearchInput" class="form-control" placeholder="Find new Friends..." ng-model="searchFriends" data-toggle="modal" data-target=".bs-example-modal-lg">
+                    <input type="text" id="friendsSearchInput" class="form-control" placeholder="Find new Friends..." ng-model="searchFriends" data-toggle="modal" data-target="#allUsersModal">
                 </div>
                 <div class="btn-group" role="group">
                     <button type="button" class="btn btn-danger" onclick="$('#friendsSearchInput').val('');">
@@ -15,24 +15,30 @@
         </div>
     </div>
     <div class="row">
-        <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-            <div class="modal-dialog modal-lg">
+        <div id="allUsersModal" class="modal fade" role="dialog" tabindex="-1">
+            <div class="modal-dialog">
                 <div class="modal-content">
+                    <div class="modal-header">
+                        <h4>Search for new friends</h4>
+                    </div>
                     <div class="modal-body">
-            <table class="table table-bordered table-striped table-condensed">
-                <tr ng-repeat="user in allUsers | filter:searchFriends">
-                    <td> {{ user.username }}</td>
-                    <td>
-                        <button type="button" class="btn btn-success">
-                            <span class="fa fa-plus"></span>
-                        </button>
-                    </td>
-                </tr>
-            </table>
+                        <table class="table table-bordered table-striped table-condensed">
+                            <tr ng-repeat="user in allUsers | filter : searchFriends">
+                                <td> {{ user.username }}</td>
+                                <td>
+                                    <button type="button" class="btn btn-success">
+                                        <span class="fa fa-plus"></span>
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+            </div>
         </div>
     </div>
-</div>
-        </div>
         <div class="table-responsive">
             <table class="table table-bordered table-striped table-condensed">
                 <thead>
