@@ -1,10 +1,11 @@
-        var async = require('async'),
+var async = require('async'),
     request = require('request'),
     xml2js = require('xml2js'),
     _ = require('lodash'),
     Map = require('../models/map.js'),
     Character = require('../models/character.js'),
-    passport = require('./passport.js');
+    passport = require('./passport.js'),
+    User = require('../models/user.js');
 
 module.exports = function(app, lobbys, callback){
 
@@ -187,6 +188,41 @@ module.exports = function(app, lobbys, callback){
             user: user,
             lobby: lobby,
             callback: ndCallback
+        });
+    });
+    // TODO: Save profilechanges to db
+    app.post('/api/changeProfile', function(req, res) {
+
+    });
+
+    app.post('/api/addFriend', function(req, res){
+        var user = req.body.user;
+        var friend = req.body.friend;
+        User.addFriend(user, friend, function(err){
+            if(err) res.sendStatus(401);
+            else res.sendStatus(200);
+        });
+    });
+
+    app.post('/api/deleteFriend', function(req, res){
+        var user = req.body.user;
+        var friend = req.body.friend;
+        User.deleteFriend(user, friend, function(err){
+            if(err) res.sendStatus(401);
+            else res.sendStatus(200);
+        });
+    });
+
+    app.post('/api/getFriends', function(req, res){
+        var user = req.body.user;
+        User.getFriends(user, function(err, arrFriends){
+            res.status(200).send(arrFriends);
+        });
+    });
+
+    app.post('/api/getUsers', function(req, res) {
+        User.getAllUsers(function(err, arrUsers) {
+            res.status(200).send(arrUsers);
         });
     });
 }

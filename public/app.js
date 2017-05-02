@@ -72,6 +72,15 @@ app.config([
                     controller: "ProfileCtrl"
                 }
             }
+        })
+        .state("root.friends", {
+            url: "/friends",
+            views: {
+                "content@": {
+                    templateUrl: 'views/friends.html',
+                    controller: "FriendsCtrl"
+                }
+            }
         });
 
         $urlRouterProvider.otherwise("home");

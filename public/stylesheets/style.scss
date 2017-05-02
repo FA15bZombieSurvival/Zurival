@@ -9,6 +9,7 @@
 @import "views/register";
 @import "views/about";
 @import "views/profile";
+@import "views/friends";
 
 /*@font-face {
     font-family: "Helvetica";
@@ -29,5 +30,6 @@ html {
         background-color: #FFFFFF;
         color: $primary;
         overflow-x: hidden;
+        z-index: 0;
     }
 }

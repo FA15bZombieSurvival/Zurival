@@ -82,7 +82,16 @@ function getUser(name, callback){
     });
 }
 
-userSchema.methods.changePassword = function(name, password, callback){
+userSchema.getAllUsers = function(callback){
+    this.find({}, {username:1}, function(err, data) {
+        if(err) return callback(err);
+        if(data) {
+            callback(null, data);
+        }
+    });
+}
+
+userSchema.changePassword = function(name, password, callback){
     getUser(name, function(err, user){
         if(err) return callback(err);
         if(user){
@@ -95,7 +104,7 @@ userSchema.methods.changePassword = function(name, password, callback){
     });
 }
 
-userSchema.methods.changeEmail = function(name, email, callback){
+userSchema.changeEmail = function(name, email, callback){
     getUser(name, function(err, user){
         if(err) return callback(err);
         if(user){
@@ -115,7 +124,7 @@ userSchema.methods.changeEmail = function(name, email, callback){
     });
 }
 
-userSchema.methods.changeName = function(name, otherName, callback){
+userSchema.changeName = function(name, otherName, callback){
     getUser(name, function(err, user){
         if(err) return callback(err);
         if(user){
@@ -135,7 +144,32 @@ userSchema.methods.changeName = function(name, otherName, callback){
     });
 }
 
-userSchema.methods.addFriend = function(name, _id, callback){
+userSchema.getFriends = function(name, callback){
+    getUser(name, function(err, user){
+        if(err) return callback(err);
+        if(user){
+            var friendIds = user.friends;
+            var arrFriends;
+            function recursivCallbacks(i){
+                if( i < friendIds.length){
+                    for(let friendId in friendIds){
+                        this.findById(friendId, function(err, friend){
+                            if(friend){
+                                arrFriends.push(friend.username);
+                            }
+                            recursivCallbacks(i+1);
+                        });
+                    }
+                }else{
+                    callback(null, arrFriends);
+                }
+            }
+            recursivCallbacks(0);
+        }
+    });
+}
+
+userSchema.addFriend = function(name, _id, callback){
     getUser(name, function(err, user){
         if(err) return callback(err);
         if(user){
@@ -153,7 +187,7 @@ userSchema.methods.addFriend = function(name, _id, callback){
     });
 }
 
-userSchema.methods.deleteFriend = function(name, _id, callback){
+userSchema.deleteFriend = function(name, _id, callback){
     getUser(name, function(err, user){
         if(err) return callback(err);
         if(user){
