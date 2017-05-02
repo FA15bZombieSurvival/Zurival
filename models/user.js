@@ -10,8 +10,6 @@ var userSchema = new mongoose.Schema({
     friends: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
 });
 
-var user = mongoose.model("User", userSchema);
-
 userSchema.pre('save', function(next) {
     var user = this;
     if (!user.isModified('password')) return next();
@@ -84,7 +82,7 @@ function getUser(name, callback){
     });
 }
 
-user.getAllUsers = function(callback){
+userSchema.getAllUsers = function(callback){
     this.find({}, {username:1}, function(err, data) {
         if(err) return callback(err);
         if(data) {
@@ -93,7 +91,7 @@ user.getAllUsers = function(callback){
     });
 }
 
-user.changePassword = function(name, password, callback){
+userSchema.changePassword = function(name, password, callback){
     getUser(name, function(err, user){
         if(err) return callback(err);
         if(user){
@@ -106,7 +104,7 @@ user.changePassword = function(name, password, callback){
     });
 }
 
-user.changeEmail = function(name, email, callback){
+userSchema.changeEmail = function(name, email, callback){
     getUser(name, function(err, user){
         if(err) return callback(err);
         if(user){
@@ -126,7 +124,7 @@ user.changeEmail = function(name, email, callback){
     });
 }
 
-user.changeName = function(name, otherName, callback){
+userSchema.changeName = function(name, otherName, callback){
     getUser(name, function(err, user){
         if(err) return callback(err);
         if(user){
@@ -146,7 +144,7 @@ user.changeName = function(name, otherName, callback){
     });
 }
 
-user.getFriends = function(name, callback){
+userSchema.getFriends = function(name, callback){
     getUser(name, function(err, user){
         if(err) return callback(err);
         if(user){
@@ -171,7 +169,7 @@ user.getFriends = function(name, callback){
     });
 }
 
-user.addFriend = function(name, _id, callback){
+userSchema.addFriend = function(name, _id, callback){
     getUser(name, function(err, user){
         if(err) return callback(err);
         if(user){
@@ -189,7 +187,7 @@ user.addFriend = function(name, _id, callback){
     });
 }
 
-user.deleteFriend = function(name, _id, callback){
+userSchema.deleteFriend = function(name, _id, callback){
     getUser(name, function(err, user){
         if(err) return callback(err);
         if(user){
@@ -205,4 +203,4 @@ user.deleteFriend = function(name, _id, callback){
     });
 }
 
-module.exports = user;
+module.exports = mongoose.model("User", userSchema);
