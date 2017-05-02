@@ -5,7 +5,9 @@ var socket      = null,
     lobbySocket = null,
     chatSocket  = null;
 
-module.exports = io;
+module.exports = function(server){
+    return new io(server);
+}
 
 function io(server){
     socket = socketio.listen(server);
@@ -13,7 +15,7 @@ function io(server){
     lobbySocket = socket.of('/lobby');
     nspChat();
     nspLobby();
-};
+}
 
 function nspChat(){
     chatSocket.use(socketioJwt.authorize({

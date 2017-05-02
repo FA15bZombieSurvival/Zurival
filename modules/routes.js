@@ -1,4 +1,4 @@
-        var async = require('async'),
+var async = require('async'),
     request = require('request'),
     xml2js = require('xml2js'),
     _ = require('lodash'),
@@ -6,7 +6,7 @@
     Character = require('../models/character.js'),
     passport = require('./passport.js');
 
-module.exports = function(app, lobbys, callback){
+module.exports = function(app, mainRoutines){
 
     app.use(function(err, req, res, next) {
         console.error(err.stack);
@@ -63,7 +63,7 @@ module.exports = function(app, lobbys, callback){
     // });
 
     app.get('/game/lobby', function(req, res){
-        res.status(200).send(lobbys);
+        res.status(200).send(mainRoutines.getAllLobbys());
     });
 
     app.get('/api/maps', function(req, res) {
@@ -79,17 +79,11 @@ module.exports = function(app, lobbys, callback){
     app.get('/game/lobby/create_game/:lobbyname', function(req, res){
 
         var lobbyname = req.params.lobbyname;
-        var lobby;
+        var lobby = mainRoutines.getLobby(lobbyname);;
 
-        for (var i = 0; i < lobbys.length; i++) {
-            if(lobbys[i].name == lobbyname){
-                lobby = lobbys[i];
-            }
-        }
-        if(lobby !== undefined){
+        if(lobby){
             res.status(200).send(lobby);
-        }
-        else {
+        }else{
             //TODO: Implement callback
             res.redirect('/#' + req.originalUrl);
         }
@@ -140,17 +134,18 @@ module.exports = function(app, lobbys, callback){
 
     // TODO: Namen auf doppelten Eintrag überprüfen. Die Namen müssen Unique sein.
     app.post('/api/createLobby', function(req, res){
+        var data = {
+            "lobbyName": req.body.lobbyname,
+            "user": req.body.user
+        }
 
-        var lobbyname = req.body.lobbyname;
-        var user = req.body.user;
+        var ret = mainRoutines.createLobby(data)
 
-        callback(null, {
-            name: 'createdLobby',
-            lobbyname: lobbyname,
-            user: user
-        });
-
-        res.sendStatus(200);
+        if(ret){
+            res.sendStatus(200);
+        }else{
+            // cannot create Lobby
+        }
     });
 
 // gibt die ID der ausgesuchten Karte um diese in der Lobby zu erstellen.
@@ -161,12 +156,15 @@ module.exports = function(app, lobbys, callback){
             if(err){ return res.status(401).send(err + '\nErr:CantCreateLobby') }
             if(map){
                 //null for possible error responses
-                callback(null, {
-                    name: "generatedMap",
-                    lobbyname: lobbyname,
-                    value: map
-                });
-                res.status(200).send(map);
+                var data;
+                data.lobbyname = lobbyname;
+                data.id = id;
+                var ret = mainRoutines.generateMap(data);
+                if(ret){
+                    res.status(200).send(map);
+                }else{
+                  //coudn't generate map
+                }
             }
             else {
                 res.status(401).send("Couldn\'t find a map");
@@ -175,19 +173,16 @@ module.exports = function(app, lobbys, callback){
     });
 
     app.post('/api/joinLobby', function(req, res){
+        var data;
+        data.user = req.body.user;
+        data.lobby = req.body.lobby;
 
-        var user = req.body.user;
-        var lobby = req.body.lobby;
-        var ndCallback = function(){
+        var ret = mainRoutines.joinLobby(data);
+        if(ret){
             res.status(200).send(lobby);
+        }else{
+            // couldn't join lobby
         }
-
-        callback(null, {
-            name: "joinLobby",
-            user: user,
-            lobby: lobby,
-            callback: ndCallback
-        });
     });
 }
 
