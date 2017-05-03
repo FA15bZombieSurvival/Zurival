@@ -1,19 +1,14 @@
 //Variables
 var BASE_SPEED = 180;
 
-var Player = function(x, y, id, color) {
+var Player = function(x, y, id, game) {
   this.spawnPoint = {x: x, y: y};
   this.id = id;
   this.facing = "down";
   this.speed = BASE_SPEED;
 
-  //Enable collosion detection for current player
-  this.game.physics.arcade.enable(this.player);
-  //Alternative?
-  //game.physics.enable(this, Phaser.Physics.ARCADE);
-
   //Add Sprite
-  this.player = this.game.add.sprite(200, 200, 'player');
+  this.player = game.add.sprite(200, 200, 'player');
 
   //Create Movement animations
   this.player.animations.add('left', [3,5], 3, true);
@@ -22,32 +17,30 @@ var Player = function(x, y, id, color) {
   this.player.animations.add('up', [9,11], 3, true);
 
   //--------------------------------------------------
-  //Keybinding is maybe wrong here -> must be in game.js?
-  //needs further testing
   //Bind WASD for movement
-  up = this.input.keyboard.addKey(Phaser.Keyboard.W);
-  down = this.input.keyboard.addKey(Phaser.Keyboard.S);
-  left = this.input.keyboard.addKey(Phaser.Keyboard.A);
-  right = this.input.keyboard.addKey(Phaser.Keyboard.D);
+  var up = this.player.input.keyboard.addKey(Phaser.Keyboard.W);
+  var down = this.player.input.keyboard.addKey(Phaser.Keyboard.S);
+  var left = this.player.input.keyboard.addKey(Phaser.Keyboard.A);
+  var right = this.player.input.keyboard.addKey(Phaser.Keyboard.D);
 
   //Bind inventory key on I
-  inventory = this.input.keyboard.addKey(Phaser.Keyboard.I);
+  var inventory = this.player.input.keyboard.addKey(Phaser.Keyboard.I);
 
   //Bind actionbar keys
-  actionbar1 = this.input.keyboard.addKey(Phaser.Keyboard.ONE);
-  actionbar2 = this.input.keyboard.addKey(Phaser.Keyboard.TWO);
-  actionbar3 = this.input.keyboard.addKey(Phaser.Keyboard.THREE);
-  actionbar4 = this.input.keyboard.addKey(Phaser.Keyboard.FOUR);
-  actionbar5 = this.input.keyboard.addKey(Phaser.Keyboard.FIFE);
+  var actionbar1 = this.player.input.keyboard.addKey(Phaser.Keyboard.ONE);
+  var actionbar2 = this.player.input.keyboard.addKey(Phaser.Keyboard.TWO);
+  var actionbar3 = this.player.input.keyboard.addKey(Phaser.Keyboard.THREE);
+  var actionbar4 = this.player.input.keyboard.addKey(Phaser.Keyboard.FOUR);
+  var actionbar5 = this.player.input.keyboard.addKey(Phaser.Keyboard.FIFE);
 
   //Bind reload key on R
-  reload = this.input.keyboard.addKey(Phaser.Keyboard.R);
+  var reload = this.player.input.keyboard.addKey(Phaser.Keyboard.R);
   //--------------------------------------------------
 
   game.add.existing(this);
 };
 
-Player.prototype.handleInput = function() {
+Player.handleInput = function() {
   this.handleMovementInput();
   this.handleAttackInput();
   this.handleHotbarInput();
@@ -55,7 +48,7 @@ Player.prototype.handleInput = function() {
   this.playerInventoryInput();
 };
 
-Player.prototype.handleMovementInput = function() {
+Player.handleMovementInput = function() {
   //Move left if "a" is pressed
   if(left.isDown){
     //play animation for running left
@@ -125,7 +118,7 @@ Player.prototype.handleMovementInput = function() {
   socket.emit('playerMovement', {x: this.position.x, y: this.position.y, facing: this.facing});
 };
 
-Player.prototype.handleAttackInput = function() {
+Player.handleAttackInput = function() {
   //Reset the attack variable before sending it again
   attackToServer = false;
 
@@ -139,7 +132,7 @@ Player.prototype.handleAttackInput = function() {
   socket.emit('playerAttack', {attack: attackToServer});
 };
 
-Player.prototype.handleHotbarInput = function() {
+Player.handleHotbarInput = function() {
   if (actionbar1.isDown){
 
   }
@@ -163,21 +156,21 @@ Player.prototype.handleHotbarInput = function() {
   socket.emit('playerHotbarInput', {hotkey: pressedHotkey});
 };
 
-Player.prototype.handleReloadInput = function() {
+Player.handleReloadInput = function() {
   if (reload.isDown){
 
   }
   socket.emit('playerReloadInput', {reload: pressedreload});
 };
 
-Player.prototype.handleInventoryInput = function(){
+Player.handleInventoryInput = function(){
     if (inventory.isDown){
 
     }
     socket.emit('playerInventoryInput', {inventory: openInventory});
 };
 
-Player.prototype.reset = function() {
+Player.reset = function() {
     this.x = this.spawnPoint.x;
     this.y = this.spawnPoint.y;
     //this.frame = this.firstFrame;
@@ -188,4 +181,5 @@ Player.prototype.reset = function() {
     }
 };
 
-angular.module.exports = Player;
+//angular.module.exports = Player;
+*/

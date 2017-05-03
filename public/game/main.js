@@ -3,25 +3,18 @@ var width = parseInt(window.innerWidth/1.1, 10),
 
 window.game = new Phaser.Game(width, height, Phaser.AUTO, 'gameCanvas');
 window.player = null;
-window.socket = null;
+window.enemy = null;
 window.map = null;
-//window.TEXTURES = ;
 
-createGametest();
+createGame();
 
-//window.createGame = function(scope, element, injector) {
-function createGametest() {
-    //socket muss hier rein
-    socket = io("http://localhost:3000");
-/*
-    game.state.add('Boot', require("./game/states/Boot"));
-    game.state.add('Preload', require("./game/states/Preload"));
-    */
-    //game.state.add('Game', require("./game/states/Game"));
-
+function createGame() {
+    //There seems to be many errors with the websockets
+    //socket = io("http://localhost:3000");
+    //Add the game states
     game.state.add('Boot', Boot);
     game.state.add('Preload', Preload);
     game.state.add('Game', Game);
-
+    //Start the game state Boot
     game.state.start('Boot');
 };
