@@ -7,16 +7,18 @@ window.socket = null;
 window.map = null;
 //window.TEXTURES = ;
 
-//var createGame();
+createGametest();
+
 //window.createGame = function(scope, element, injector) {
-window.createGame = function() {
-  //socket muss hier rein
-    socket = io("");
+function createGametest() {
+    //socket muss hier rein
+    socket = io("http://localhost:3000");
 /*
     game.state.add('Boot', require("./game/states/Boot"));
     game.state.add('Preload', require("./game/states/Preload"));
-    game.state.add('Game', require("./game/states/Game"));
     */
+    //game.state.add('Game', require("./game/states/Game"));
+
     game.state.add('Boot', Boot);
     game.state.add('Preload', Preload);
     game.state.add('Game', Game);
