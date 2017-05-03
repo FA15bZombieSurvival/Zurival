@@ -34,11 +34,13 @@ angular.module('Zurival.game.create_game', ['smart-table'])
 
         $scope.generateWorld = function(){
 
+            clearTimeout(refreshTimeout);
+            
             var mapId = $scope.chosenMap._id;
 
             $http.post('/api/createLobby', mapId)
                 .success(function(data, status, header, config){
-                    $scope.worlds.push(data);
+                    console.log("Game started");
                     createGame();
                 })
                 .error(function(data, status, header, config){
@@ -61,4 +63,6 @@ angular.module('Zurival.game.create_game', ['smart-table'])
                 });
         };
 
+        var refreshTimeout = setTimeout(() => window.location.reload(), 3000);
+        
     }]);
