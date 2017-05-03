@@ -7,12 +7,12 @@ window.socket = null;
 window.map = null;
 //window.TEXTURES = ;
 
-createGametest();
+//createGametest();
 
 //window.createGame = function(scope, element, injector) {
-function createGametest() {
+function createGametest(lobbySocket) {
     //socket muss hier rein
-    socket = io("http://localhost:3000");
+    socket = lobbySocket;
 /*
     game.state.add('Boot', require("./game/states/Boot"));
     game.state.add('Preload', require("./game/states/Preload"));

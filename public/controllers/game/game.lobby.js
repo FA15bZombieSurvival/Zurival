@@ -58,4 +58,8 @@ angular.module('Zurival.game.lobby', [])
             });
         };
 
+        $scope.createGame = function(){
+            createGametest($scope.lobbySocket);
+        }
+
     }]);

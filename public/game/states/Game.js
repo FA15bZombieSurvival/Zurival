@@ -2,6 +2,7 @@ var movementToServer = 0;
 var attackToServer = 0;
 
 var Game = function () {};
+var player = new Player(/* x, y, id, color */);
 
 Game.prototype = {
     initialize: function(){
@@ -69,6 +70,6 @@ Game.prototype = {
     },
 
     update: function() {
-      Player.handleInput();
+      player.handleInput();
     }
 }
