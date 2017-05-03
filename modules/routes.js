@@ -139,6 +139,7 @@ module.exports = function(app, lobbys, callback){
         });
     });
 
+
     // TODO: Namen auf doppelten Eintrag überprüfen. Die Namen müssen Unique sein.
     app.post('/api/createLobby', function(req, res){
 
@@ -225,6 +226,16 @@ module.exports = function(app, lobbys, callback){
             res.status(200).send(arrUsers);
         });
     });
+
+    app.post('/api/changeName', function(req, res){
+        var currentName = req.body.user;
+        var otherName = 'test';
+        User.changeName(currentName, otherName, function(req, res){
+            res.status(200).send(otherName);
+        });
+    })
+
+
 }
 
 function ensureAuthenticated(req, res, next) {
