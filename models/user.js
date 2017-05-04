@@ -88,7 +88,6 @@ function getUser(name, callback){
     });
 }
 
-<<<<<<< HEAD
 userSchema.getAllUsers = function(callback){
     this.find({}, {username:1}, function(err, data) {
         if(err) return callback(err);
