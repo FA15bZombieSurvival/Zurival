@@ -1,7 +1,9 @@
 //Constants
-var BASE_SPEED = 180;
+var PLAYER_BASE_SPEED = 100;
+var ZOMBIE_BASE_SPEED = 80;
 
 //Variables
+var map;
 var player;
 var zombies;
 var zombieCount = 0;
@@ -9,221 +11,296 @@ var remainingZombies = 0;
 
 var projectiles;
 
-var cooldown = 100;
+var cooldown = 200;
 var canShootAgain = 0;
+var ammo;
 
-var CreateSingleplayerGame = function () {
+var up;
+var down;
+var left;
+var right;
+var reload;
 
-
-var game = new Phaser.Game(800, 800, Phaser.AUTO, 'gameCanvas', {preload: preload, create: create, update: update, render: render});
+var game = new Phaser.Game(800, 800, Phaser.AUTO, 'game-canvas', {preload: preload, create: create, update: update});
 
 function preload(){
    //load game assets
    game.load.tilemap('map1', 'maps/map1.json', null, Phaser.Tilemap.TILED_JSON);
    game.load.image('gameTiles', 'maps/tiles/terrain.png');
-   game.load.image('player', 'assets/CharacterSpriteSingleLine.png');
-   game.load.image('enemy', 'assets/enenmy.png');
-   game.load.image('bullet', 'assets/bullet.png');
+   game.load.spritesheet('player', 'assets/CharacterSpriteSingleLine.png', 64, 64, 12);
+   game.load.spritesheet('zombie', 'assets/enemy.png', 64, 64, 12);
+   game.load.image('rocket', 'assets/bullet.png');
+   //Upon finishing loading the assets start the game
+   this.load.onLoadComplete.add(function() {
+       this.create();
+   });
 }
 
-CreateSingleplayerGame.prototype = {
-    create: function(){
-        //----------    Map specific    ----------
-        //Load the map
-        this.map = this.game.add.tilemap('map1');
-        //Load the textures
-        this.map.addTilesetImage('terrain1', 'gameTiles');
-        //Create background layer
-        this.backgroundlayer = this.map.createLayer('Background');
-        //Create obstacle layer
-        this.blockedLayer = this.map.createLayer('Obstacles');
-        //Set collision on the map for all obstacles
-        this.map.setCollisionBetween(1, 2000, true, 'Obstacles');
-        //Resize the map
-        this.backgroundlayer.resizeWorld();
-        //----------    Map specific    ----------
+function create(){
+    //----------    Map specific    ----------
+    //Load the map
+    map = game.add.tilemap('map1');
+    //Load the textures
+    map.addTilesetImage('terrain1', 'gameTiles');
+    //Create background layer
+    map.backgroundlayer = map.createLayer('Background');
+    //Create obstacle layer
+    map.blockedLayer = map.createLayer('Obstacles');
+    //Set collision on the map for all obstacles
+    map.setCollisionBetween(1, 2000, true, 'Obstacles');
+    //Resize the map
+    map.backgroundlayer.resizeWorld();
+    //----------    Map specific    ----------
 
-        //----------    Player specific ----------
-        //Create the character Sprite
-        this.player = game.add.sprite(200, 200, 'player');
-        //Create Movement animations
-        this.player.animations.add('left', [3,5], 3, true);
-        this.player.animations.add('right', [6,8], 3, true);
-        this.player.animations.add('down', [1,2], 3, true);
-        this.player.animations.add('up', [9,11], 3, true);
-        //Set Camera to follow player
-        this.game.camera.follow(this.player);
-        //Enable collosion detection for current player
-        game.physics.arcade.enable(this.player);
-        //Let the world bounds be unpasseble
-        this.player.body.collideWorldBounds = true
-        //----------    Player specific ----------
+    //----------    Player specific ----------
+    //Create the character Sprite
+    player = game.add.sprite(200, 200, 'player');
+    //Create Movement animations
+    player.animations.add('left', [3,5], 3, true);
+    player.animations.add('right', [6,8], 3, true);
+    player.animations.add('down', [1,2], 3, true);
+    player.animations.add('up', [9,11], 3, true);
+    //Set Camera to follow player
+    game.camera.follow(player);
+    //Initiate collisiondetection
+    game.physics.arcade.collide(player, map.blockedLayer);
+    //Enable collosion detection for current player
+    game.physics.arcade.enable(player);
+    //Let the world bounds be unpasseble
+    player.body.collideWorldBounds = true
+    //Set ammo to 20 shots
+    ammo = 20;
+    //----------    Player specific ----------
 
-        //Initialize empty enemy array
-        enemies = [];
-        enemyCount = 20;
+    //----------    Enemy specific ----------
+    //Initialize empty enemy array
+    zombies = [];
+    zombieCount = 20;
+    //Add enemies
+    for (var i = 0; i < zombieCount; i++)
+    {
+      zombies.push(new Zombie(i, game, player));
+    }
+    //----------    Enemy specific ----------
 
-        for (var i = 0; i < enemyCount; i++)
-        {
-        enemies.push(new Enemy(i, game, player));
-        }
+    //----------    Projectile specific ----------
+    //Create projectile group
+    projectiles = game.add.group();
+    //Enable physics for the projectiles
+    projectiles.enableBody = true;
+    projectiles.physicsBodyType = Phaser.Physics.ARCADE;
+    projectiles.createMultiple(30, 'rocket', 0, false);
+    //Let the projectiles start from the player mid
+    projectiles.setAll('player.x', 1);
+    projectiles.setAll('player.y', 1);
+    //Delete projectiles that leave the map bounds
+    projectiles.setAll('outOfBoundsKill', true);
+    projectiles.setAll('checkWorldBounds', true);
+    //----------    Projectile specific ----------
 
-        //----------    Projectile specific ----------
-        //Create projectile group
-        projectiles = game.add.group();
-        //Enable physics for the projectiles
-        projectiles.enableBody = true;
-        projectiles.physicsBodyType = Phaser.Physics.ARCADE;
-        projectiles.createMultiple(30, 'rocket', 0, false);
-        //Let the projectiles start from the player mid
-        projectiles.setAll('anchor.x', 0);
-        projectiles.setAll('anchor.y', 0);
-        //Delete projectiles that leave the map bounds
-        projectiles.setAll('outOfBoundsKill', true);
-        projectiles.setAll('checkWorldBounds', true);
-        //----------    Projectile specific ----------
+    //----------    Control specific ----------
+    //Bind WASD for movement
+    up = game.input.keyboard.addKey(Phaser.Keyboard.W);
+    down = game.input.keyboard.addKey(Phaser.Keyboard.S);
+    left = game.input.keyboard.addKey(Phaser.Keyboard.A);
+    right = game.input.keyboard.addKey(Phaser.Keyboard.D);
 
-        //----------    Control specific ----------
-        //Bind WASD for movement
-        var up = this.input.keyboard.addKey(Phaser.Keyboard.W);
-        var down = this.input.keyboard.addKey(Phaser.Keyboard.S);
-        var left = this.input.keyboard.addKey(Phaser.Keyboard.A);
-        var right = this.input.keyboard.addKey(Phaser.Keyboard.D);
+    //Bind reload key on R
+    reload = game.input.keyboard.addKey(Phaser.Keyboard.R);
+    //----------    Control specific ----------
+}
 
-        //Bind reload key on R
-        var reload = this.input.keyboard.addKey(Phaser.Keyboard.R);
-        //----------    Control specific ----------
-  },
+function update(){
+    //----------    Player specific ----------
+    var facing;
+    player.body.velocity.x = 0;
+    player.body.velocity.y = 0;
 
-  update: function(){
-      remainingZombies = 0;
-      for (var i = 0; i < enemies.length; i++) {
-          if (enemies[i].alive) {
-            remainingZombies++;
-            game.physics.arcade.collide(this.player, zombies[i].tank);
-            game.physics.arcade.overlap(bullets, enemies[i].tank, bulletHitEnemy, null, this);
-            zombies[i].update();
-          }
-      }
-      //Move left if "a" is pressed
-      if(left.isDown){
+    //Move left if "a" is pressed
+    if(left.isDown){
         //play animation for running left
-        this.facing = "left";
+        facing = "left";
         //Move the player left with the basespeed
-        this.body.velocity.x -= BASE_SPEED;
-      }
-      //Move right if "d" is pressed
-      if(right.isDown){
+        player.body.velocity.x -= PLAYER_BASE_SPEED;
+    }
+    //Move right if "d" is pressed
+    else if(right.isDown){
         //play animation for running right
-        this.facing = "right";
+        facing = "right";
         //Move the player right with the basespeed
-        this.body.velocity.x += BASE_SPEED;
-      }
-      //Move up if "w" is pressed
-      if(up.isDown){
+        player.body.velocity.x += PLAYER_BASE_SPEED;
+    }
+    //Move up if "w" is pressed
+    if(up.isDown){
         //play animation for running down
-        this.facing = "down";
+        facing = "up";
         //Move the player up with the basespeed
-        this.body.velocity.y -= BASE_SPEED;
-      }
-      //Move down if "s" is pressed
-      if(down.isDown){
+        player.body.velocity.y -= PLAYER_BASE_SPEED;
+    }
+    //Move down if "s" is pressed
+    else if(down.isDown){
         //play animation for running up
-        this.facing = "up";
+        facing = "down";
         //Move the player down with the basespeed
-        this.body.velocity.y += BASE_SPEED;
-      }
+        player.body.velocity.y += PLAYER_BASE_SPEED;
+    }
 
-      //Start playing animation for the direction the play is facing
-      this.animations.play(this.facing);
+    //Start playing animation for the direction the play is facing
+    player.animations.play(facing);
 
-      //Initiate collisiondetection
-      game.physics.arcade.collide(this, level.blockLayer);
-      //Different Version - copied this.blockedlayer
-      //game.physics.arcade.collide(this, this.blockedLayer);
-      //Old Version
-      //this.game.physics.arcade.collide(this, this.blockedLayer);
-
-      //If no movementkey is pressed ...
-      if(left.isUp&&right.isUp&&up.isUp&&down.isUp){
+    //If no movementkey is pressed ...
+    if(left.isUp&&right.isUp&&up.isUp&&down.isUp){
         //... Stop Animation
-        this.player.animations.stop();
+        player.animations.stop();
         //If player is facing left ...
-        if(this.player.frame == 3||this.player.frame == 5){
+        if(player.frame == 3||player.frame == 5){
           //... set frame to stand facing left
-          this.player.frame = 4;
+          player.frame = 4;
           //If player is facing right ...
-        }else if(this.player.frame == 6||this.player.frame == 8) {
+        }else if(player.frame == 6||player.frame == 8) {
           //... set frame to stand facing right
-          this.player.frame = 7;
+          player.frame = 7;
           //If player is facing front ...
-        }else if(this.player.frame == 1||this.player.frame == 2){
+        }else if(player.frame == 1||player.frame == 2){
           //... set frame to stand facing front
-          this.player.frame = 0;
+          player.frame = 0;
           //If player is facing back ...
-        }else if(this.player.frame == 9||this.player.frame == 11){
+        }else if(player.frame == 9||player.frame == 11){
           //... set frame to stand facing front
-          this.player.frame = 10;
+          player.frame = 10;
         }
-      }
-      //If player is clicking ...
-      if(game.input.activePointer.isDown){
-          //... let the player shoot
-          shoot();
-      }
-  },
+    }
 
-  shoot: function() {
-      if (game.time.now > canShootAgain) {
-          canShootAgain = game.time.now + cooldown;
-          var newProjectile = projectiles.getFirstExists(false);
-          newProjectile.reset(game.player.x, game.player.y);
-          newProjectile.rotation = game.physics.arcade.moveToPointer(newProjectile, 1000, game.input.activePointer, 500);
-      }
-  }
+    //If player is clicking ...
+    if(game.input.activePointer.isDown){
+      //... let the player shoot
+      shoot();
+    }
+    //If player is pressing r
+    if (reload.isDown) {
+        //Reload
+        if (ammo == 0) {
+            ammo = 20;
+            canShootAgain = game.time.now + 5 * cooldown;
+        }
+    }
+    //----------    Player specific ----------
+
+    //----------    Zombie specific ----------
+    //Reset remaining Zombies counter
+    remainingZombies = 0;
+    //Count remaining Zombies
+    for (var i = 0; i < zombies.length; i++) {
+        //Only count when zombie is alive
+        if (zombies[i].alive) {
+            //Count one up
+            remainingZombies++;
+            //Check whether a zombie is colliding with a player
+            game.physics.arcade.collide(player, zombies[i].zombies);
+            //Check whether zombie is overlapping with a projectile
+            game.physics.arcade.overlap(projectiles, zombies[i].zombies, projectileHitZombie, null, this);
+            //Update zombie
+            zombies[i].update(i);
+        }
+    }
+    //If all enemies are dead generate another 20
+    if (remainingZombies = 0) {
+        for (var i = 0; i < zombieCount; i++)
+        {
+            zombies.push(new Zombie(i, game, player));
+        }
+    }
+    //----------    Zombie specific ----------
 }
 
-
-Zombie.prototype.methodName = function () {
-
-};
+function shoot() {
+    //Shoot if player has ammo and cooldown expired
+    if (game.time.now > canShootAgain && ammo > 0) {
+        //Add cooldown to next attack
+        canShootAgain = game.time.now + cooldown;
+        //Create new projectile
+        var newProjectile = projectiles.getFirstExists(false);
+        //Let it start from the middle of the player
+        newProjectile.reset(player.x + 32, player.y + 32);
+        //Let it move in the direction of the pointer
+        newProjectile.rotation = game.physics.arcade.moveToPointer(newProjectile, 1000, game.input.activePointer);
+        //Substract one ammo
+        ammo--;
+    }
+}
 
 Zombie = function(index, game, player, projectiles){
-    //Genereate a random position for the enemy
-    var x = game.world.randomX;
-    var y = game.world.randomY;
-
     this.game = game;
+    //Add zombie state
     this.health = 100;
-    this.player = player;
-    this.cooldown = 1000;
-    this.nextAttack = 0;
-    this.zombie = game.add.sprite(x, y, 'zombie');
+    this.alive = true;
 
+    this.player = player;
+    //Add attack cooldown
+    this.cooldown = 1000;
+    //Let next attack ne directly
+    this.nextAttack = 0;
+    //Genereate a random position for the enemy
+    this.x = game.world.randomX;
+    this.y = game.world.randomY;
+    //Add a zombie
+    this.zombie = game.add.sprite(this.x, this.y, 'zombie');
+    //Give zombie the name of his index
     this.zombie.name = index.toString();
+    //Enable phaser physics for the zombie
     game.physics.enable(this.zombie, Phaser.Physics.ARCADE);
     this.zombie.body.immovable = false;
     this.zombie.body.collideWorldBounds = true;
     this.zombie.body.bounce.setTo(1, 1);
+}
 
-    this.damage = function(){
-        this.health -= 1;
-        if (this.health <= 0){
-            this.alive = false;
-            this.zombie.kill();
-            return true;
-        }
-        return false;
-    }
-    this.update = function(){
-        //if()
-        if(this.game.physics.arcade.distanceBetween(this.zombie, this.player) < 20){
-            if (this.game.time.now > this.nextAttack) {
-                this.nextAttack = this.game.time.now + this.cooldown;
-                //hurt player
-            }
-        }
+Zombie.prototype.damage = function(){
+    //Substract 20 life
+    this.health -= 20;
+    //If health of this zombie is 0 or lower
+    if (this.health <= 0){
+        //set his alive state to false and delete the sprite
+        this.alive = false;
+        this.zombie.kill();
     }
 }
 
+Zombie.prototype.update = function(index){
+        // Get Position of the player
+        var distanceX = this.zombie.x - player.x;
+        var distanceY = this.zombie.y - player.y;
+
+        this.zombie.body.velocity.x = 0
+        this.zombie.body.velocity.y = 0
+
+        if ( distanceX > 0 ){
+            //Move the enemy right with the basespeed
+            this.zombie.body.velocity.x -= ZOMBIE_BASE_SPEED;
+        }
+        else if ( distanceX < 0 ){
+            //Move the enemy left with the basespeed
+            this.zombie.body.velocity.x += ZOMBIE_BASE_SPEED;
+        }
+        if ( distanceY > 0 ){
+            //Move the enemy down with the basespeed
+            this.zombie.body.velocity.y -= ZOMBIE_BASE_SPEED;
+        }
+        else if ( distanceY < 0 ) {
+            //Move the enemy up with the basespeed
+            this.zombie.body.velocity.y += ZOMBIE_BASE_SPEED;
+        }
+        //Let enemy attack if player is in range
+        if(this.game.physics.arcade.distanceBetween(zombies[index].zombie, player) < 32){
+            if (this.game.time.now > this.zombie.nextAttack) {
+                //Set zombie cooldown
+                this.zombie.nextAttack = this.game.time.now + this.zombie.cooldown;
+                //Substract health of player
+                player.heatlh -= 10;
+            }
+        }
+    }
+
+function projectileHitZombie(zombieIndex, newProjectile){
+    newProjectile.kill();
+    zombies[zombieIndex].damage();
 }
