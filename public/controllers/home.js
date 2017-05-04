@@ -10,7 +10,7 @@ angular.module('Zurival')
                   $scope.playBtnLink = '.game.lobby';
               }
               else {
-                  $scope.playBtnLink = '.login';
+                  $scope.playBtnLink = 'root.login';
               }
           }
     }]);
