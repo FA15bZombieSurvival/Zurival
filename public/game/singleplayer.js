@@ -188,7 +188,6 @@ function update(){
         }
     }
     if (player.health <= 0) {
-        console.log(player.health.toString());
         player.kill();
     }
     //----------    Player specific ----------
@@ -300,7 +299,6 @@ Zombie.prototype.update = function(index){
         //Let enemy attack if player is in range
         if(this.game.physics.arcade.distanceBetween(this.zombie, player) < 100){
             if (this.game.time.now > this.nextAttack) {
-                console.log("hit");
                 //Set zombie cooldown
                 this.nextAttack = this.game.time.now + this.cooldown;
                 //Substract 5-15 health of player
