@@ -1,20 +1,21 @@
 <div class="container-fluid" id="login-wrapper" controller="LoginCtrl">
     <div class="row">
+        <!-- Placeholder (neccessary for layout) -->
         <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3"></div>
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
             <div class="center-form panel">
                 <div class="panel-body">
                     <h2 class="text-center">{{title}}</h2>
-
+                    <!-- Login Form -->
                     <form method="post" ng-submit="login()" name="loginForm">
-
+                        <!-- User validation with Angular -->
                         <div class="form-group" ng-class="{ 'has-error' : userNotFound }">
                             <input class="form-control input-lg" type="text" name="email" ng-model="email" placeholder="Email/Username" required autofocus>
                             <div class="help-block text-danger" ng-if="userNotFound">
                                 <span class="help-block text-danger my-special-animation">{{userNotFound}}</span>
                             </div>
                         </div>
-
+                        <!-- Password validation with Angular -->
                         <div class="form-group" ng-class="{ 'has-error' : wrongPassword }">
                             <input class="form-control input-lg" type="password" name="password" ng-model="password" placeholder="Password" required>
                             <div class="help-block text-danger" ng-if="wrongPassword">
@@ -30,6 +31,7 @@
                 </div>
             </div>
         </div>
+        <!-- Placeholder (neccessary for layout) -->
         <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3"></div>
     </div>
 </div>

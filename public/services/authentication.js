@@ -43,8 +43,7 @@
                     }
                     payload = JSON.parse(payload);
 
-                    return {
-                        id: payload._id,
+                    return {                        id: payload._id,
                         username: payload.username,
                         email: payload.email
                     }
@@ -73,6 +72,16 @@
                 });
             };
 
+            var allUsers = function() {
+                $http.post('/api/getUsers')
+                    .success(function(data) {
+                        return data;
+                    })
+                    .error(function(err, status) {
+                        console.log(err + ' ' + status);
+                    });
+            }
+
             return {
                 saveToken: saveToken,
                 getToken: getToken,
@@ -80,7 +89,8 @@
                 isLoggedIn: isLoggedIn,
                 currentUser: currentUser,
                 register: register,
-                login: login
+                login: login,
+                allUsers: allUsers
             };
         }
 })();

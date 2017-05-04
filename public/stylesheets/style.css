@@ -11,16 +11,16 @@
   #ui-nav .navbar {
     margin-bottom: 0;
     float: left;
-    background-color: #FFFFFF;
-    color: #932D24;
+    background-color: #932D24;
+    color: #FFFFFF;
     width: 55px;
     height: 100%;
     padding-right: 2px;
     margin-right: 0;
     border-bottom: none; }
     #ui-nav .navbar #nav-toggle {
-      background-color: #FFFFFF;
-      color: #932D24;
+      background-color: #932D24;
+      color: #FFFFFF;
       border-radius: 0;
       border: 0;
       width: inherit;
@@ -36,12 +36,9 @@
           display: block;
           width: inherit;
           text-align: center;
-          color: #932D24; }
-      #ui-nav .navbar .navbar-nav #navigationLogout {
-        position: relative;
-        left: 0;
-        bottom: 0;
-        margin-bottom: 0; }
+          color: #FFFFFF; }
+        #ui-nav .navbar .navbar-nav li #logout {
+          border: none; }
 
 #content {
   float: left;
@@ -51,9 +48,8 @@
   min-height: 100% !important;
   height: 100% !important; }
   #content .container-fluid .row {
-    margin-bottom: 20px; }
-    #content .container-fluid .row #logo-container h1 span {
-      color: #932D24; }
+    margin-bottom: 20px;
+    color: #000000; }
     #content .container-fluid .row #play-button .btn {
       border-radius: 0;
       background-color: #932D24;
@@ -107,14 +103,6 @@
   #registration-wrapper .row div .panel p {
     text-align: center; }
 
-#about .row #about-content .row div a {
-  color: #17525A;
-  text-align: center;
-  display: block;
-  width: auto;
-  height: auto;
-  margin: 0; }
-
 #profile {
   height: 100% !important;
   max-height: 100% !important;
@@ -131,9 +119,6 @@
         display: flex;
         flex-flow: flex-start;
         float: left; }
-        #profile #profile-header div header #profile-header-left #profile-avatar {
-          height: inherit;
-          max-height: inherit; }
       #profile #profile-header div header #profile-header-left {
         height: inherit;
         display: flex;
@@ -160,6 +145,8 @@
             height: 100%; }
             #profile #profile-body #profile-left .row div .panel .panel-heading {
               height: auto; }
+              #profile #profile-body #profile-left .row div .panel .panel-heading #submitProfileChanges {
+                visibility: hidden; }
         #profile #profile-body #profile-left .row #profile-marketplace-short {
           margin: 15px 0; }
           #profile #profile-body #profile-left .row #profile-marketplace-short .panel {
@@ -194,6 +181,60 @@
     color: #932D24;
     margin-top: calc((100% - 25px) / 2); }
 
+.navbar-default {
+  width: 100%;
+  border-radius: 0;
+  border: none;
+  margin: 0;
+  background-color: #FFFFFF; }
+
+#chat {
+  z-index: 5;
+  visibility: hidden;
+  width: 275px;
+  height: 450px;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  background-color: #FFFFFF;
+  border: 1px solid #932D24; }
+  #chat header p {
+    float: left; }
+  #chat main {
+    width: 273px;
+    height: 404px;
+    max-height: 404px;
+    overflow-y: scroll; }
+    #chat main #message {
+      display: block;
+      background-color: #BD564E;
+      margin: 10px 10px;
+      padding: 10px 10px;
+      color: #FFFFFF;
+      border-radius: 10px;
+      width: 223px;
+      float: left; }
+    #chat main #friendsMessage {
+      display: block;
+      background-color: #89AF48;
+      margin: 10px 10px;
+      padding: 10px 10px;
+      color: #FFFFFF;
+      border-radius: 10px;
+      width: 223px;
+      float: right; }
+  #chat footer {
+    position: absolute;
+    bottom: 0;
+    left: 0; }
+    #chat footer button {
+      width: 70px;
+      height: 26px;
+      float: right;
+      border: none;
+      background-color: #FFFFFF;
+      font-weight: bold; }
+
 /*@font-face {
     font-family: "Helvetica";
     src: url("../fonts/Transformers\ Movie.ttf");
@@ -211,6 +252,8 @@ html {
     max-height: 100%;
     background-color: #FFFFFF;
     color: #932D24;
-    overflow-x: hidden; }
+    overflow-x: hidden;
+    z-index: 0;
+    color: #000000; }
 
 /*# sourceMappingURL=style.css.map */
