@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Enemy = require('./enemy.js');
 
+//This scheme represents the map collection in the database
 var mapSchema = new mongoose.Schema({
     name: String,
     maxPlayers: Number,
