@@ -16,11 +16,6 @@ let time = {
 };
 time.delta = new Date().getTime() - time.delta_end;
 
-//private functions are written like this
-function dummy(dummyValue1) {
-  return dummyValue1 - 0.1;
-}
-
 // Public
 module.exports = Lobby;
 
@@ -79,6 +74,7 @@ Lobby.prototype.addPlayer = function(data){
     players.push(player);
 }
 
+// Removes a player from the lobby.
 Lobby.prototype.removePlayer = function(userID){
     var index = players.indexOf(userID);
     if(index >= 0){

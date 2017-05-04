@@ -11,6 +11,7 @@ module.exports = function Enemy(x, y, data){
     //Movementspeed
     this.baseVelocity = 96;
 
+    // Updates the point where the enemy stands.
     this.update = function(delta){
          minDistance = 0;
         // Get Positions of the players
@@ -51,6 +52,7 @@ module.exports = function Enemy(x, y, data){
         client.emit('positionEnemies', { xPosition: this.x, yPosition: this.y } );
     }
 
+    // Updates the HP if the enemy was hit.
     this.damageStep = function(damage){
         if(damage >= 0){
             diff = this.armor - damage;

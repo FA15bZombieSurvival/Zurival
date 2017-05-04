@@ -16,6 +16,8 @@ angular.module('Zurival.game.lobby', [])
                 $scope.lobbys = lobbys;
             });
 
+        //Creates a lobby instance and forwards the user to the lobby
+        //which triggers the joinLobby route and joins the user
         $scope.createLobby = function(){
 
             var lobbyname = $scope.lobbyname;
@@ -35,20 +37,7 @@ angular.module('Zurival.game.lobby', [])
             });
         };
 
-        $scope.generatePlayer = function(){
-            $http.post('/api/generatePlayer', {
-                character: $scope.characters[0],
-                worldID: $scope.worlds[0]._id
-            })
-                .success(function(data, status, header, config){
-                    console.log(data);
-                    //$scope.worlds[worlds.length-1].addPlayer(data);
-                })
-                .error(function(data, status, header, config){
-                    console.log("Error");
-                });
-        };
-
+        //Just forwards the player to the lobby
         $scope.join = function(data){
 
             var lobbyname = data;

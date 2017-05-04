@@ -10,6 +10,7 @@ var enemySchema = new mongoose.Schema({
     type: String
 });
 
+// Updates an enemy from the database.
 enemySchema.methods.update = function(name, data, callback){
     this.findOne({ name: name }, function(err, enemy){
         if(err) return callback(err);
@@ -30,6 +31,7 @@ enemySchema.methods.update = function(name, data, callback){
     })
 }
 
+// Deletes a specific enemy from the database.
 enemySchema.methods.delete = function(name, callback){
     this.findOne({name: name}, function(err, enemy){
         if(err) return callback(err);
@@ -54,7 +56,8 @@ enemySchema.methods.delete = function(name, callback){
     });
 }
 
-function updateEnemy(enemy, callback){
+// Helper function to update every single field in the database if it's in the data-object.
+function updateEnemy(enemy, data, callback){
     if("sprite" in data) enemy.sprite = data.sprite;
     if("name" in data) enemy.name = data.name;
     if("description" in data) enemy.description = data.description;

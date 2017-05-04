@@ -30,52 +30,12 @@ app.use(express.static(path.join(__dirname, '/public/game'), { maxAge: 0 }));
 
 var server = http.createServer(app);
 
-//Array for all Lobbys
-var lobbys = [];
-
-// Any socket.io related functions are at game/helper/io.js
-var io = require('./modules/io.js')(server);
-
 server.listen(app.get('port'), function() {
   console.log('Express server listening on port ' + app.get('port'));
 });
 
-var routes = require('./modules/routes.js')(app, lobbys, function(err, data){
-    if(err){ console.log("Err: " + err); }
-    //Switch to distinguish different callbacks
-    switch(data.name){
-        case 'createdLobby':
-            var alreadyUsed = false
-            for(var i=0; i<lobbys.length; i++){
-                if(lobbys[i].name == data.lobbyname){
-                    alreadyUsed = true;
-                }
-            }
-            if(!alreadyUsed){
-                let lobby = new Lobby(data.lobbyname, data.user);
-                lobbys.push(lobby);
-            }
-            break;
-        case 'joinLobby':
-            var alreadyJoined = false;
-            // Find lobby
-            for(var i=0; i<lobbys.length; i++){
-                if(lobbys[i].name == data.lobby.name){
-                    // Check if player has already joined
-                    for (var j = 0; j < lobbys[i].players.length; j++) {
-                        if(lobbys[i].players[j].id === data.user.id){
-                            alreadyJoined = true;
-                        }
-                    }
-                    if(!alreadyJoined){
-                        lobbys[i].addPlayer(data.user);
-                    }
-                }
-            }
-            data.callback();
-            break;
-        default: break;
-    }
-});
+var mainRoutines = require('./modules/mainroutines.js')(server);
+
+var routes = require('./modules/routes.js')(app, mainRoutines);
 
 mongoose.connect('mongodb://localhost:27017/zurival');

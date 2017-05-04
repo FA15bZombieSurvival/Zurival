@@ -29,11 +29,6 @@ var x,
     xVelocity,
     yVelocity;
 
-//private functions are written like this
-function dummy(dummyValue1) {
-  return dummyValue1 - 0.1;
-}
-
 // Public
 module.exports = Player;
 
