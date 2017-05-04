@@ -1,6 +1,7 @@
 angular.module('Zurival.game.create_game', ['smart-table'])
     .controller('CreateGameCtrl', ['$scope', '$http', '$stateParams', 'authentication', function($scope, $http, $stateParams, authentication) {
 
+        //Retrieves the lobbyname from the URL and lets the player join.
         $http.get('/game/lobby/create_game/'+$stateParams.lobbyname)
             .success(function(lobby){
 
@@ -23,6 +24,7 @@ angular.module('Zurival.game.create_game', ['smart-table'])
                 console.log("Error in GET:game/create_game");
             });
 
+        //Gets the maps from the database
         $http.get('/api/maps')
             .success(function(data){
                 $scope.maps = data;
@@ -32,23 +34,24 @@ angular.module('Zurival.game.create_game', ['smart-table'])
                 console.log("Error in GET:api/maps");
             });
 
-        $scope.generateWorld = function(){
+        //Starts the game
+        $scope.generateWorld = function(selectedMap){
 
             clearTimeout(refreshTimeout);
-            
-            var mapId = $scope.chosenMap._id;
+
+            var mapId = selectedMap._id;
 
             $http.post('/api/createLobby', mapId)
                 .success(function(data, status, header, config){
                     console.log("Game started");
-                    createGame();
                 })
                 .error(function(data, status, header, config){
                     console.log("Error in POST:api/generateWorld");
                 });
         };
 
-        //TODO: Refactor multiple usages in here and game.lobby.js
+        //Basic structure for player generation on game start
+        //This actually got moved and remains here for debugging purposes
         $scope.generatePlayer = function(){
             $http.post('/api/generatePlayer', {
                 character: $scope.characters[0],
@@ -64,5 +67,5 @@ angular.module('Zurival.game.create_game', ['smart-table'])
         };
 
         var refreshTimeout = setTimeout(() => window.location.reload(), 3000);
-        
+
     }]);
