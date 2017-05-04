@@ -7,7 +7,7 @@ var async = require('async'),
     passport = require('./passport.js'),
     User = require('../models/user.js');
 
-module.exports = function(app, lobbys, callback){
+module.exports = function(app, mainRoutines){
 
     app.use(function(err, req, res, next) {
         console.error(err.stack);
@@ -63,43 +63,41 @@ module.exports = function(app, lobbys, callback){
     //     });
     // });
 
+    // Requests and sends back the lobby-array
+    // TODO: Needs to be refactored. Only send needed information and not the entire lobby-objects.
     app.get('/game/lobby', function(req, res){
-        res.status(200).send(lobbys);
+        res.status(200).send(mainRoutines.getAllLobbys());
     });
 
+    // Seaches the map from the database and returns it.
     app.get('/api/maps', function(req, res) {
-        Map
-          .find({})
-          .populate('enemyTypes')
-          .exec(function(err, maps) {
-            if(err) console.log(err);
-            res.status(200).send(maps);
-          })
+        Map.find({})
+            .populate('enemyTypes')
+            .exec(function(err, maps) {
+                if(err) console.log(err);
+                res.status(200).send(maps);
+            })
     });
 
+    // Sends the requested lobby-object back to the client.
+    // TODO: Needs to be refactored. Only needed information and not the entire lobby-object should be send.
     app.get('/game/lobby/create_game/:lobbyname', function(req, res){
-
         var lobbyname = req.params.lobbyname;
-        var lobby;
+        var lobby = mainRoutines.getLobby(lobbyname);
 
-        for (var i = 0; i < lobbys.length; i++) {
-            if(lobbys[i].name == lobbyname){
-                lobby = lobbys[i];
-            }
-        }
-        if(lobby !== undefined){
+        if(lobby){
             res.status(200).send(lobby);
-        }
-        else {
-            //TODO: Implement callback
+        }else{
             res.redirect('/#' + req.originalUrl);
         }
     });
 
+    // Default get route.
     app.get('*', function(req, res) {
         res.redirect('/#' + req.originalUrl);
     });
 
+    // Tries to login the user and returns an token if successfully or an error message if failed.
     app.post('/api/login', function(req, res, next) {
         passport.authenticate('login', function(err, user, info){
             if (err) { return next(err); }
@@ -117,6 +115,7 @@ module.exports = function(app, lobbys, callback){
         })(req, res, next);
     });
 
+    // Registrates the user and returns error-messages if it fails or a token if it was successfully.
     app.post('/api/registration', function(req, res, next) {
         var user = new User({
             username: req.body.username,
@@ -139,23 +138,23 @@ module.exports = function(app, lobbys, callback){
         });
     });
 
-
-    // TODO: Namen auf doppelten Eintrag überprüfen. Die Namen müssen Unique sein.
+    // Creates a lobby and sends a status if it was successfully.
     app.post('/api/createLobby', function(req, res){
+        var data = {
+            "lobbyName": req.body.lobbyname,
+            "user": req.body.user
+        }
 
-        var lobbyname = req.body.lobbyname;
-        var user = req.body.user;
+        var ret = mainRoutines.createLobby(data)
 
-        callback(null, {
-            name: 'createdLobby',
-            lobbyname: lobbyname,
-            user: user
-        });
-
-        res.sendStatus(200);
+        if(ret){
+            res.sendStatus(200);
+        }else{
+            // cannot create Lobby
+        }
     });
 
-// gibt die ID der ausgesuchten Karte um diese in der Lobby zu erstellen.
+    // Searches the map from the database and sends the data back to the client.
     app.post('/api/generateMap', function(req, res){
         var id = req.body._id;
         var lobbyname = req.body.lobbyname;
@@ -163,12 +162,15 @@ module.exports = function(app, lobbys, callback){
             if(err){ return res.status(401).send(err + '\nErr:CantCreateLobby') }
             if(map){
                 //null for possible error responses
-                callback(null, {
-                    name: "generatedMap",
-                    lobbyname: lobbyname,
-                    value: map
-                });
-                res.status(200).send(map);
+                var data;
+                data.lobbyname = lobbyname;
+                data.id = id;
+                var ret = mainRoutines.generateMap(data);
+                if(ret){
+                    res.status(200).send(map);
+                }else{
+                  //coudn't generate map
+                }
             }
             else {
                 res.status(401).send("Couldn\'t find a map");
@@ -176,20 +178,19 @@ module.exports = function(app, lobbys, callback){
         });
     });
 
+    // Joins the client to the lobby and returns the needed lobby information.
     app.post('/api/joinLobby', function(req, res){
+        var data;
+        data.user = req.body.user;
+        data.lobby = req.body.lobby;
 
-        var user = req.body.user;
-        var lobby = req.body.lobby;
-        var ndCallback = function(){
+        var ret = mainRoutines.joinLobby(data);
+        if(ret){
+            // TODO: Send only needed lobby information.
             res.status(200).send(lobby);
+        }else{
+            // couldn't join lobby
         }
-
-        callback(null, {
-            name: "joinLobby",
-            user: user,
-            lobby: lobby,
-            callback: ndCallback
-        });
     });
     // TODO: Save profilechanges to db
     app.post('/api/changeProfile', function(req, res) {
@@ -238,6 +239,7 @@ module.exports = function(app, lobbys, callback){
 
 }
 
+// Checks if the client is authenticated to call the route.
 function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) next();
     else res.sendStatus(401);

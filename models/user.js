@@ -10,6 +10,7 @@ var userSchema = new mongoose.Schema({
     friends: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
 });
 
+// If a user should be saved to the database, a hash value of the password will be generated.
 userSchema.pre('save', function(next) {
     var user = this;
     if (!user.isModified('password')) return next();
@@ -23,6 +24,7 @@ userSchema.pre('save', function(next) {
     });
 });
 
+// Compares the given password with the hash value in the database.
 userSchema.methods.comparePassword = function(candidatePassword, cb) {
     bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
         if (err) return cb(err);
@@ -30,6 +32,7 @@ userSchema.methods.comparePassword = function(candidatePassword, cb) {
     });
 };
 
+// Generates the Jason-Web-Token from the user information.
 userSchema.methods.generateJwt = function() {
     var expiry = new Date();
     expiry.setDate(expiry.getDate() + 7);
@@ -42,6 +45,7 @@ userSchema.methods.generateJwt = function() {
     }, "MY_SECRET"); //TODO: get from Environment Variable (process.env.ENV_VARIABLE)
 };
 
+// Updates the user.
 userSchema.methods.update = function(name, data, callback) {
     getUser(name, function(err, user){
         updateUser(user, data, function(err){
@@ -51,6 +55,7 @@ userSchema.methods.update = function(name, data, callback) {
     });
 };
 
+// Helper function to update the fields in the user database.
 function updateUser(user, data, callback){
     if("gold" in data) user.gold = data.gold;
     user.save(function(err){
@@ -59,6 +64,7 @@ function updateUser(user, data, callback){
     });
 }
 
+// Seaches and returns a specific user either by email, name or id from the database.
 function getUser(name, callback){
     this.findOne({email: name}, function(err, user){
         if(err) return callback(err);
@@ -82,6 +88,7 @@ function getUser(name, callback){
     });
 }
 
+<<<<<<< HEAD
 userSchema.getAllUsers = function(callback){
     this.find({}, {username:1}, function(err, data) {
         if(err) return callback(err);
@@ -91,7 +98,8 @@ userSchema.getAllUsers = function(callback){
     });
 }
 
-userSchema.changePassword = function(name, password, callback){
+// Changes the password.
+userSchema.methods.changePassword = function(name, password, callback){
     getUser(name, function(err, user){
         if(err) return callback(err);
         if(user){
@@ -104,7 +112,8 @@ userSchema.changePassword = function(name, password, callback){
     });
 }
 
-userSchema.changeEmail = function(name, email, callback){
+// Changes the email, if its not already been taken.
+userSchema.methods.changeEmail = function(name, email, callback){
     getUser(name, function(err, user){
         if(err) return callback(err);
         if(user){
@@ -124,7 +133,8 @@ userSchema.changeEmail = function(name, email, callback){
     });
 }
 
-userSchema.changeName = function(name, otherName, callback){
+// Changes the name, if its not already been taken.
+userSchema.methods.changeName = function(name, otherName, callback){
     getUser(name, function(err, user){
         if(err) return callback(err);
         if(user){
@@ -144,32 +154,8 @@ userSchema.changeName = function(name, otherName, callback){
     });
 }
 
-userSchema.getFriends = function(name, callback){
-    getUser(name, function(err, user){
-        if(err) return callback(err);
-        if(user){
-            var friendIds = user.friends;
-            var arrFriends;
-            function recursivCallbacks(i){
-                if( i < friendIds.length){
-                    for(let friendId in friendIds){
-                        this.findById(friendId, function(err, friend){
-                            if(friend){
-                                arrFriends.push(friend.username);
-                            }
-                            recursivCallbacks(i+1);
-                        });
-                    }
-                }else{
-                    callback(null, arrFriends);
-                }
-            }
-            recursivCallbacks(0);
-        }
-    });
-}
-
-userSchema.addFriend = function(name, _id, callback){
+// Adds a friend.
+userSchema.methods.addFriend = function(name, _id, callback){
     getUser(name, function(err, user){
         if(err) return callback(err);
         if(user){
@@ -187,7 +173,8 @@ userSchema.addFriend = function(name, _id, callback){
     });
 }
 
-userSchema.deleteFriend = function(name, _id, callback){
+// Removes a friend.
+userSchema.methods.deleteFriend = function(name, _id, callback){
     getUser(name, function(err, user){
         if(err) return callback(err);
         if(user){

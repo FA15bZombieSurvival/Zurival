@@ -7,11 +7,13 @@ module.exports = function Enemy(x, y, data){
     this.type = data.type;
     this.alive = true;
 
+    // Updates the point where the enemy stands.
     this.update = function(delta){
         this.x += 10 * delta;
         this.y += 10 * delta;
     }
 
+    // Updates the HP if the enemy was hit.
     this.damageStep = function(damage){
         if(damage >= 0){
             diff = this.armor - damage;

@@ -1,6 +1,7 @@
 angular.module('Zurival.game', [])
     .config(function($stateProvider) {
         $stateProvider
+            //These are the routes for the lobby 
             .state('root.game.lobby', {
                 url: '/lobby',
                 views: {
