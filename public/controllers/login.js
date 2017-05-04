@@ -14,7 +14,7 @@ angular.module('Zurival')
                         $scope.wrongPassword = "Wrong password";
                 }else{
                     $rootScope.isLoggedIn = true;
-                    $rootScope.socket = io.connect('http://localhost:3000', {   // ToDo change Website
+                    $rootScope.socket = io.connect('http://localhost:3000', {   // TODO: change Website
                         'query': 'token=' + authentication.getToken()
                     });
                     console.log($rootScope.socket);
