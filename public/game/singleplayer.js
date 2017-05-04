@@ -1,6 +1,6 @@
 //Constants
 var PLAYER_BASE_SPEED = 100;
-var ZOMBIE_BASE_SPEED = 80;
+var ZOMBIE_BASE_SPEED = 50;
 
 //Variables
 var map;
@@ -63,6 +63,7 @@ function create(){
     //Set Camera to follow player
     game.camera.follow(player);
     //Initiate collisiondetection
+    game.physics.enable(player, Phaser.Physics.ARCADE);
     game.physics.arcade.collide(player, map.blockedLayer);
     //Enable collosion detection for current player
     game.physics.arcade.enable(player);
@@ -70,6 +71,8 @@ function create(){
     player.body.collideWorldBounds = true
     //Set ammo to 20 shots
     ammo = 20;
+    //Set health of the player to 100
+    player.health = 100;
     //----------    Player specific ----------
 
     //----------    Enemy specific ----------
@@ -184,6 +187,10 @@ function update(){
             canShootAgain = game.time.now + 5 * cooldown;
         }
     }
+    if (player.health <= 0) {
+        console.log(player.health.toString());
+        player.kill();
+    }
     //----------    Player specific ----------
 
     //----------    Zombie specific ----------
@@ -196,15 +203,17 @@ function update(){
             //Count one up
             remainingZombies++;
             //Check whether a zombie is colliding with a player
-            game.physics.arcade.collide(player, zombies[i].zombies);
+            game.physics.arcade.collide(player, zombies[i].zombie);
             //Check whether zombie is overlapping with a projectile
-            game.physics.arcade.overlap(projectiles, zombies[i].zombies, projectileHitZombie, null, this);
+            game.physics.arcade.overlap(projectiles, zombies[i].zombie, projectileHitZombie, null, this);
             //Update zombie
             zombies[i].update(i);
         }
     }
     //If all enemies are dead generate another 20
-    if (remainingZombies = 0) {
+    if (remainingZombies == 0) {
+        zombies = [];
+        zombieCount = 20;
         for (var i = 0; i < zombieCount; i++)
         {
             zombies.push(new Zombie(i, game, player));
@@ -234,11 +243,10 @@ Zombie = function(index, game, player, projectiles){
     //Add zombie state
     this.health = 100;
     this.alive = true;
-
     this.player = player;
     //Add attack cooldown
     this.cooldown = 1000;
-    //Let next attack ne directly
+    //Let next attack be instantly upon touching the player
     this.nextAttack = 0;
     //Genereate a random position for the enemy
     this.x = game.world.randomX;
@@ -251,12 +259,12 @@ Zombie = function(index, game, player, projectiles){
     game.physics.enable(this.zombie, Phaser.Physics.ARCADE);
     this.zombie.body.immovable = false;
     this.zombie.body.collideWorldBounds = true;
-    this.zombie.body.bounce.setTo(1, 1);
+    this.zombie.body.bounce.setTo(10, 10);
 }
 
 Zombie.prototype.damage = function(){
-    //Substract 20 life
-    this.health -= 20;
+    //Substract 15-25 life of the zombie
+    this.health -= Math.floor(Math.random()*(25-15+1)+15);
     //If health of this zombie is 0 or lower
     if (this.health <= 0){
         //set his alive state to false and delete the sprite
@@ -290,17 +298,18 @@ Zombie.prototype.update = function(index){
             this.zombie.body.velocity.y += ZOMBIE_BASE_SPEED;
         }
         //Let enemy attack if player is in range
-        if(this.game.physics.arcade.distanceBetween(zombies[index].zombie, player) < 32){
-            if (this.game.time.now > this.zombie.nextAttack) {
+        if(this.game.physics.arcade.distanceBetween(this.zombie, player) < 100){
+            if (this.game.time.now > this.nextAttack) {
+                console.log("hit");
                 //Set zombie cooldown
-                this.zombie.nextAttack = this.game.time.now + this.zombie.cooldown;
-                //Substract health of player
-                player.heatlh -= 10;
+                this.nextAttack = this.game.time.now + this.cooldown;
+                //Substract 5-15 health of player
+                player.health -= Math.floor(Math.random()*(15-5+1)+5);
             }
         }
     }
 
 function projectileHitZombie(zombieIndex, newProjectile){
     newProjectile.kill();
-    zombies[zombieIndex].damage();
+    zombies[zombieIndex.name].damage();
 }
