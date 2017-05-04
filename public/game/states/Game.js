@@ -105,4 +105,8 @@ Game.prototype = {
             positionNextPlayer = positionNextPlayer + 200;
         }
     }
+<<<<<<< HEAD
 }
+=======
+}*/
+>>>>>>> Multiplayer
