@@ -7,7 +7,6 @@
 @import "content";
 @import "views/login";
 @import "views/register";
-@import "views/about";
 @import "views/profile";
 @import "views/friends";
 
@@ -31,5 +30,6 @@ html {
         color: $primary;
         overflow-x: hidden;
         z-index: 0;
+        color: #000000;
     }
 }

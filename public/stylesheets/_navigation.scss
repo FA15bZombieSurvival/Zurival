@@ -9,16 +9,16 @@
     .navbar {
         margin-bottom: 0;
         float: left;
-        background-color: #FFFFFF;
-        color: $primary;
+        background-color: $primary;
+        color: #FFFFFF;
         width: 55px;
         height: 100%;
         padding-right: 2px;
         margin-right: 0;
         border-bottom: none;
         #nav-toggle {
-            background-color: #FFFFFF;
-            color: $primary;
+            background-color: $primary;
+            color: #FFFFFF;
             border-radius: 0;
             border: 0;
             width: inherit;
@@ -35,7 +35,7 @@
                     display: block;
                     width: inherit;
                     text-align: center;
-                    color: $primary;
+                    color: #FFFFFF;
                 }
                 #logout {
                     border: none;

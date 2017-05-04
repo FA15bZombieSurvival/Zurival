@@ -10,13 +10,7 @@
     .container-fluid {
         .row {
             margin-bottom: 20px;
-            #logo-container {
-                h1 {
-                    span {
-                        color: $primary;
-                    }
-                }
-            }
+            color: #000000;
             #play-button {
                 .btn {
                     @font-face {

@@ -11,16 +11,16 @@
   #ui-nav .navbar {
     margin-bottom: 0;
     float: left;
-    background-color: #FFFFFF;
-    color: #932D24;
+    background-color: #932D24;
+    color: #FFFFFF;
     width: 55px;
     height: 100%;
     padding-right: 2px;
     margin-right: 0;
     border-bottom: none; }
     #ui-nav .navbar #nav-toggle {
-      background-color: #FFFFFF;
-      color: #932D24;
+      background-color: #932D24;
+      color: #FFFFFF;
       border-radius: 0;
       border: 0;
       width: inherit;
@@ -36,7 +36,7 @@
           display: block;
           width: inherit;
           text-align: center;
-          color: #932D24; }
+          color: #FFFFFF; }
         #ui-nav .navbar .navbar-nav li #logout {
           border: none; }
 
@@ -48,9 +48,8 @@
   min-height: 100% !important;
   height: 100% !important; }
   #content .container-fluid .row {
-    margin-bottom: 20px; }
-    #content .container-fluid .row #logo-container h1 span {
-      color: #932D24; }
+    margin-bottom: 20px;
+    color: #000000; }
     #content .container-fluid .row #play-button .btn {
       border-radius: 0;
       background-color: #932D24;
@@ -103,14 +102,6 @@
     border: none; }
   #registration-wrapper .row div .panel p {
     text-align: center; }
-
-#about .row #about-content .row div a {
-  color: #17525A;
-  text-align: center;
-  display: block;
-  width: auto;
-  height: auto;
-  margin: 0; }
 
 #profile {
   height: 100% !important;
@@ -262,6 +253,7 @@ html {
     background-color: #FFFFFF;
     color: #932D24;
     overflow-x: hidden;
-    z-index: 0; }
+    z-index: 0;
+    color: #000000; }
 
 /*# sourceMappingURL=style.css.map */

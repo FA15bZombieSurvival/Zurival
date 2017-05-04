@@ -1,8 +1,10 @@
 <!-- Navigation (Bootstrap Navbar) -->
 <nav class="navbar navbar-inverse navbar-fixed-top" ng-Controller="NavigationCtrl">
+    <!-- Toggle button -->
     <button class="btn btn-lg" id="nav-toggle">
         <span class="glyphicon glyphicon-menu-hamburger"></span>
     </button>
+    <!-- Links -->
     <ul class="nav navbar-nav">
         <li>
             <a ui-sref=".">
@@ -16,25 +18,20 @@
                 <span class="hidden nav-hidden"> Game</span>
             </a>
         </li>
+        <!-- Just shown when user is not logged in. -->
         <li ng-show="!isLoggedIn">
             <a ui-sref=".login" id="navigationUser">
                 <span class="fa fa-user"></span>
                 <span class="hidden nav-hidden"> Login</span>
             </a>
         </li>
+        <!-- Just shown when user is logged in. -->
         <li ng-show="isLoggedIn">
             <a ui-sref=".profile">
                 <span class="fa fa-user"></span>
                 <span class="hidden nav-hidden"> Profile</span>
             </a>
         </li>
-        <li>
-            <a ui-sref=".about">
-                <span class="fa fa-question"></span>
-                <span class="hidden nav-hidden"> About</span>
-            </a>
-        </li>
-
     </ul>
     <ul class="nav navbar-nav" id="userViews" ng-show="isLoggedIn">
         <li>
@@ -49,6 +46,7 @@
                 <span class="hidden nav-hidden"> Statistics</span>
             </a>
         </li>
+        <!-- Logout Button -->
         <li id="navigationLogout">
             <a id="logout" ng-click="logout()" ui-sref=".home">
                 <span class="fa fa-power-off"></span>
@@ -57,5 +55,5 @@
         </li>
     </ul>
 </nav>
-<!-- Include navigation toggler -->
+<!-- Include navigation toggler script-->
 <script src="../scripts/navigation-toggle.js"></script>
