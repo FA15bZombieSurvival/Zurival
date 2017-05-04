@@ -62,37 +62,41 @@ module.exports = function(app, mainRoutines){
     //     });
     // });
 
+    // Requests and sends back the lobby-array
+    // TODO: Needs to be refactored. Only send needed information and not the entire lobby-objects.
     app.get('/game/lobby', function(req, res){
         res.status(200).send(mainRoutines.getAllLobbys());
     });
 
+    // Seaches the map from the database and returns it.
     app.get('/api/maps', function(req, res) {
-        Map
-          .find({})
-          .populate('enemyTypes')
-          .exec(function(err, maps) {
-            if(err) console.log(err);
-            res.status(200).send(maps);
-          })
+        Map.find({})
+            .populate('enemyTypes')
+            .exec(function(err, maps) {
+                if(err) console.log(err);
+                res.status(200).send(maps);
+            })
     });
 
+    // Sends the requested lobby-object back to the client.
+    // TODO: Needs to be refactored. Only needed information and not the entire lobby-object should be send.
     app.get('/game/lobby/create_game/:lobbyname', function(req, res){
-
         var lobbyname = req.params.lobbyname;
-        var lobby = mainRoutines.getLobby(lobbyname);;
+        var lobby = mainRoutines.getLobby(lobbyname);
 
         if(lobby){
             res.status(200).send(lobby);
         }else{
-            //TODO: Implement callback
             res.redirect('/#' + req.originalUrl);
         }
     });
 
+    // Default get route.
     app.get('*', function(req, res) {
         res.redirect('/#' + req.originalUrl);
     });
 
+    // Tries to login the user and returns an token if successfully or an error message if failed.
     app.post('/api/login', function(req, res, next) {
         passport.authenticate('login', function(err, user, info){
             if (err) { return next(err); }
@@ -110,6 +114,7 @@ module.exports = function(app, mainRoutines){
         })(req, res, next);
     });
 
+    // Registrates the user and returns error-messages if it fails or a token if it was successfully.
     app.post('/api/registration', function(req, res, next) {
         var user = new User({
             username: req.body.username,
@@ -132,7 +137,7 @@ module.exports = function(app, mainRoutines){
         });
     });
 
-    // TODO: Namen auf doppelten Eintrag überprüfen. Die Namen müssen Unique sein.
+    // Creates a lobby and sends a status if it was successfully.
     app.post('/api/createLobby', function(req, res){
         var data = {
             "lobbyName": req.body.lobbyname,
@@ -148,7 +153,7 @@ module.exports = function(app, mainRoutines){
         }
     });
 
-// gibt die ID der ausgesuchten Karte um diese in der Lobby zu erstellen.
+    // Searches the map from the database and sends the data back to the client.
     app.post('/api/generateMap', function(req, res){
         var id = req.body._id;
         var lobbyname = req.body.lobbyname;
@@ -172,6 +177,7 @@ module.exports = function(app, mainRoutines){
         });
     });
 
+    // Joins the client to the lobby and returns the needed lobby information.
     app.post('/api/joinLobby', function(req, res){
         var data;
         data.user = req.body.user;
@@ -179,6 +185,7 @@ module.exports = function(app, mainRoutines){
 
         var ret = mainRoutines.joinLobby(data);
         if(ret){
+            // TODO: Send only needed lobby information.
             res.status(200).send(lobby);
         }else{
             // couldn't join lobby
@@ -186,6 +193,7 @@ module.exports = function(app, mainRoutines){
     });
 }
 
+// Checks if the client is authenticated to call the route.
 function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) next();
     else res.sendStatus(401);

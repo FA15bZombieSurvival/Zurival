@@ -26,6 +26,7 @@ var characterSchema = new mongoose.Schema({
     created: { type: Date, default: Date.now }
 });
 
+// Updates a character from the database.
 characterSchema.methods.update = function(_id, data, callback){
     this.findById(_id, function(err, character){
         if(err) return callback(err);
@@ -37,6 +38,7 @@ characterSchema.methods.update = function(_id, data, callback){
     });
 }
 
+// Deletes a character from the database.
 characterSchema.methods.delete = function(name, callback){
     this.findById(name, function(err, character){
         if(err) return callback(err);
@@ -49,6 +51,7 @@ characterSchema.methods.delete = function(name, callback){
     });
 }
 
+// Helper function to update every single field in the database if it's in the data-object.
 function updateCharacter(character, data, callback){
     if("name" in data) character.name = data.name;
     if("userID" in data) character.userID = data.userID;

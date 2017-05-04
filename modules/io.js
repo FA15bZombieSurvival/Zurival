@@ -5,10 +5,12 @@ var socket      = null,
     lobbySocket = null,
     chatSocket  = null;
 
+// Creates the io-object and returns it.
 module.exports = function(server){
     return new io(server);
 }
 
+// Constructor
 function io(server){
     socket = socketio.listen(server);
     chatSocket = socket.of('/chat');
@@ -17,6 +19,7 @@ function io(server){
     nspLobby();
 }
 
+// The chat namespace, where all clients were connected when they login.
 function nspChat(){
     chatSocket.use(socketioJwt.authorize({
         secret: "MY_SECRET",    //TODO get from Environment Variable (process.env.ENV_VARIABLE)
@@ -33,6 +36,7 @@ function nspChat(){
     });
 }
 
+// The lobby namespace, where all clients were connected if they join a lobby.
 function nspLobby() {
     lobbySocket.use(socketioJwt.authorize({
         secret: "MY_SECRET",    //TODO get from Environment Variable (process.env.ENV_VARIABLE)
@@ -48,6 +52,7 @@ function nspLobby() {
     });
 }
 
+// Removes a client from a specific namespace.
 io.prototype.removeClientFromNamespace = function(id, namespace){
     var ns = io.of(namespace || "/");
 
@@ -59,10 +64,12 @@ io.prototype.removeClientFromNamespace = function(id, namespace){
     }
 }
 
+// Returns a specific namespace from the io-object.
 io.prototype.getNamespace = function(namespace){
     return socket.of(namespace || "/");
 }
 
+// Search and returns a specific client from a namespace and or room.
 io.prototype.getClient = function(id, namespace, roomId) {
     var res = [];
     var ns = io.of(namespace || "/");
