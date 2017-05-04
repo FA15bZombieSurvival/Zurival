@@ -1,40 +1,42 @@
 //Variables
 var BASE_SPEED = 180;
 
-var Player = function(x, y, id, game) {
+var Player = function(x, y, id) {
   this.spawnPoint = {x: x, y: y};
   this.id = id;
   this.facing = "down";
   this.speed = BASE_SPEED;
 
+  game.physics.enable(this, Phaser.Physics.ARCADE);
+
   //Add Sprite
   this.player = game.add.sprite(200, 200, 'player');
 
   //Create Movement animations
-  this.player.animations.add('left', [3,5], 3, true);
-  this.player.animations.add('right', [6,8], 3, true);
-  this.player.animations.add('down', [1,2], 3, true);
-  this.player.animations.add('up', [9,11], 3, true);
+  this.animations.add('left', [3,5], 3, true);
+  this.animations.add('right', [6,8], 3, true);
+  this.animations.add('down', [1,2], 3, true);
+  this.animations.add('up', [9,11], 3, true);
 
   //--------------------------------------------------
   //Bind WASD for movement
-  var up = this.player.input.keyboard.addKey(Phaser.Keyboard.W);
-  var down = this.player.input.keyboard.addKey(Phaser.Keyboard.S);
-  var left = this.player.input.keyboard.addKey(Phaser.Keyboard.A);
-  var right = this.player.input.keyboard.addKey(Phaser.Keyboard.D);
+  var up = this.input.keyboard.addKey(Phaser.Keyboard.W);
+  var down = this.input.keyboard.addKey(Phaser.Keyboard.S);
+  var left = this.input.keyboard.addKey(Phaser.Keyboard.A);
+  var right = this.input.keyboard.addKey(Phaser.Keyboard.D);
 
   //Bind inventory key on I
-  var inventory = this.player.input.keyboard.addKey(Phaser.Keyboard.I);
+  var inventory = this.input.keyboard.addKey(Phaser.Keyboard.I);
 
   //Bind actionbar keys
-  var actionbar1 = this.player.input.keyboard.addKey(Phaser.Keyboard.ONE);
-  var actionbar2 = this.player.input.keyboard.addKey(Phaser.Keyboard.TWO);
-  var actionbar3 = this.player.input.keyboard.addKey(Phaser.Keyboard.THREE);
-  var actionbar4 = this.player.input.keyboard.addKey(Phaser.Keyboard.FOUR);
-  var actionbar5 = this.player.input.keyboard.addKey(Phaser.Keyboard.FIFE);
+  var actionbar1 = this.input.keyboard.addKey(Phaser.Keyboard.ONE);
+  var actionbar2 = this.input.keyboard.addKey(Phaser.Keyboard.TWO);
+  var actionbar3 = this.input.keyboard.addKey(Phaser.Keyboard.THREE);
+  var actionbar4 = this.input.keyboard.addKey(Phaser.Keyboard.FOUR);
+  var actionbar5 = this.input.keyboard.addKey(Phaser.Keyboard.FIFE);
 
   //Bind reload key on R
-  var reload = this.player.input.keyboard.addKey(Phaser.Keyboard.R);
+  var reload = this.input.keyboard.addKey(Phaser.Keyboard.R);
   //--------------------------------------------------
 
   game.add.existing(this);
@@ -115,7 +117,7 @@ Player.handleMovementInput = function() {
   }
 
   //Send movement status to the server
-  socket.emit('playerMovement', {x: this.position.x, y: this.position.y, facing: this.facing});
+  socket.emit('playerMovement', {x: this.position.x, y: this.position.y, facing: this.facing, playerId: this.id});
 };
 
 Player.handleAttackInput = function() {
@@ -129,7 +131,7 @@ Player.handleAttackInput = function() {
   }
 
   //Send attack and movementStatus to the server
-  socket.emit('playerAttack', {attack: attackToServer});
+  socket.emit('playerAttack', {attack: attackToServer, playerId: this.id});
 };
 
 Player.handleHotbarInput = function() {
@@ -153,21 +155,21 @@ Player.handleHotbarInput = function() {
 
   }
 
-  socket.emit('playerHotbarInput', {hotkey: pressedHotkey});
+  socket.emit('playerHotbarInput', {hotkey: pressedHotkey, PlayerId: this.id});
 };
 
 Player.handleReloadInput = function() {
   if (reload.isDown){
 
   }
-  socket.emit('playerReloadInput', {reload: pressedreload});
+  socket.emit('playerReloadInput', {reload: pressedreload, PlayerId: this.id});
 };
 
 Player.handleInventoryInput = function(){
     if (inventory.isDown){
 
     }
-    socket.emit('playerInventoryInput', {inventory: openInventory});
+    socket.emit('playerInventoryInput', {inventory: openInventory, PlayerId: this.id});
 };
 
 Player.reset = function() {
@@ -182,4 +184,3 @@ Player.reset = function() {
 };
 
 //angular.module.exports = Player;
-*/

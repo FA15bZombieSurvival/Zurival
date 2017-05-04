@@ -10,7 +10,8 @@ Preload.prototype = {
         this.load.image('bullet', 'assets/bullet.png');
         //Upon finishing loading the assets start the game
         this.load.onLoadComplete.add(function() {
-          game.state.start('Game');
+            game.state.start('Game');
+            //game.state.start('Game', mapid, players);
         });
     }
 }

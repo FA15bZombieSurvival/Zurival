@@ -10,7 +10,7 @@ createGame();
 
 function createGame() {
     //There seems to be many errors with the websockets
-    //socket = io("http://localhost:3000");
+    socket = io("http://localhost:3000");
     //Add the game states
     game.state.add('Boot', Boot);
     game.state.add('Preload', Preload);

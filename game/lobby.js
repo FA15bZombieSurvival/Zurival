@@ -65,6 +65,7 @@ Lobby.prototype.generateWorld = function(data){
     const WORLD_PIXEL_WIDTH = worldInTilesWidth * tileSize;
     const WORLD_PIXEL_HEIGHT = worldInTilesHeight * tileSize;
     console.log(WORLD_PIXEL_HEIGHT + ' / ' + WORLD_PIXEL_WIDTH);
+    io.emit("startGame", {players: players, mapId: this.mapId});
 }
 
 Lobby.prototype.addPlayer = function(data){
