@@ -1,12 +1,17 @@
+<script src="game/Singleplayer.js"></script>
 <div class="container" ng-Controller="LobbyCtrl">
   <div class="row">
     <div class="center-form panel">
       <div class="panel-body">
+          <div id="game-canvas">
+              
+          </div>
+          <!--
         <h2 class="text-center">Lobby</h2>
 
         <div class="col-xs-8 col-sm-8 col-md-8 col-lg-6 well well-sm">
             <div class=" col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <form method="post" ng-submit="createLobby()" name="createGameForm" class="form-inline" role="form">
+                <form method="post" ng-submit="createLobby" name="createGameForm" class="form-inline" role="form">
 
                     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
                         <label for="namefield">Create Game:</label>
@@ -45,6 +50,7 @@
                     <td><button ng-click="join(lobby.name)">Join</button></td>
                 </tr>
             </table>
+        -->
       </div>
     </div>
   </div>

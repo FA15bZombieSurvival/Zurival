@@ -1,4 +1,4 @@
-module.exports = function Enemy(data){
+var Enemy = function(data){
     this.sprite = data.sprite;
     this.x = data.x;
     this.y = data.y;

@@ -61,73 +61,21 @@ function Player(data) {
     this.yVelocity = data.yVelocity;
 }
 
-/*
-Player.prototype.update = function(keyPressed, delta){
-    //Reset the move and attack variable before sending it again
-    moveToServer = 0;
-    attackToServer = 0;
+Player.prototype = {
+  /*
+  function fire () {
+      if (game.time.now > nextFire && bullets.countDead() > 0)
+      {
+          nextFire = game.time.now + fireRate;
 
-    //Move left if "a" is pressed
-    if(left.isDown){
-      //play animation for running left
-      this.player.animations.play('left');
-      //Set the first Bit of the move variable
-      moveToServer |= (1<<0);
-    }
+          var bullet = bullets.getFirstExists(false);
 
+          bullet.reset(turret.x, turret.y);
 
-//Move right if "d" is pressed
-update: function(){
-  //Movementspeed
-  this.baseVelocity = 128;
-
-  //Move left
-  if (moveDirection == 01){
-    //Move the player left with the basespeed
-    this.player.body.velocity.x -= this.baseVelocity;
+          bullet.rotation = game.physics.arcade.moveToPointer(bullet, 1000, game.input.activePointer, 500);
+      }
   }
-  //Move right
-  if (moveDirection == 010){
-    //Move the player right with the basespeed
-    this.player.body.velocity.x += this.baseVelocity;
-  }
-  //Move up
-  if (moveDirection == 0100){
-    //Move the player up with the basespeed
-    this.player.body.velocity.y -= this.baseVelocity;
-  }
-  //Move down
-  if (moveDirection == 01000){
-    //Move the player down with the basespeed
-    this.player.body.velocity.y += this.baseVelocity;
-  }
-  if (moveDirection == 0101){
-    //Move the player left with the basespeed
-    this.player.body.velocity.x -= this.baseVelocity;
-    //Move the player up with the basespeed
-    this.player.body.velocity.y -= this.baseVelocity;
-  }
-  if (moveDirection == 0110){
-    //Move the player right with the basespeed
-    this.player.body.velocity.x += this.baseVelocity;
-    //Move the player up with the basespeed
-    this.player.body.velocity.y -= this.baseVelocity;
-  }
-  if (moveDirection == 01001){
-    //Move the player left with the basespeed
-    this.player.body.velocity.x -= this.baseVelocity;
-    //Move the player down with the basespeed
-    this.player.body.velocity.y += this.baseVelocity;
-  }
-  if (moveDirection == 01010){
-    //Move the player right with the basespeed
-    this.player.body.velocity.x += this.baseVelocity;
-    //Move the player down with the basespeed
-    this.player.body.velocity.y += this.baseVelocity;
-  }
+  */
 }
 
-Player.prototype.generate = function(){
-
-}
-*/
+module.exports = Player;
